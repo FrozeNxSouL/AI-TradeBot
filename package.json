@@ -9,19 +9,41 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@heroui/button": "^2.2.13",
+    "@heroui/card": "^2.2.13",
+    "@heroui/chip": "^2.2.10",
+    "@heroui/divider": "^2.2.9",
+    "@heroui/drawer": "^2.2.11",
+    "@heroui/dropdown": "^2.3.13",
+    "@heroui/form": "^2.1.12",
+    "@heroui/input": "^2.4.13",
+    "@heroui/link": "^2.2.11",
+    "@heroui/modal": "^2.2.11",
+    "@heroui/navbar": "^2.2.12",
+    "@heroui/switch": "^2.2.12",
+    "@heroui/system": "^2.4.10",
+    "@heroui/table": "^2.2.12",
+    "@heroui/tabs": "^2.2.11",
+    "@heroui/theme": "^2.4.9",
+    "@heroui/user": "^2.2.10",
+    "@prisma/client": "^6.4.1",
+    "framer-motion": "^12.4.7",
+    "next": "15.1.7",
+    "next-auth": "^4.24.11",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "next": "15.1.7"
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "typescript": "^5",
-    "@types/node": "^20",
+    "@eslint/eslintrc": "^3",
+    "@types/node": "^20.17.19",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1",
     "eslint": "^9",
     "eslint-config-next": "15.1.7",
-    "@eslint/eslintrc": "^3"
+    "postcss": "^8",
+    "prisma": "^6.4.1",
+    "tailwindcss": "^3.4.1",
+    "tsx": "^4.19.3",
+    "typescript": "^5.7.3"
   }
 }
