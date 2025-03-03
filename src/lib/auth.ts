@@ -1,9 +1,6 @@
-import NextAuth from "next-auth";
-import Google from "next-auth/providers/google";
 
-// export const {auth, handlers, signIn, signUp} = NextAuth({
-//     providers: [Google],
-// });
+import Google from "next-auth/providers/google";
+import { compare } from "bcrypt";
 
 import { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
@@ -30,24 +27,23 @@ export const authOptions: NextAuthOptions = {
                 }
             
                 const user = await prisma.user.findFirst({
-                    where: { email }
+                    where: { user_email:email }
                 });
             
                 if (!user) {
                     return null;
                 }
             
-                const matched = await compare(password, user.password as string);
+                const matched = await compare(password, user.user_password as string);
             
                 if (!matched) {
                     return null;
                 }
             
                 return {
-                    id: user.id,
-                    email: user.email,
-                    name: user.name,
-                    role: user.role
+                    id: user.user_id,
+                    email: user.user_email,
+                    role: user.user_role
                 };
             }
         })
@@ -57,41 +53,44 @@ export const authOptions: NextAuthOptions = {
             if (account?.provider == "google") {
                 token.id = profile?.sub!,
                 token.email = profile?.email!,
-                token.name = profile?.name!,
+                // token.name = profile?.name!,
                 token.provider = "google"
 
                 let existedUser = await prisma.user.findFirst({
-                    where: { id: token.id as string }
+                    where: { user_id: token.id as string }
                 });
 
                 if (!existedUser) {
                     existedUser = await prisma.user.create({
                         data: {
-                            id: profile?.sub!,
-                            email: profile?.email!,
-                            name: profile?.name!,
+                            user_id: profile?.sub!,
+                            user_email: profile?.email!,
                             provider: "google"
                         }
                     });
                 }
+                // console.log("token :",token)
+                // console.log("user :",user)
+                // console.log("account :",account)
+                // console.log("profile :",profile)
 
             }
             if (user) {
                 // If a new user signs in, assign token from user object
                 token.id = user.id;
-                token.name = user.name;
+                // token.name = user.name;
                 token.role = user.role;
             }
             // Fetch fresh user data from the database every time the token is requested
             const dbUser = await prisma.user.findFirst({
-                where: { id: token.id as string }
+                where: { user_id: token.id as string }
             });
 
     
             if (dbUser) {
-                token.name = dbUser.name;
-                token.role = dbUser.role;
-                token.email = dbUser.email;
+                // token.name = dbUser.user_name;
+                token.role = dbUser.user_role;
+                token.email = dbUser.user_email;
             }
     
             return token;
@@ -100,7 +99,7 @@ export const authOptions: NextAuthOptions = {
             // Sync session with updated token data
             if (token) {
                 session.user.id = token.id;
-                session.user.name = token.name;
+                // session.user.name = token.name;
                 session.user.email = token.email;
                 session.user.role = token.role;
             }
@@ -108,8 +107,8 @@ export const authOptions: NextAuthOptions = {
             return session;
         }
     },
-    pages: {
-        signIn: "/signin"
-    },
+    // pages: {
+    //     signIn: "/signin"
+    // },
     secret: process.env.AUTH_SECRET
 }

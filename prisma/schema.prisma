@@ -14,19 +14,71 @@ datasource db {
 }
 
 model User {
-  id        String    @id @default(cuid())
-  name      String?
-  email     String?   @unique
-  password  String?
-  // image     String?
-  // role      String    @default("user")
-  // idCard    String?
-  // mobile    String?
-  status    Int
-  // birthDate DateTime? @default(now())
-  // provider  String    @default("credentials")
-  // Receipt   Receipt[]
-  // Event     Event[]
-  // createdAt DateTime  @default(now())
-  // updatedAt DateTime  @updatedAt
+  user_id           String    @id @default(cuid())
+  user_email        String?   @unique
+  user_password     String?
+  user_role         String    @default("user")
+  user_card         String?
+  user_status       Int?      @default(0)
+  user_account      Account[]
+  provider          String    @default("credentials")
+  Usage             Usage[]
+}
+
+model Account {
+  acc_id      Int    @id @default(autoincrement())
+  acc_name    String
+  acc_client  Int    @default(0)
+  acc_user    User   @relation(fields: [acc_user_id], references: [user_id], onDelete: Cascade)
+  acc_user_id String
+}
+
+model Model {
+  model_id      Int      @id @default(autoincrement())
+  model_date    DateTime @default(now())
+  model_path    String
+  model_version Int      @default(0)
+  model_type    Int      @default(0)
+}
+
+model Billing {
+  bill_id          Int      @id @default(autoincrement())
+  bill_create_date DateTime @default(now())
+  bill_expire_date DateTime
+  bill_cost        Float
+  bill_status      Int      @default(0)
+  bill_usage       Usage    @relation(fields: [bill_usage_id], references: [usage_id], onDelete: Cascade)
+  bill_usage_id    Int
+}
+
+model Usage {
+  usage_id              Int        @id @default(autoincrement())
+  usage_token           String
+  usage_currency        String
+  usage_timeframe       String
+  usage_collection_date DateTime
+  usage_init_balance    Float
+  usage_profit          Float
+  usage_status          Int        @default(0)
+  usage_log             TradeLog[]
+  usage_bill            Billing[]
+  usage_user            User       @relation(fields: [usage_user_id], references: [user_id], onDelete: Cascade)
+  usage_user_id         String
+}
+
+model TradeLog {
+  log_id         Int      @id @default(autoincrement())
+  log_magic      String[]
+  log_trades     String[]
+  log_start_date DateTime
+  log_balance    Float
+  log_status     Int      @default(0) //0 = gethering, 1 = finalized
+  log_usage      Usage    @relation(fields: [log_usage_id], references: [usage_id], onDelete: Cascade)
+  log_usage_id   Int
+}
+
+model Admin_Data {
+  ad_id     Int      @id @default(autoincrement())
+  ad_fee    Float
+  ad_banner String[]
 }

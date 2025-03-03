@@ -65,9 +65,20 @@
 
 FROM node:18-alpine
 WORKDIR /app
-COPY package*.json ./
+COPY package.json package-lock.json ./
 RUN npm install
 
 COPY . .
 EXPOSE 3000
+RUN npx prisma generate
 CMD npm run dev
+# RUN npm run build
+# CMD ["npm", "run", "dev"]
+# # Copy rest of the application files
+# COPY . .
+
+# # Build the app (if needed)
+
+
+# # Start the application
+# CMD ["npm", "run", "dev"]
