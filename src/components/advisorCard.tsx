@@ -8,8 +8,10 @@ export default function AdvisorCard() {
     return (
         <Card className="py-4 w-fit h-fit p-0" radius="sm">
             <CardHeader className="flex w-72 p-0">
-                <div className="flex flex-col items-start gap-2 p-6 text-accent bg-background w-full">
-                    <h4 className="font-bold text-large uppercase text-primary text-end w-full">USDJPY - M1</h4>
+                <div className="flex flex-col items-start gap-3 p-6 text-accent bg-background w-full">
+                    <div className="w-full py-3 px-5 bg-primary rounded-2xl">
+                        <p className="font-bold text-large uppercase text-background text-end w-full">USDJPY - M1</p>
+                    </div>
                     <p className="text-tiny uppercase font-semibold ">ID : XI22647 </p>
                     <p className="text-tiny uppercase font-normal ">Start Date : 25/6/64 </p>
                     <p className="text-tiny uppercase font-normal ">Billing Date : 30/6/64 </p>

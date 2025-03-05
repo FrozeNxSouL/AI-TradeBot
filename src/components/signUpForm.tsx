@@ -122,8 +122,8 @@ export default function SignUpForm({ onClose }: { onClose: () => void }) {
 
     return (
         <>
-            <ModalBody>
-                <form onSubmit={signUpUser}>
+            <form onSubmit={signUpUser}>
+                <ModalBody>
                     {/* <Button isLoading={loading} spinner={
                     <Spinner color="white" size="sm" />
                     } type="submit" color='primary' variant='shadow' className="uppercase w-full" radius="full" >sign in</Button>
@@ -173,23 +173,24 @@ export default function SignUpForm({ onClose }: { onClose: () => void }) {
                         variant="bordered"
                     />
                     {validation.result.isError && <span className="auth-error">{validation.result.errorMsg}</span>}
-                </form>
-                <Button onPress={() => signIn("google", { callbackUrl: "/" })} className="bg-white text-black w-full border-background border-2"><IconGoogle />Sign in with Google</Button>
-                {/* <div className="flex py-2 px-1 justify-between">
+
+                    <Button onPress={() => signIn("google", { callbackUrl: "/" })} className="bg-white text-black w-full border-background border-2"><IconGoogle />Sign in with Google</Button>
+                    {/* <div className="flex py-2 px-1 justify-between">
                         <Link color="secondary" href="#" size="sm">
                             Forgot password?
                         </Link>
                     </div> */}
-            </ModalBody >
-            <ModalFooter>
-                {/* <Button color="danger" variant="flat" onPress={onClose}>
+                </ModalBody >
+                <ModalFooter>
+                    {/* <Button color="danger" variant="flat" onPress={onClose}>
                     Close
                 </Button> */}
-                <Button isLoading={loading} type="submit" color='secondary' variant='shadow' className="w-full font-semibold text-black">Sign in</Button>
-                {/* <Button color="secondary" onPress={onClose} className="w-full font-semibold text-black">
+                    <Button isLoading={loading} type="submit" color='secondary' variant='shadow' className="w-full font-semibold text-black">Sign in</Button>
+                    {/* <Button color="secondary" onPress={onClose} className="w-full font-semibold text-black">
                         Enter
                     </Button> */}
-            </ModalFooter>
+                </ModalFooter>
+            </form>
         </>
     );
 }

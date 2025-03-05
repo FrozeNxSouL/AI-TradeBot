@@ -70,10 +70,10 @@ export default function MainNavbar() {
                             <DropdownItem
                                 key="edit"
                                 showDivider
-                                description="Payment Orders List"
+                                description="Documentation for Trading System"
                                 className="text-background"
                             >
-                                Billing
+                                Documentation
                             </DropdownItem>
                             <DropdownItem
                                 key="delete"

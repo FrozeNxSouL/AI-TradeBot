@@ -7,7 +7,7 @@ export default function BillCard() {
             <div className="flex flex-col items-center justify-center py-2 w-1/12 bg-background text-foreground rounded-l-lg">
                 <p>status</p>
             </div>
-            <div className="flex flex-col justify-evenly py-2 px-10 w-3/12 text-background border-2 border-background">
+            <div className="flex flex-col justify-evenly py-2 px-10 w-3/12 text-background border-2 border-background text-xs">
                 <p>Date</p>
                 <p>currency timeframe</p>
                 <p>collection Date</p>

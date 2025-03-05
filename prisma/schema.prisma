@@ -14,23 +14,23 @@ datasource db {
 }
 
 model User {
-  user_id           String    @id @default(cuid())
-  user_email        String?   @unique
-  user_password     String?
-  user_role         String    @default("user")
-  user_card         String?
-  user_status       Int?      @default(0)
-  user_account      Account[]
-  provider          String    @default("credentials")
-  Usage             Usage[]
+  user_id       String    @id @default(cuid())
+  user_email    String?   @unique
+  user_password String?
+  user_role     String    @default("user")
+  user_card     String?
+  user_status   Int?      @default(0)
+  user_account  Account[]
+  provider      String    @default("credentials")
 }
 
 model Account {
-  acc_id      Int    @id @default(autoincrement())
+  acc_id      Int     @id @default(autoincrement())
   acc_name    String
-  acc_client  Int    @default(0)
-  acc_user    User   @relation(fields: [acc_user_id], references: [user_id], onDelete: Cascade)
+  acc_client  Int     @default(0)
+  acc_user    User    @relation(fields: [acc_user_id], references: [user_id], onDelete: Cascade)
   acc_user_id String
+  acc_usage   Usage[]
 }
 
 model Model {
@@ -62,13 +62,12 @@ model Usage {
   usage_status          Int        @default(0)
   usage_log             TradeLog[]
   usage_bill            Billing[]
-  usage_user            User       @relation(fields: [usage_user_id], references: [user_id], onDelete: Cascade)
-  usage_user_id         String
+  usage_account         Account    @relation(fields: [usage_account_id], references: [acc_id], onDelete: Cascade)
+  usage_account_id      Int
 }
 
 model TradeLog {
   log_id         Int      @id @default(autoincrement())
-  log_magic      String[]
   log_trades     String[]
   log_start_date DateTime
   log_balance    Float
