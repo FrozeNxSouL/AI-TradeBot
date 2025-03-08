@@ -32,7 +32,7 @@ export default function DashboardCard() {
             <div className="w-96 h-64 bg-red-400">
                 <p>Graph Here!</p>
             </div>
-            <CardFooter className="justify-between before:bg-white/10 border-white/20 border-1 p-0 overflow-hidden absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_8px)] shadow-small z-10">
+            <CardFooter className="justify-between before:bg-white/10 border-white/20 border-1 p-0 overflow-hidden absolute before:rounded-xl rounded-large bottom-1 left-1 w-[calc(100%_-_8px)] shadow-small z-10">
                 <div className="flex-col items-start p-4 text-background w-3/5">
                     <h4 className="font-bold text-large ">USDJPY - M1</h4>
                     <p className="text-tiny uppercase font-bold ">balance</p>

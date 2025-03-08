@@ -13,23 +13,15 @@ export async function POST(request: NextRequest) {
     try {
         const exist = await prisma.usage.findFirst({
             include: {
-                usage_user: {
-                    include: {
-                        user_account: true
-                    }
-                },
+                usage_account: true,
                 usage_log: true
             },
             where: {
-                usage_user: {
-                    user_account: {
-                        some: {
-                            AND: [
-                                { acc_name: account },
-                                { acc_client: provider }
-                            ]
-                        }
-                    }
+                usage_account: {
+                    AND: [
+                        { acc_name: account },
+                        { acc_client: provider }
+                    ]
                 },
                 usage_currency: currency,
                 usage_timeframe: timeframe,
@@ -60,14 +52,14 @@ export async function POST(request: NextRequest) {
             //         }
             //     });
 
-                const updated = await prisma.usage.update({
-                    where: {
-                        usage_id: exist.usage_id
-                    },
-                    data: {
-                        usage_status: UsageStatus.Active
-                    }
-                });
+            const updated = await prisma.usage.update({
+                where: {
+                    usage_id: exist.usage_id
+                },
+                data: {
+                    usage_status: UsageStatus.Active
+                }
+            });
             // }
         } else {
             throw Error

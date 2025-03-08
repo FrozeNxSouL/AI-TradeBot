@@ -5,30 +5,22 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
     const body = await request.json();
-    const { email, password, repass, name } = body.data;
-    if (!email || !password || !repass || !name) {
+    const { email, password } = body.data;
+    if (!email || !password) {
         return NextResponse.json({ error: 'Please fill out all required fields' })
     }
-
-    if (password !== repass) {
-        return NextResponse.json({ error: 'Passwords do not match' })
-    }
-
-    const exist = await prisma.user.findUnique({
-        where: {
-            user_email: email
-        }
-    });
-    if (exist) {
-        return NextResponse.json({ error: 'This email is already registered' })
-    }
-
     const hashedPassword = await hashSync(password, 10);
-    const user = await prisma.user.create({
-        data: {
+    const exist = await prisma.user.findFirst({
+        where: {
             user_email: email,
             user_password: hashedPassword
         }
-    })
-    return NextResponse.json({ status: 200 });
+    });
+    if (exist) {
+        return NextResponse.json({ status: 200 });
+    }
+    else {
+
+    }
+    return NextResponse.json({ status: 400 });
 }

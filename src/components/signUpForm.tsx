@@ -63,7 +63,7 @@ export default function SignUpForm({ onClose }: { onClose: () => void }) {
             setLoading(false);
             return;
         }
-
+ 
         if (data.password !== data.repass) {
             setValidation((prevValidation) => ({
                 ...prevValidation,
@@ -75,7 +75,7 @@ export default function SignUpForm({ onClose }: { onClose: () => void }) {
             return;
         }
 
-        const response = await fetch('/api/signup', {
+        const response = await fetch('api/signup', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -149,6 +149,7 @@ export default function SignUpForm({ onClose }: { onClose: () => void }) {
                             <LockIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
                         }
                         label="Password"
+                        className="text-background"
                         placeholder="Enter your password"
                         isRequired
                         isInvalid={validation.password.isError}
@@ -163,6 +164,7 @@ export default function SignUpForm({ onClose }: { onClose: () => void }) {
                             <LockIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
                         }
                         isRequired
+                        className="text-background"
                         isInvalid={validation.password.isError}
                         errorMessage={validation.password.errorMsg}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setData({ ...data, repass: e.target.value })}
@@ -186,9 +188,6 @@ export default function SignUpForm({ onClose }: { onClose: () => void }) {
                     Close
                 </Button> */}
                     <Button isLoading={loading} type="submit" color='secondary' variant='shadow' className="w-full font-semibold text-black">Sign in</Button>
-                    {/* <Button color="secondary" onPress={onClose} className="w-full font-semibold text-black">
-                        Enter
-                    </Button> */}
                 </ModalFooter>
             </form>
         </>
