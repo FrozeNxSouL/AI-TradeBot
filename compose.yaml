@@ -8,7 +8,7 @@ services:
       - 3000:3000
     environment:
       NODE_ENV: development
-      # DATABASE_URL: "postgresql://postgres:1234567890@ai_website-db-1:5000/tradebotdb"
+      DATABASE_URL: "postgresql://postgres:1234567890@db:5432/tradebotdb"
     develop:
       watch:
         - action: sync
@@ -22,12 +22,16 @@ services:
   db:
     image: postgres:16.7-alpine
     environment: 
-      POSTGRES_USER: postgres
+      POSTGRES_USER: forex
       POSTGRES_PASSWORD: 1234567890
       POSTGRES_DB: tradebotdb
     ports:
-      - "5000:5432" 
-    command: ["postgres"] 
+      - "5200:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  postgres-data:
     # user: postgres
     # secrets:
     #   - db-password

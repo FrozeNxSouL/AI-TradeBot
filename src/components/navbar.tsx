@@ -17,8 +17,10 @@ import { Button } from "@heroui/button"
 import { Tabs, Tab } from "@heroui/tabs";
 import LoginForm from "./loginForm";
 import SignUpForm from "./signUpForm";
+import { useSession } from "next-auth/react";
 
 export default function MainNavbar() {
+    const { data: session, status } = useSession();
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     return (
         <Navbar className="flex bg-background opacity-95 border-b-primary border-b-2" maxWidth="full">
@@ -47,82 +49,86 @@ export default function MainNavbar() {
                 </NavbarItem>
             </NavbarContent>
             <NavbarContent justify="end">
-                <NavbarItem className="hidden lg:flex">
-                    <Dropdown placement="bottom-end">
-                        <DropdownTrigger>
-                            <Button variant="bordered">User</Button>
-                        </DropdownTrigger>
-                        <DropdownMenu aria-label="Dropdown menu with description" variant="shadow">
-                            <DropdownItem
-                                key="new"
-                                description="Profile and Description"
-                                className="text-background"
-                            >
-                                UserName
-                            </DropdownItem>
-                            <DropdownItem
-                                key="copy"
-                                description="Historical Trade Orders"
-                                className="text-background"
-                            >
-                                Trade History
-                            </DropdownItem>
-                            <DropdownItem
-                                key="edit"
-                                showDivider
-                                description="Documentation for Trading System"
-                                className="text-background"
-                            >
-                                Documentation
-                            </DropdownItem>
-                            <DropdownItem
-                                key="delete"
-                                className="text-danger"
-                                color="danger"
-                                description="Logout from current user"
+                {session ? (
+                    <NavbarItem className="hidden lg:flex">
+                        <Dropdown placement="bottom-end">
+                            <DropdownTrigger>
+                                <Button variant="bordered">{session.user.email}</Button>
+                            </DropdownTrigger>
+                            <DropdownMenu aria-label="Dropdown menu with description" variant="shadow">
+                                <DropdownItem
+                                    key="new"
+                                    description="Profile and Description"
+                                    className="text-background"
+                                >
+                                    Account
+                                </DropdownItem>
+                                <DropdownItem
+                                    key="copy"
+                                    description="Historical Trade Orders"
+                                    className="text-background"
+                                >
+                                    Trade History
+                                </DropdownItem>
+                                <DropdownItem
+                                    key="edit"
+                                    showDivider
+                                    description="Documentation for Trading System"
+                                    className="text-background"
+                                >
+                                    Documentation
+                                </DropdownItem>
+                                <DropdownItem
+                                    key="delete"
+                                    className="text-danger"
+                                    color="danger"
+                                    description="Logout from current user"
                                 // startContent={<DeleteDocumentIcon className={cn(iconClasses, "text-danger")} />}
-                            >
-                                Logout
-                            </DropdownItem>
-                        </DropdownMenu>
-                    </Dropdown>
-                </NavbarItem>
-                <NavbarItem>
-                    <Button as={Link} color="primary" href="#" variant="ghost" onPress={onOpen}>
-                        Sign In
-                    </Button>
+                                >
+                                    Logout
+                                </DropdownItem>
+                            </DropdownMenu>
+                        </Dropdown>
+                    </NavbarItem>
+                ) : (
+                    <NavbarItem>
+                        <Button as={Link} color="primary" href="#" variant="ghost" onPress={onOpen}>
+                            Sign In
+                        </Button>
 
-                    <Modal isOpen={isOpen} placement="top-center" onOpenChange={onOpenChange} hideCloseButton>
-                        <ModalContent>
-                            {(onClose) => (
-                                <>
-                                    {/* <ModalHeader className="flex flex-col gap-1"> */}
-                                    <Tabs
-                                        aria-label="Dynamic tabs"
-                                        fullWidth
-                                        size="lg"
-                                        variant="light"
-                                    >
-                                        {/* {(item) => ( */}
-                                        <Tab key={0} title={"Login"} className="text-lg font-bold">
-                                            <LoginForm onClose={onClose} />
-                                        </Tab>
+                        <Modal isOpen={isOpen} placement="top-center" onOpenChange={onOpenChange} hideCloseButton>
+                            <ModalContent>
+                                {(onClose) => (
+                                    <>
+                                        {/* <ModalHeader className="flex flex-col gap-1"> */}
+                                        <Tabs
+                                            aria-label="Dynamic tabs"
+                                            fullWidth
+                                            size="lg"
+                                            variant="light"
+                                        >
+                                            {/* {(item) => ( */}
+                                            <Tab key={0} title={"Login"} className="text-lg font-bold">
+                                                <LoginForm onClose={onClose} />
+                                            </Tab>
 
-                                        <Tab key={1} title={"Register"} className="text-lg font-bold">
-                                            <SignUpForm onClose={onClose} />
-                                        </Tab>
-                                        {/* )} */}
-                                    </Tabs>
-                                    {/* Log in
+                                            <Tab key={1} title={"Register"} className="text-lg font-bold">
+                                                <SignUpForm onClose={onClose} />
+                                            </Tab>
+                                            {/* )} */}
+                                        </Tabs>
+                                        {/* Log in
 
-                                    </ModalHeader> */}
+                                </ModalHeader> */}
 
-                                </>
-                            )}
-                        </ModalContent>
-                    </Modal>
-                </NavbarItem>
-            </NavbarContent>
-        </Navbar>
+                                    </>
+                                )}
+                            </ModalContent>
+                        </Modal>
+                    </NavbarItem>
+                )
+                }
+            </NavbarContent >
+        </Navbar >
     );
 }

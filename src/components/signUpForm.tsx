@@ -75,7 +75,7 @@ export default function SignUpForm({ onClose }: { onClose: () => void }) {
             return;
         }
 
-        const response = await fetch('api/signup', {
+        const response = await fetch('/api/signup', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
