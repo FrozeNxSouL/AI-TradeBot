@@ -21,7 +21,7 @@ export default async function AccountProfile() {
     }
     userData.user_password = null;
     return (
-        <div className="space-y-5">
+        <div className="flex flex-col px-10 py-12 items-center w-full space-y-5">
             <AccountProfileCard userData={userData} />
         </div>
     )

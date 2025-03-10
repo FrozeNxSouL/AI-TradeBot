@@ -107,11 +107,12 @@ export default function AccountForm() {
         }
         setValidation(newValidation)
     }
+
     return (
         <div className="flex flex-col px-10 py-7 w-full">
             <div className="flex flex-col w-fit">
-                <p className="font-bold text-3xl text-background uppercase pr-20">Trading Account</p>
-                <Divider className="my-4 bg-background h-0.5" />
+                <p className="font-bold text-3xl text-foreground uppercase pr-20">Trading Account</p>
+                <Divider className="my-4 bg-foreground h-0.5" />
             </div>
             <div className="flex w-full items-center gap-5">
                 <form onSubmit={accountCreate} className="flex flex-col w-full gap-5 p-5">
@@ -128,17 +129,14 @@ export default function AccountForm() {
                             {/* {animals.map((animal) => (
                                 <SelectItem key={animal.key}>{animal.label}</SelectItem>
                             ))} */}
-                            <SelectItem className="text-background px-5">{"MetaTrader"}</SelectItem>
-                            <SelectItem className="text-background px-5">{"Binance"}</SelectItem>
+                            <SelectItem className="text-foreground px-5">{"MetaTrader"}</SelectItem>
+                            <SelectItem className="text-foreground px-5">{"Binance"}</SelectItem>
                         </Select>
                     </div>
                     <Input
-                        // endContent={
-                        //     <LockIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
-                        // }
                         label="User"
                         placeholder="Enter your username"
-                        className="pl-16 w-5/12 text-background"
+                        className="pl-16 w-5/12 text-foreground"
                         isRequired
                         isInvalid={validation.password.isError}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setData({ ...data, password: e.target.value })}
@@ -147,7 +145,7 @@ export default function AccountForm() {
                         variant="bordered"
                     />
                     {validation.result.isError && <span className="auth-error">{validation.result.errorMsg}</span>}
-                    <Button isLoading={loading} type="submit" color='primary' size="lg" variant='ghost' className="w-full font-semibold text-background text-md mt-10">Create</Button>
+                    <Button isLoading={loading} type="submit" color='primary' size="lg" variant='ghost' className="w-full font-semibold text-foreground text-md mt-10">Create</Button>
                 </form>
             </div>
         </div>

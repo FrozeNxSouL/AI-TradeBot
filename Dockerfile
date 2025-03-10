@@ -63,11 +63,22 @@
 # ENTRYPOINT [ "/bin/hello.sh" ]
 
 
-FROM node:18-alpine
-WORKDIR /app
-# COPY package.json package-lock.json ./
-COPY . .
+FROM node:18-alpine AS dependencies
+
+WORKDIR /dependencies
+
+COPY package.json package-lock.json ./
+
 RUN npm install
+
+
+FROM node:18-alpine AS app
+
+WORKDIR /app
+
+COPY --from=dependencies /dependencies/node_modules .
+COPY . .
+
 # RUN npx prisma db push
 RUN npx prisma generate
 

@@ -19,16 +19,16 @@ export default function AccountProfileCard({ userData }: { userData: User }) {
         {
             email: {
                 regex: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-                errorMsg: "กรุณากรอก email ให้ถูกต้อง",
+                errorMsg: "Enter your email Correctly",
                 isError: false
             },
             credit: {
                 regex: /^[0-9]{13}$/,
-                errorMsg: "กรุณากรอกบัตรประชาชน 13 หลัก",
+                errorMsg: "Enter your Credit Card Number Correctly",
                 isError: false
             },
             result: {
-                errorMsg: "email หรือรหัสผ่านไม่ถูกต้อง",
+                errorMsg: "Some Value is Incorrect",
                 isError: false
             }
         }
@@ -109,11 +109,11 @@ export default function AccountProfileCard({ userData }: { userData: User }) {
             if (!changePasswordValidation()) {
                 setLoading(false);
                 return;
-            } else {
+            } else if (isSelected) {
                 group_password = password
             }
         }
-        
+
         // Check for empty required fields (both null and empty string)
         if (!data.user_email || !data.user_card) {
             setValidation((prevValidation) => ({
@@ -201,21 +201,24 @@ export default function AccountProfileCard({ userData }: { userData: User }) {
     }
 
     return (
-        <Card>
+        <Card className="w-2/5 p-5">
             <CardHeader>
-                <h2 className="font-bold uppercase">Account</h2>
+                <h2 className="font-bold uppercase text-2xl">Account</h2>
             </CardHeader>
-            <CardBody className="space-y-2">
-                <Input isRequired label="Email" isInvalid={validation.email.isError} errorMessage={validation.email.errorMsg} onChange={handleEmailChange} value={data.user_email ?? ""} />
-                <Input maxLength={16} label="Credit Card" isInvalid={validation.credit.isError} errorMessage={validation.credit.errorMsg} onChange={handleIdCardChange} value={data.user_card ?? ""} required />
+            <CardBody className="gap-3 space-y-3">
+                <Input variant="underlined" isRequired label="Email" isInvalid={validation.email.isError} errorMessage={validation.email.errorMsg} onChange={handleEmailChange} value={data.user_email ?? ""} />
+                <Input variant="underlined" maxLength={16} label="Credit Card" isInvalid={validation.credit.isError} errorMessage={validation.credit.errorMsg} onChange={handleIdCardChange} value={data.user_card ?? ""} required />
                 {userData.provider == "credentials" && (
                     <>
-                        <Switch isSelected={isSelected} onValueChange={setIsSelected}></Switch>
-                        <p className="text-small text-default-500">Change Password : {isSelected ? "On" : "Off"}</p>
+                        <div className="flex gap-3 items-center">
+                            <Switch isSelected={isSelected} onValueChange={setIsSelected}></Switch>
+                            <p className="text-small text-default-500">Change Password : {isSelected ? "On" : "Off"}</p>
+                        </div>
                         {isSelected && (
                             <>
                                 <Input
                                     isRequired
+                                    variant="underlined"
                                     label="Current password"
                                     type="password"
                                     // value={data.user_password ?? ""}
@@ -227,6 +230,7 @@ export default function AccountProfileCard({ userData }: { userData: User }) {
                                 />
                                 <Input
                                     isRequired
+                                    variant="underlined"
                                     label="New password"
                                     type="password"
                                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -237,6 +241,7 @@ export default function AccountProfileCard({ userData }: { userData: User }) {
                                 />
                                 <Input
                                     isRequired
+                                    variant="underlined"
                                     label="Re-new password"
                                     type="password"
                                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {

@@ -13,17 +13,19 @@ import { Input } from "@heroui/input"
 import { LockIcon, MailIcon } from "./icon";
 import { Link } from "@heroui/link";
 import { Button } from "@heroui/button"
-// import {Tabs, Tab, Card, CardBody} from "@heroui/react";
+
 import { Tabs, Tab } from "@heroui/tabs";
 import LoginForm from "./loginForm";
 import SignUpForm from "./signUpForm";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function MainNavbar() {
+    const router = useRouter()
     const { data: session, status } = useSession();
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     return (
-        <Navbar className="flex bg-background opacity-95 border-b-primary border-b-2" maxWidth="full">
+        <Navbar className="flex bg-foreground opacity-95 border-b-primary border-b-2" maxWidth="full">
             <NavbarBrand>
                 <Link href="/">
                     <p className="font-bold text-xl uppercase text-primary">money</p>
@@ -33,17 +35,17 @@ export default function MainNavbar() {
             </NavbarBrand>
             <NavbarContent className="hidden sm:flex gap-7" justify="center">
                 <NavbarItem className="hover:text-primary">
-                    <Link color="foreground" className="hover:text-primary" href="/dashboard">
+                    <Link className="text-background hover:text-primary" href="/dashboard">
                         Dashboard
                     </Link>
                 </NavbarItem>
                 <NavbarItem className="hover:text-primary">
-                    <Link color="foreground" className="hover:text-primary" href="/advisor">
+                    <Link className="text-background hover:text-primary" href="/advisor">
                         Advisor
                     </Link>
                 </NavbarItem>
                 <NavbarItem className="hover:text-primary">
-                    <Link color="foreground" className="hover:text-primary" href="/billing">
+                    <Link className="text-background hover:text-primary" href="/billing">
                         Billing
                     </Link>
                 </NavbarItem>
@@ -53,30 +55,36 @@ export default function MainNavbar() {
                     <NavbarItem className="hidden lg:flex">
                         <Dropdown placement="bottom-end">
                             <DropdownTrigger>
-                                <Button variant="bordered">{session.user.email}</Button>
+                                <Button className="text-background" variant="bordered">{session.user.email}</Button>
                             </DropdownTrigger>
-                            <DropdownMenu aria-label="Dropdown menu with description" variant="shadow">
+                            <DropdownMenu aria-label="Dropdown menu with description" variant="shadow" onAction={(key) => router.push(`/${key}`)}>
                                 <DropdownItem
-                                    key="new"
+                                    key="account"
                                     description="Profile and Description"
-                                    className="text-background"
+                                    className="text-foreground"
                                 >
+                                    {/* <Link color="foreground" href="/account"> */}
                                     Account
+                                    {/* </Link> */}
                                 </DropdownItem>
                                 <DropdownItem
                                     key="copy"
                                     description="Historical Trade Orders"
-                                    className="text-background"
+                                    className="text-foreground"
                                 >
+                                    {/* <Link color="foreground" href="/account"> */}
                                     Trade History
+                                    {/* </Link> */}
                                 </DropdownItem>
                                 <DropdownItem
-                                    key="edit"
+                                    key="documentation"
                                     showDivider
                                     description="Documentation for Trading System"
-                                    className="text-background"
+                                    className="text-foreground"
                                 >
+                                    {/* <Link color="foreground" href="/documentation"> */}
                                     Documentation
+                                    {/* </Link> */}
                                 </DropdownItem>
                                 <DropdownItem
                                     key="delete"
@@ -126,8 +134,8 @@ export default function MainNavbar() {
                             </ModalContent>
                         </Modal>
                     </NavbarItem>
-                )
-                }
+                )}
+
             </NavbarContent >
         </Navbar >
     );

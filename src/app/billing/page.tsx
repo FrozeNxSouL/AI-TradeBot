@@ -12,8 +12,8 @@ export default function Billing() {
         <>
             <div className="px-10 py-7 w-full">
                 <div className="flex flex-col w-fit">
-                    <p className="font-bold text-3xl text-background uppercase pr-20">Billing</p>
-                    <Divider className="my-4 bg-background h-0.5" />
+                    <p className="font-bold text-3xl text-foreground uppercase pr-20">Billing</p>
+                    <Divider className="my-4 bg-foreground h-0.5" />
                 </div>
                 <IncomingBills />
                 <LateBills />

@@ -109,11 +109,41 @@ export default function CreateAdvisor() {
         }
         setValidation(newValidation)
     }
+
+    const broker = [
+        {
+            id: 1,
+            name: "85245896",
+            provider: "MetaTrader"
+        },
+        {
+            id: 2,
+            name: "25458964",
+            provider: "MetaTrader"
+        },
+    ];
+
+    const models = [
+        {
+            id: 1,
+            model_type: "USDCAD - M1",
+            model_id: "X85436",
+            model_date: "02/02/22",
+            version: "10"
+        },
+        {
+            id: 2,
+            model_type: "USDJPY - M1",
+            model_id: "X85432",
+            model_date: "02/03/22",
+            version: "12"
+        },
+    ];
     return (
         <div className="flex flex-col px-10 py-7 w-full">
             <div className="flex flex-col w-fit">
-                <p className="font-bold text-3xl text-background uppercase pr-20">Advisors Creation</p>
-                <Divider className="my-4 bg-background h-0.5" />
+                <p className="font-bold text-3xl text-foreground uppercase pr-20">Advisors Creation</p>
+                <Divider className="my-4 bg-foreground h-0.5" />
             </div>
             <div className="flex w-full justify-end items-center gap-5">
                 <form onSubmit={advisorCreate} className="flex flex-col w-full gap-5 p-5">
@@ -135,9 +165,9 @@ export default function CreateAdvisor() {
                                 {/* {animals.map((animal) => (
                                 <SelectItem key={animal.key}>{animal.label}</SelectItem>
                             ))} */}
-                                <SelectItem className="text-background px-5">{"USDJPY"}</SelectItem>
-                                <SelectItem className="text-background px-5">{"USDCAD"}</SelectItem>
-                                <SelectItem className="text-background px-5">{"EURUSD"}</SelectItem>
+                                <SelectItem className="text-foreground px-5">{"USDJPY"}</SelectItem>
+                                <SelectItem className="text-foreground px-5">{"USDCAD"}</SelectItem>
+                                <SelectItem className="text-foreground px-5">{"EURUSD"}</SelectItem>
                             </Select>
                         </div>
 
@@ -154,9 +184,9 @@ export default function CreateAdvisor() {
                                 {/* {animals.map((animal) => (
                                 <SelectItem key={animal.key}>{animal.label}</SelectItem>
                             ))} */}
-                                <SelectItem className="text-background px-5">{"M1"}</SelectItem>
-                                <SelectItem className="text-background px-5">{"H1"}</SelectItem>
-                                <SelectItem className="text-background px-5">{"D1"}</SelectItem>
+                                <SelectItem className="text-foreground px-5">{"M1"}</SelectItem>
+                                <SelectItem className="text-foreground px-5">{"H1"}</SelectItem>
+                                <SelectItem className="text-foreground px-5">{"D1"}</SelectItem>
                             </Select>
                         </div>
 
@@ -171,30 +201,32 @@ export default function CreateAdvisor() {
                             label="ACCOUNT"
                             variant="underlined"
                             placeholder="Select Trading Account for Advisor"
+                            items={broker}
+                            renderValue={(items: any) => {
+                                return items.map((item: any) => (
+                                    <div key={item.key} className="flex gap-2 items-center w-full">
+                                        <div className="flex items-center w-full gap-2 py-2 px-4">
+                                            <Chip color="primary" className="text-small text-background bg-foreground border-background" variant="dot">
+                                                {item.data.provider}
+                                            </Chip>
+                                            <span className="text-tiny text-default-600 pl-5">{item.data.name}</span>
+                                        </div>
+                                    </div>
+                                ));
+                            }}
                         >
-                            {/* {animals.map((animal) => (
-                                <SelectItem key={animal.key}>{animal.label}</SelectItem>
-                            ))} */}
-                            <SelectItem>
-                                <div className="flex gap-2 items-center w-full">
-                                    <div className="flex flex-col w-full gap-2 py-2 px-4">
-                                        <Chip color="primary" className="text-small text-background border-background" variant="dot">
-                                            {"MetaTrader"}
-                                        </Chip>
-                                        <span className="text-tiny text-default-500 pl-5">{"User 54831457"}</span>
+                            {(broker: any) => (
+                                <SelectItem key={broker.id} textValue={broker.id}>
+                                    <div className="flex gap-2 items-center w-full">
+                                        <div className="flex flex-col w-full gap-2 py-2 px-4">
+                                            <Chip color="primary" className="text-small text-foreground bg-foreground border-background" variant="dot">
+                                                {broker.provider}
+                                            </Chip>
+                                            <span className="text-tiny text-default-600 pl-5">{broker.name}</span>
+                                        </div>
                                     </div>
-                                </div>
-                            </SelectItem>
-                            <SelectItem>
-                                <div className="flex gap-2 items-center w-full">
-                                    <div className="flex flex-col w-full gap-2 py-2 px-4">
-                                        <Chip color="primary" className="text-small text-background border-background" variant="dot">
-                                            {"MetaTrader"}
-                                        </Chip>
-                                        <span className="text-tiny text-default-500 pl-5">{"User 89647543"}</span>
-                                    </div>
-                                </div>
-                            </SelectItem>
+                                </SelectItem>
+                            )}
                         </Select>
                     </div>
 
@@ -207,38 +239,41 @@ export default function CreateAdvisor() {
                             label="Model"
                             variant="underlined"
                             placeholder="Select a Available Model"
+                            items={models}
+                            renderValue={(items: any) => {
+                                return items.map((item: any) => (
+                                    <div key={item.key} >
+                                        <div className="flex gap-2 items-center w-full text-foreground">
+                                            <div className="flex flex-col bg-foreground rounded-md w-full py-2 px-4">
+                                                <span className="text-small text-primary">{item.data.model_type}</span>
+                                                <span className="text-tiny text-default-400">Version {item.data.version}</span>
+                                            </div>
+                                            <div className="flex flex-col w-full py-2 px-4">
+                                                <span className="text-small">Create Date {item.data.model_date}</span>
+                                                <span className="text-tiny text-default-400">Model ID {item.data.model_id}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ));
+                            }}
                         >
-                            {/* {animals.map((animal) => (
-                                <SelectItem key={animal.key}>{animal.label}</SelectItem>
-                            ))} */}
-
-                            <SelectItem className="text-background">
-                                <div className="flex gap-2 items-center w-full">
-                                    <div className="flex flex-col bg-background rounded-md w-full py-2 px-4">
-                                        <span className="text-small text-primary">{"USDJPY - M1"}</span>
-                                        <span className="text-tiny text-default-400">{"Version 54"}</span>
+                            {(model: any) => (
+                                <SelectItem key={model.id} textValue={model.id} className="text-foreground">
+                                    <div className="flex gap-2 items-center w-full">
+                                        <div className="flex flex-col bg-foreground rounded-md w-full py-2 px-4">
+                                            <span className="text-small text-primary">{model.model_type}</span>
+                                            <span className="text-tiny text-default-400">Version {model.version}</span>
+                                        </div>
+                                        <div className="flex flex-col w-full py-2 px-4">
+                                            <span className="text-small">Create Date {model.model_date}</span>
+                                            <span className="text-tiny text-default-400">Model ID {model.model_id}</span>
+                                        </div>
                                     </div>
-                                    <div className="flex flex-col w-full py-2 px-4">
-                                        <span className="text-small">{"Deploy Date 02/02/23"}</span>
-                                        <span className="text-tiny text-default-400">{"ID 0x8567"}</span>
-                                    </div>
-                                </div>
-                            </SelectItem>
-                            <SelectItem className="text-background">
-                                <div className="flex gap-2 items-center w-full">
-                                    <div className="flex flex-col bg-background rounded-md w-full py-2 px-4">
-                                        <span className="text-small text-primary">{"USDJPY - M1"}</span>
-                                        <span className="text-tiny text-default-400">{"Version 52"}</span>
-                                    </div>
-                                    <div className="flex flex-col w-full py-2 px-4">
-                                        <span className="text-small">{"Deploy Date 01/02/23"}</span>
-                                        <span className="text-tiny text-default-400">{"ID 0x8565"}</span>
-                                    </div>
-                                </div>
-                            </SelectItem>
+                                </SelectItem>
+                            )}
                         </Select>
                     </div>
-                    <Button isLoading={loading} type="submit" color='primary' size="lg" variant='ghost' className="w-full font-semibold text-background text-md">Create</Button>
+                    <Button isLoading={loading} type="submit" color='primary' size="lg" variant='ghost' className="w-full font-semibold text-foreground text-md">Create</Button>
                 </form>
             </div>
 

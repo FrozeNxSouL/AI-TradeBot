@@ -21,6 +21,7 @@
     "@heroui/listbox": "^2.3.14",
     "@heroui/modal": "^2.2.11",
     "@heroui/navbar": "^2.2.12",
+    "@heroui/pagination": "^2.2.14",
     "@heroui/select": "^2.4.15",
     "@heroui/switch": "^2.2.12",
     "@heroui/system": "^2.4.10",
@@ -34,8 +35,10 @@
     "framer-motion": "^12.4.7",
     "next": "15.1.7",
     "next-auth": "^4.24.11",
+    "next-themes": "^0.4.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "recharts": "^2.15.1",
     "swiper": "^11.2.5"
   },
   "devDependencies": {

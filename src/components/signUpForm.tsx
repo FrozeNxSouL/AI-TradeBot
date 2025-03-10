@@ -149,7 +149,7 @@ export default function SignUpForm({ onClose }: { onClose: () => void }) {
                             <LockIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
                         }
                         label="Password"
-                        className="text-background"
+                        className="text-foreground"
                         placeholder="Enter your password"
                         isRequired
                         isInvalid={validation.password.isError}
@@ -164,7 +164,7 @@ export default function SignUpForm({ onClose }: { onClose: () => void }) {
                             <LockIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
                         }
                         isRequired
-                        className="text-background"
+                        className="text-foreground"
                         isInvalid={validation.password.isError}
                         errorMessage={validation.password.errorMsg}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setData({ ...data, repass: e.target.value })}

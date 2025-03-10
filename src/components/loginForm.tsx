@@ -128,7 +128,7 @@ export default function LoginForm({ onClose }: { onClose: () => void }) {
                             <LockIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
                         }
                         label="Password"
-                        className="text-background"
+                        className="text-foreground"
                         placeholder="Enter your password"
                         isRequired
                         isInvalid={validation.password.isError}
@@ -137,11 +137,11 @@ export default function LoginForm({ onClose }: { onClose: () => void }) {
                         type="password"
                         variant="bordered"
                     />
-                    <div className="flex py-2 px-1 justify-between">
+                    {/* <div className="flex py-2 px-1 justify-between">
                         <Link color="primary" href="#" size="sm">
                             Forgot password?
                         </Link>
-                    </div>
+                    </div> */}
                 </ModalBody>
                 <ModalFooter>
                     {/* <Button color="danger" variant="flat" onPress={onClose}>
