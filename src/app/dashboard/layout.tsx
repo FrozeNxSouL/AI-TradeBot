@@ -18,8 +18,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <Link className="text-background hover:text-primary" href="/dashboard/insight">
           Insight Analytics
           </Link>
-          <Link className="text-background hover:text-primary" href="/dashboard/tradelog">
-          Trade Log
+          <Link className="text-background hover:text-primary" href="/dashboard/trade_archive">
+          Trade Archive
           </Link>
         </div>
       </div>

@@ -1,29 +1,8 @@
 "use client"
 import { Button } from "@heroui/button";
 import { Card, CardHeader, CardBody, CardFooter } from "@heroui/card";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-// export default function DashboardCard() {
-//     return (
-//         <Card className="py-4 w-fit h-fit p-0" radius="sm">
-//             <CardBody className=" py-2 w-96 h-64 bg-slate-500">
+import ReactECharts from 'echarts-for-react';
 
-//             </CardBody>
-//             <CardHeader className="flex w-full p-0">
-//                 <div className="flex-col items-start p-4 text-foreground w-3/5">
-//                     <h4 className="font-bold text-large ">USDJPY - M1</h4>
-//                     <p className="text-tiny uppercase font-bold ">Daily Mix</p>
-//                     <small className="text-md">12 Tracks</small>
-//                 </div>
-//                 <div className="flex-col items-start p-4 text-accent bg-foreground w-2/5">
-//                     <p className="text-tiny uppercase font-bold ">Profit</p>
-//                     <small className="text-md">12 $</small>
-//                     <h4 className="font-bold text-large">Option</h4>
-//                 </div>
-//             </CardHeader>
-
-//         </Card>
-//     );
-// }
 const data = [
     { time: '09:00', price: 151.25 },
     { time: '09:05', price: 151.30 },
@@ -38,50 +17,92 @@ const data = [
     { time: '09:50', price: 152.10 },
     { time: '09:55', price: 152.05 },
     { time: '10:00', price: 152.15 },
-  ];
+];
+
+const times = data.map(item => item.time);
+const prices = data.map(item => item.price);
 
 export default function DashboardCard() {
     return (
         <Card isFooterBlurred className="border-none" radius="lg">
-            <div className="w-[475px] h-80 bg-foreground pb-24">
-                <ResponsiveContainer width="100%" height="100%">
-                    <LineChart
-                        data={data}
-                        margin={{ top: 10, right: 10, left: 0, bottom: 0 }}
-                    >
-                        {/* <CartesianGrid strokeDasharray="3 3" /> */}
-                        {/* <XAxis
-                            dataKey="time"
-                            tick={{ fontSize: 10 }}
-                            padding={{ left: 10, right: 10 }}
-                        /> */}
-                        <YAxis
-                            domain={['dataMin - 0.2', 'dataMax + 0.2']}
-                            tick={{ fontSize: 8 }}
-                            width={35}
-                        />
-                        {/* <Tooltip/> */}
-                        <Line
-                            type="monotone"
-                            dataKey="price"
-                            stroke="#26DE29"
-                            strokeWidth={2}
-                            dot={false}
-                            activeDot={{ r: 6 }}
-                        />
-                    </LineChart>
-                </ResponsiveContainer>
+            <div className="w-[475px] h-80 bg-foreground pb-14">
+                <ReactECharts
+                    option={{
+                        tooltip: {
+                            trigger: 'axis',
+                            backgroundColor: 'rgba(50, 50, 50, 0.9)',
+                            borderColor: 'rgba(70, 70, 70, 0.9)',
+                            textStyle: {
+                                color: '#fff'
+                            },
+                            formatter: function (params: any) {
+                                return `
+                          <div style="font-size: 12px; padding: 4px;">
+                            <div style="font-weight: bold;">Time: ${params[0].name}</div>
+                            <div style="color: #26DE29;">Price: ${params[0].value.toFixed(2)}</div>
+                          </div>
+                        `;
+                            }
+                        },
+                        grid: {
+                            left: '3%',
+                            right: '3%',
+                            bottom: '5%',
+                            top: '5%',
+                            containLabel: true
+                        },
+                        xAxis: {
+                            type: 'category',
+                            data: times,
+                            axisLabel: {
+                                fontSize: 10
+                            }
+                        },
+                        yAxis: {
+                            type: 'value',
+                            scale: true,
+                            axisLabel: {
+                                fontSize: 10,
+                                formatter: '{value}'
+                            }
+                        },
+                        series: [
+                            {
+                                data: prices,
+                                type: 'line',
+                                smooth: true,
+                                lineStyle: {
+                                    width: 2,
+                                    color: '#26DE29'
+                                },
+                                symbol: 'none',
+                                itemStyle: {
+                                    color: '#2563eb'
+                                },
+                                emphasis: {
+                                    itemStyle: {
+                                        color: '#1d4ed8',
+                                        borderColor: '#1d4ed8',
+                                        borderWidth: 2
+                                    }
+                                }
+                            }
+                        ]
+                    }}
+                    style={{ height: '100%', width: '100%' }}
+                    opts={{ renderer: 'canvas' }}
+                />
             </div>
             <CardFooter className="justify-between before:bg-white/10 border-white/20 border-1 p-0 overflow-hidden absolute before:rounded-xl rounded-large bottom-1 left-1 w-[calc(100%_-_8px)] shadow-small z-10">
-                <div className="flex-col items-start p-4 text-foreground bg-primary w-3/5">
-                    <h4 className="font-bold text-large ">USDJPY - M1</h4>
+                <div className="flex-col items-start p-2 px-6 text-foreground bg-primary w-3/5">
+                    <h4 className="font-bold text-md ">USDJPY - M1</h4>
                     <p className="text-tiny uppercase font-bold ">balance</p>
-                    <small className="text-md">collection date</small>
+                    <small className="text-sm">collection date</small>
                 </div>
-                <div className="flex-col items-start p-4 text-accent bg-foreground w-2/5">
+                <div className="flex-col items-start p-2 px-6 text-accent bg-foreground w-2/5">
                     <p className="text-tiny uppercase font-bold ">Profit</p>
-                    <small className="text-md">12 $</small>
-                    <h4 className="font-bold text-large">Option</h4>
+                    <small className="text-sm">12 $</small>
+                    <h4 className="font-bold text-md">Percentage</h4>
                 </div>
             </CardFooter>
         </Card>

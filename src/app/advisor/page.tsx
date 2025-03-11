@@ -13,7 +13,7 @@ export default function Advisor() {
             <div className="flex w-full justify-end items-center gap-5">
 
                 <Button as={Link} color="primary" href="/advisor/advisor_create" className="text-4xl w-1/4 p-7 px-10">+
-                    <p className="font-semibold text-lg text-foreground capitalize">Create New Expert Advisor</p>
+                    <p className="font-semibold text-lg text-background capitalize">Create New Expert Advisor</p>
                 </Button>
             </div>
             <div className="flex w-full px-5 py-10 gap-5">

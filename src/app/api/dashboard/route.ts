@@ -9,19 +9,19 @@ export async function POST(request: NextRequest) {
         if (!id) {
             return NextResponse.json({ error: 'Please fill out all required fields' })
         }
-        const data = await prisma.billing.findMany({
+        const data = await prisma.tradeLog.findMany({
             include: {
-                bill_usage: {
+                log_usage: {
                     include: {
                         usage_account: {
                             include: {
-                                acc_user : true
+                                acc_user: true,
                             }
                         }
                     }
                 }
             }, where: {
-                bill_usage: {
+                log_usage: {
                     usage_account: {
                         acc_user: {
                             user_id: id
@@ -32,14 +32,16 @@ export async function POST(request: NextRequest) {
             // , orderBy: {
             //     bill_status: "asc"
             // }
+
+
         })
 
         if (data) {
             return NextResponse.json(data);
         }
-    } catch (error:any) {
+    } catch (error: any) {
         return NextResponse.json({
-            message: 'error in billing',
+            message: 'error in usage',
             error: error.message,
         }, { status: 500 });
     }

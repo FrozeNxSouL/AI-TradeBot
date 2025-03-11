@@ -3,7 +3,7 @@ import DashboardCard from "@/components/dashboardCard";
 import { Divider } from "@heroui/divider";
 import ChartDashboard from "./chart/page";
 import Insight from "./insight/page";
-import TradeArchive from "./tradelog/page";
+import TradeArchive from "./trade_archive/page";
 
 export default async function Dashboard() {
     return (
