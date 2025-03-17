@@ -45,8 +45,8 @@ export default function DashboardCard() {
                             }
                         },
                         grid: {
-                            left: '3%',
-                            right: '3%',
+                            left: '1%',
+                            right: '1%',
                             bottom: '5%',
                             top: '5%',
                             containLabel: true
@@ -55,7 +55,7 @@ export default function DashboardCard() {
                             type: 'category',
                             data: times,
                             axisLabel: {
-                                fontSize: 10
+                                fontSize: 0
                             }
                         },
                         yAxis: {
@@ -83,7 +83,7 @@ export default function DashboardCard() {
                                     itemStyle: {
                                         color: '#1d4ed8',
                                         borderColor: '#1d4ed8',
-                                        borderWidth: 2
+                                        borderWidth: 1
                                     }
                                 }
                             }

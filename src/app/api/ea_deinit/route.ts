@@ -26,6 +26,15 @@ export async function POST(request: NextRequest) {
             }
         });
         if (exist) {
+            const updated = await prisma.usage.update({
+                where: {
+                    usage_id: exist.usage_id
+                },
+                data: {
+                    usage_status: UsageStatus.Inactive,
+                }
+            });
+
             const log_find = await prisma.tradeLog.findFirst({
 
                 where: {

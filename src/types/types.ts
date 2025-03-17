@@ -20,7 +20,7 @@ export interface signInType {
     password?: string
 }
 
-export enum RoleAvailable  {
+export enum RoleAvailable {
     User = 'user',
     Admin = 'admin',
 }
@@ -31,38 +31,48 @@ export enum RoleAvailable  {
 //     D1 = 2,
 // }
 
-export enum UserStatus  {
+export enum UserStatus {
     Active = 0,
     Suspend = 1,
     Inactive = 2,
     Unverify = 3,
 }
 
-export enum TradeProvider  {
+export enum TradeProvider {
     MetaTrader = 0,
     Binance = 1,
     // Inactive = 2,
     // Unverify = 3,
 }
 
-export enum Modeltype  {
+export enum Modeltype {
     USDJPY = 0,
     USDCAD = 1,
     EURUSD = 2,
 }
 
-export enum PaymentStatus  {
+export enum PaymentStatus {
     Active = 0,
     Inactive = 1,
     Delay = 2,
 }
 
-export enum UsageStatus  {
+export enum UsageStatus {
     Active = 0,
     Inactive = 1,
 }
 
-export enum LogStatus  {
+export enum LogStatus {
     Gethering = 0,
     Finalize = 1,
+}
+
+interface TradeHistoryData {
+    Ticket: string;
+    Symbol: string;
+    Type: string;
+    Lot: number;
+    Price: number;
+    Profit: number;
+    CloseTime: Date;
 }

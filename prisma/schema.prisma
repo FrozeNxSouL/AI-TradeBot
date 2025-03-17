@@ -57,8 +57,7 @@ model Usage {
   usage_currency        String
   usage_timeframe       String
   usage_collection_date DateTime
-  usage_init_balance    Float
-  usage_profit          Float
+  usage_init_balance    Float      @default(0)
   usage_status          Int        @default(0)
   usage_log             TradeLog[]
   usage_bill            Billing[]
@@ -70,7 +69,8 @@ model TradeLog {
   log_id         Int      @id @default(autoincrement())
   log_trades     String[]
   log_start_date DateTime
-  log_balance    Float
+  log_balance    Float    @default(0)
+  log_profit     Float    @default(0)
   log_status     Int      @default(0) //0 = gethering, 1 = finalized
   log_usage      Usage    @relation(fields: [log_usage_id], references: [usage_id], onDelete: Cascade)
   log_usage_id   Int

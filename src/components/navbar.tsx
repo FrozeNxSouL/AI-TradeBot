@@ -68,7 +68,7 @@ export default function MainNavbar() {
                                     {/* </Link> */}
                                 </DropdownItem>
                                 <DropdownItem
-                                    key="copy"
+                                    key="data_check"
                                     description="Historical Trade Orders"
                                     className="text-foreground"
                                 >
