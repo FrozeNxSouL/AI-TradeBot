@@ -10,14 +10,14 @@ import {
     useDisclosure,
 } from "@heroui/modal";
 import { Input } from "@heroui/input"
-import { LockIcon, MailIcon } from "./icon";
+import { LockIcon, MailIcon } from "../utils/icon";
 import { Link } from "@heroui/link";
 import { Button } from "@heroui/button"
 
 import { Tabs, Tab } from "@heroui/tabs";
 import LoginForm from "./loginForm";
 import SignUpForm from "./signUpForm";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 export default function MainNavbar() {
@@ -57,20 +57,34 @@ export default function MainNavbar() {
                             <DropdownTrigger>
                                 <Button className="text-background" variant="bordered">{session.user.email}</Button>
                             </DropdownTrigger>
-                            <DropdownMenu aria-label="Dropdown menu with description" variant="shadow" onAction={(key) => router.push(`/${key}`)}>
+                            {/* <DropdownMenu aria-label="Dropdown menu with description" variant="shadow" onAction={(key) => router.push(`/${key}`)}> */}
+                            <DropdownMenu aria-label="Dropdown menu with description" variant="shadow">
                                 <DropdownItem
                                     key="account"
+                                    showDivider
                                     description="Profile and Description"
                                     className="text-foreground"
+                                    onPress={() => router.push(`/account`)}
                                 >
                                     {/* <Link color="foreground" href="/account"> */}
                                     Account
                                     {/* </Link> */}
                                 </DropdownItem>
                                 <DropdownItem
+                                    key="admin"
+                                    description="Admin"
+                                    className="text-foreground"
+                                    onPress={() => router.push(`/admin`)}
+                                >
+                                    {/* <Link color="foreground" href="/documentation"> */}
+                                    Admin
+                                    {/* </Link> */}
+                                </DropdownItem>
+                                <DropdownItem
                                     key="data_check"
                                     description="Historical Trade Orders"
                                     className="text-foreground"
+                                    onPress={() => router.push(`/data_check`)}
                                 >
                                     {/* <Link color="foreground" href="/account"> */}
                                     Trade History
@@ -81,16 +95,18 @@ export default function MainNavbar() {
                                     showDivider
                                     description="Documentation for Trading System"
                                     className="text-foreground"
+                                    onPress={() => router.push(`/documentation`)}
                                 >
                                     {/* <Link color="foreground" href="/documentation"> */}
                                     Documentation
                                     {/* </Link> */}
                                 </DropdownItem>
                                 <DropdownItem
-                                    key="delete"
+                                    key="logout"
                                     className="text-danger"
                                     color="danger"
                                     description="Logout from current user"
+                                    onPress={() => signOut()}
                                 // startContent={<DeleteDocumentIcon className={cn(iconClasses, "text-danger")} />}
                                 >
                                     Logout

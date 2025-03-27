@@ -10,7 +10,7 @@ import {
 import { Link } from "@heroui/link";
 import { Button } from "@heroui/button"
 import { Input } from "@heroui/input"
-import { LockIcon, MailIcon } from "./icon";
+import { LockIcon, MailIcon } from "../utils/icon";
 import { useState } from "react";
 import { signInType } from "@/types/types";
 import { signIn } from "next-auth/react";
@@ -19,11 +19,6 @@ import { signIn } from "next-auth/react";
 export default function LoginForm({ onClose }: { onClose: () => void }) {
     const [validation, setValidation] = useState(
         {
-            name: {
-                regex: /^[\wก-๙a-zA-Z]{4,30}$/,
-                errorMsg: "ต้องการอักขระ ภาษาไทย, อังกฤษจำนวน 4-30 ตัว",
-                isError: false,
-            },
             email: {
                 regex: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
                 errorMsg: "กรุณากรอก email ให้ถูกต้อง",
@@ -45,7 +40,7 @@ export default function LoginForm({ onClose }: { onClose: () => void }) {
         password: "",
     });
 
-    const signUpUser = async (e: React.ChangeEvent<HTMLFormElement>) => {
+    const signInUser = async (e: React.ChangeEvent<HTMLFormElement>) => {
         e.preventDefault();
         setLoading(true);
 
@@ -107,7 +102,7 @@ export default function LoginForm({ onClose }: { onClose: () => void }) {
     }
     return (
         <>
-            <form onSubmit={signUpUser}>
+            <form onSubmit={signInUser}>
                 <ModalBody>
                     <Input
                         endContent={

@@ -27,18 +27,20 @@ model User {
 model Account {
   acc_id      Int     @id @default(autoincrement())
   acc_name    String
-  acc_client  Int     @default(0)
+  acc_client  String
   acc_user    User    @relation(fields: [acc_user_id], references: [user_id], onDelete: Cascade)
   acc_user_id String
   acc_usage   Usage[]
 }
 
 model Model {
-  model_id      Int      @id @default(autoincrement())
-  model_date    DateTime @default(now())
-  model_path    String
-  model_version Int      @default(0)
-  model_type    Int      @default(0)
+  model_id        Int      @id @default(autoincrement())
+  model_date      DateTime @default(now())
+  model_path      String
+  model_version   Int
+  model_currency  String
+  model_timeframe String
+  Usage           Usage[]
 }
 
 model Billing {
@@ -63,11 +65,13 @@ model Usage {
   usage_bill            Billing[]
   usage_account         Account    @relation(fields: [usage_account_id], references: [acc_id], onDelete: Cascade)
   usage_account_id      Int
+  usage_model           Model      @relation(fields: [usage_model_id], references: [model_id], onDelete: Cascade)
+  usage_model_id        Int
 }
 
 model TradeLog {
   log_id         Int      @id @default(autoincrement())
-  log_trades     String[]
+  log_trades     Json[]
   log_start_date DateTime
   log_balance    Float    @default(0)
   log_profit     Float    @default(0)

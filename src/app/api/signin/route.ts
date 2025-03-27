@@ -20,7 +20,6 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ status: 200 });
     }
     else {
-
+        return NextResponse.json({ status: 400 });
     }
-    return NextResponse.json({ status: 400 });
 }

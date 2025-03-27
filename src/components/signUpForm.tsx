@@ -14,7 +14,7 @@ import {
 import { Link } from "@heroui/link";
 import { Button } from "@heroui/button"
 import { Input } from "@heroui/input"
-import { IconGoogle, LockIcon, MailIcon } from "./icon";
+import { IconGoogle, LockIcon, MailIcon } from "../utils/icon";
 import { signUpType } from "@/types/types";
 
 

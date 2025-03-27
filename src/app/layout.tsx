@@ -35,10 +35,10 @@ export default function RootLayout({
         <SessionProvider>
           <Providers>
             <MainNavbar />
-            <div>
+            <main className="flex-grow">
               {children}
-            </div>
-            {/* <Footer /> */}
+            </main>
+            <Footer />
           </Providers>
         </SessionProvider>
       </body>

@@ -1,31 +1,66 @@
 "use client"
+import { TiingoData, UsageWithRelations } from "@/types/types";
 import { Button } from "@heroui/button";
 import { Card, CardHeader, CardBody, CardFooter } from "@heroui/card";
+import { Chip } from "@heroui/chip";
+
 import ReactECharts from 'echarts-for-react';
+import { useEffect, useState } from "react";
 
-const data = [
-    { time: '09:00', price: 151.25 },
-    { time: '09:05', price: 151.30 },
-    { time: '09:10', price: 151.45 },
-    { time: '09:15', price: 151.40 },
-    { time: '09:20', price: 151.60 },
-    { time: '09:25', price: 151.55 },
-    { time: '09:30', price: 151.75 },
-    { time: '09:35', price: 151.85 },
-    { time: '09:40', price: 151.80 },
-    { time: '09:45', price: 152.00 },
-    { time: '09:50', price: 152.10 },
-    { time: '09:55', price: 152.05 },
-    { time: '10:00', price: 152.15 },
-];
+export default function DashboardCard({ input }: { input: UsageWithRelations }) {
+    const [chartData, setChartData] = useState<TiingoData[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
-const times = data.map(item => item.time);
-const prices = data.map(item => item.price);
+    useEffect(() => {
+        async function fetchTiingoData() {
+            try {
+                // Reset states
+                setLoading(true);
+                setError(null);
 
-export default function DashboardCard() {
+
+                const response = await fetch('/api/dashboard/pricegraph', {
+                    method: "POST",
+                    body: JSON.stringify({ data: { timeframe: input.usage_timeframe, currency: input.usage_currency } })
+                });
+                if (!response.ok) {
+                    throw new Error('Failed to fetch data from Tiingo');
+                }
+                // Transform data to match the expected format
+                const transformedData = await response.json();
+
+                setChartData(transformedData);
+                setLoading(false);
+            } catch (err) {
+                setError(err instanceof Error ? err.message : 'An unknown error occurred');
+                setLoading(false);
+            }
+        }
+
+        // Only fetch if currency is provided
+        if (input.usage_currency && input.usage_timeframe) {
+            fetchTiingoData();
+        }
+    }, [input]);
+
+    // If loading, show a loading state
+    if (loading) {
+        return <Card><div className="flex justify-center items-center w-[475px] h-96 bg-gray-300 text-foreground pb-20">Loading...</div></Card>;
+    }
+
+    // If error, show error message
+    if (error) {
+        return <Card><div className="flex justify-center items-center w-[475px] h-96 bg-gray-300 text-foreground pb-20">Error: {error}</div></Card>;
+    }
+
+    // Extract times and prices for chart
+    const times = chartData.map(item => item.time);
+    const prices = chartData.map(item => item.price);
+
     return (
         <Card isFooterBlurred className="border-none" radius="lg">
-            <div className="w-[475px] h-80 bg-foreground pb-14">
+            <div className="w-[475px] h-96 bg-foreground pb-14 p-2">
                 <ReactECharts
                     option={{
                         tooltip: {
@@ -36,12 +71,14 @@ export default function DashboardCard() {
                                 color: '#fff'
                             },
                             formatter: function (params: any) {
+                                const dataIndex = params[0].dataIndex;
                                 return `
-                          <div style="font-size: 12px; padding: 4px;">
-                            <div style="font-weight: bold;">Time: ${params[0].name}</div>
-                            <div style="color: #26DE29;">Price: ${params[0].value.toFixed(2)}</div>
-                          </div>
-                        `;
+                                    <div style="font-size: 12px; padding: 4px;">
+                                        <div style="font-weight: bold;">Time: ${times[dataIndex]}</div>
+                                        <div style="color: #26DE29;">Date: ${chartData[dataIndex].date}</div>
+                                        <div style="color: #26DE29;">Price: ${params[0].value.toFixed(2)}</div>
+                                    </div>
+                                `;
                             }
                         },
                         grid: {
@@ -55,14 +92,17 @@ export default function DashboardCard() {
                             type: 'category',
                             data: times,
                             axisLabel: {
-                                fontSize: 0
+                                fontSize: 0,
                             }
                         },
                         yAxis: {
                             type: 'value',
+                            splitLine: {
+                                show: false
+                            },
                             scale: true,
                             axisLabel: {
-                                fontSize: 10,
+                                fontSize: 9,
                                 formatter: '{value}'
                             }
                         },
@@ -70,7 +110,7 @@ export default function DashboardCard() {
                             {
                                 data: prices,
                                 type: 'line',
-                                smooth: true,
+                                smooth: false,
                                 lineStyle: {
                                     width: 2,
                                     color: '#26DE29'
@@ -93,19 +133,19 @@ export default function DashboardCard() {
                     opts={{ renderer: 'canvas' }}
                 />
             </div>
-            <CardFooter className="justify-between before:bg-white/10 border-white/20 border-1 p-0 overflow-hidden absolute before:rounded-xl rounded-large bottom-1 left-1 w-[calc(100%_-_8px)] shadow-small z-10">
-                <div className="flex-col items-start p-2 px-6 text-foreground bg-primary w-3/5">
-                    <h4 className="font-bold text-md ">USDJPY - M1</h4>
-                    <p className="text-tiny uppercase font-bold ">balance</p>
-                    <small className="text-sm">collection date</small>
+            <CardFooter className="justify-between before:bg-white/10 border-white/20 border-1 p-0 absolute before:rounded-xl rounded-large bottom-1 left-1 w-[calc(100%_-_8px)] shadow-small h-20 z-10">
+                <div className="flex flex-col items-start h-full justify-between p-3 px-6 text-foreground bg-primary w-3/5">
+                    <h4 className="font-bold text-lg">{input.usage_currency} - {input.usage_timeframe.toUpperCase()}</h4>
+                    <small className="text-sm">Start Date {new Date(input.usage_collection_date).toLocaleDateString()}</small>
                 </div>
-                <div className="flex-col items-start p-2 px-6 text-accent bg-foreground w-2/5">
-                    <p className="text-tiny uppercase font-bold ">Profit</p>
-                    <small className="text-sm">12 $</small>
-                    <h4 className="font-bold text-md">Percentage</h4>
+                <div className="flex flex-col p-3 px-6 items-end justify-between h-full text-accent bg-foreground w-2/5">
+                    <Chip color="primary" variant="dot" className="text-background">
+                        {prices[prices.length - 1].toFixed(2)}
+                    </Chip>
+                    {/* <small className="text-sm p-1 m-1 border-1 border-background rounded-2xl"></small> */}
+                    <h4 className="font-bold text-md text-primary">{(input.alltimeProfit / (input.usage_init_balance || input.lastBalance)).toFixed(5)} %</h4>
                 </div>
             </CardFooter>
         </Card>
     );
 }
-

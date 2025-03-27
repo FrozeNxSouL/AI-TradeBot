@@ -22,3 +22,24 @@ export async function GET(request: NextRequest) {
     }
 
 }
+
+
+export async function POST(request: NextRequest) {
+    const body = await request.json();
+    const { fee } = body.data;
+    if (!fee) {
+        return NextResponse.json({ error: 'Please fill out all required fields' })
+    }
+    const admin = await prisma.admin_Data.create({
+        data: {
+            ad_fee: fee,
+            ad_banner: []
+        }
+    });
+    if (admin) {
+        return NextResponse.json({ status: 200 });
+    }
+    else {
+        return NextResponse.json({ status: 400 });
+    }
+}

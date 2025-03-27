@@ -5,108 +5,42 @@ import { Link } from "@heroui/link";
 import { useState } from "react";
 import { Select, SelectItem } from "@heroui/select";
 import { Input } from "@heroui/input";
+import { TradeProvider } from "@/types/types";
+import { useSession } from "next-auth/react";
 
 export default function AccountForm() {
-    const [validation, setValidation] = useState(
-        {
-            name: {
-                regex: /^[\wก-๙a-zA-Z]{4,30}$/,
-                errorMsg: "ต้องการอักขระ ภาษาไทย, อังกฤษจำนวน 4-30 ตัว",
-                isError: false,
-            },
-            email: {
-                regex: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-                errorMsg: "กรุณากรอก email ให้ถูกต้อง",
-                isError: false
-            },
-            password: {
-                errorMsg: "",
-                isError: false,
-            },
-            result: {
-                errorMsg: "",
-                isError: false,
-            }
-        }
-    )
+    const session = useSession()
     const [loading, setLoading] = useState(false);
-    const [data, setData] = useState({
-        email: "",
-        password: "",
-        repass: "",
-    });
+    const [data, setData] = useState<string>("");
+    const [inputProvider, setInputProvider] = useState<string>("");
+    const [error, setError] = useState<string>("");
 
     const accountCreate = async (e: React.ChangeEvent<HTMLFormElement>) => {
         e.preventDefault();
         setLoading(true);
 
-        if (!data.email || !data.password || !data.repass) {
-            setValidation((prevValidation) => ({
-                ...prevValidation,
-                result: {
-                    isError: true,
-                    errorMsg: "กรุณากรอกข้อมูลให้ครบถ้วน"
-                },
-            }));
-            setLoading(false);
-            return;
-        }
-
-        if (data.password !== data.repass) {
-            setValidation((prevValidation) => ({
-                ...prevValidation,
-                password: {
-                    isError: true,
-                    errorMsg: "รหัสผ่านทั้ง 2 ช่องไม่ตรงกัน"
-                },
-            }));
-            return;
-        }
-
-        const response = await fetch('/api/signup', {
+        const response = await fetch('/api/advisor/account', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ data })
+            body: JSON.stringify({
+                acc: data,
+                id: session.data?.user.id,
+                client: String(inputProvider)
+            })
         });
 
         const result = await response.json();
         if (result.error) {
-            setValidation((prevValidation) => ({
-                ...prevValidation,
-                result: {
-                    isError: true,
-                    errorMsg: result.error
-                },
-            }));
+            setError(result.error);
         } else {
-            setValidation((prevValidation) => ({
-                ...prevValidation,
-                result: {
-                    isError: false,
-                    errorMsg: ""
-                },
-            }));
-            // signIn("credentials", {
-            //     email: data.email,
-            //     password: data.password,
-            // });
+            setError("");
         }
         setLoading(false);
         // onClose();
     }
 
-    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setData({ ...data, email: e.target.value })
-        let newValidation = validation
-        if (!validation.email.regex.test(e.target.value)) {
-            newValidation.email.isError = true
-        } else {
-            newValidation.email.isError = false
-        }
-        setValidation(newValidation)
-    }
 
     return (
         <div className="flex flex-col px-10 py-7 w-full">
@@ -125,27 +59,30 @@ export default function AccountForm() {
                             label="TRADE BROKER"
                             variant="underlined"
                             placeholder="Select Currency"
+                            value={inputProvider}
+                            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setInputProvider(e.target.value)}
                         >
-                            {/* {animals.map((animal) => (
-                                <SelectItem key={animal.key}>{animal.label}</SelectItem>
-                            ))} */}
-                            <SelectItem className="text-foreground px-5">{"MetaTrader"}</SelectItem>
-                            <SelectItem className="text-foreground px-5">{"Binance"}</SelectItem>
+
+                            {Object.entries(TradeProvider)
+                                .filter(([key]) => isNaN(Number(key)))
+                                .map(([key, value]) => (
+                                    <SelectItem key={value} className="text-foreground px-5">{key}</SelectItem>
+                                ))}
                         </Select>
                     </div>
                     <Input
-                        label="User"
-                        placeholder="Enter your username"
+                        label="Account"
+                        placeholder="Enter your Account"
                         className="pl-16 w-5/12 text-foreground"
                         isRequired
-                        isInvalid={validation.password.isError}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setData({ ...data, password: e.target.value })}
-                        value={data.password}
+                        // isInvalid={validation.password.isError}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setData(e.target.value)}
+                        value={data}
                         type="text"
                         variant="bordered"
                     />
-                    {validation.result.isError && <span className="auth-error">{validation.result.errorMsg}</span>}
                     <Button isLoading={loading} type="submit" color='primary' size="lg" variant='ghost' className="w-full font-semibold text-foreground text-md mt-10">Create</Button>
+                    <p className="text-foreground">{error}</p>
                 </form>
             </div>
         </div>

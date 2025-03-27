@@ -1,3 +1,5 @@
+import { Prisma } from "@prisma/client"
+
 export interface SignInData {
     email: string
     password: string
@@ -39,16 +41,20 @@ export enum UserStatus {
 }
 
 export enum TradeProvider {
-    MetaTrader = 0,
-    Binance = 1,
-    // Inactive = 2,
-    // Unverify = 3,
+    MetaTrader = "MetaTrader",
+    Binance = "Binance",
 }
 
 export enum Modeltype {
-    USDJPY = 0,
-    USDCAD = 1,
-    EURUSD = 2,
+    USDJPY = "USDJPY",
+    USDCAD = "USDCAD",
+    EURUSD = "EURUSD",
+}
+
+export enum Timeframetype {
+    M1 = "M1",
+    H1 = "H1",
+    D1 = "D1",
 }
 
 export enum PaymentStatus {
@@ -67,12 +73,29 @@ export enum LogStatus {
     Finalize = 1,
 }
 
-interface TradeHistoryData {
-    Ticket: string;
-    Symbol: string;
-    Type: string;
-    Lot: number;
-    Price: number;
-    Profit: number;
-    CloseTime: Date;
+export interface TradeHistoryData {
+    ticket: number;
+    symbol: string;
+    type: "Buy" | "Sell";  // Enforce valid trade types
+    lots: number;
+    price: number;
+    profit: number;
+    closeTime: String;  // Store as Unix timestamp initially
 }
+
+export interface TiingoData {
+    time: string;
+    price: number;
+    date: string;
+}
+
+export type UsageWithRelations = Prisma.UsageGetPayload<{
+    include: {
+        usage_model: true;
+        usage_log: true;
+    };
+}> & {
+    lastBalance: number;
+    lastProfit: number;
+    alltimeProfit: number;
+};

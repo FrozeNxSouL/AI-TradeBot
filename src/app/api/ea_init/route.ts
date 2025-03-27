@@ -6,7 +6,6 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
-
         const { account, balance, currency, provider, timeframe } = body.data;
 
         const exist = await prisma.usage.findFirst({
@@ -16,10 +15,12 @@ export async function POST(request: NextRequest) {
             },
             where: {
                 usage_account: {
-                    AND: [
-                        { acc_name: account },
-                        { acc_client: provider }
-                    ]
+                    // AND: [
+                    //     { acc_name: account },
+                    //     { acc_client: provider }
+                    // ]
+                    acc_name: account ,
+                    acc_client: provider
                 },
                 usage_currency: currency,
                 usage_timeframe: timeframe,
@@ -30,6 +31,7 @@ export async function POST(request: NextRequest) {
                 // }
             }
         });
+        console.log(exist, "exist")
         if (exist) {
             const log_find = await prisma.tradeLog.findFirst({
                 // include: {
@@ -74,8 +76,11 @@ export async function POST(request: NextRequest) {
                     }
                 });
             }
+
+            return NextResponse.json({ status: 200 });
+        } else {
+            return NextResponse.json({ status: 400 });
         }
-        return NextResponse.json({ status: 200 });
     } catch (error) {
         return NextResponse.json({ status: 500 });
     }

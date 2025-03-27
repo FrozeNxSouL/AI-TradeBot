@@ -4,7 +4,7 @@ import { Divider } from "@heroui/divider";
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="dashboard-layout">
-      <div className="fixed flex flex-col h-screen w-1/5 bg-foreground px-12 py-16 opacity-95">
+      <div className="fixed flex flex-col h-screen w-1/5 bg-foreground px-12 py-16 opacity-95 backdrop-blur-sm">
         <p className="font-semibold text-lg text-foreground uppercase">
           <Link color="primary" className="hover:text-background" href="/dashboard/">
             Dashboard
@@ -23,7 +23,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           </Link>
         </div>
       </div>
-      <main className="flex w-full pl-80">{children}</main>
+      <main className="flex w-full pl-80 min-h-[calc(100vh-4rem)]">{children}</main>
     </div>
   );
 }
