@@ -7,9 +7,10 @@ export default function Footer() {
                 <div className="grid md:grid-cols-4 gap-8">
                     {/* Company Info Column */}
                     <div>
-                        <h3 className="text-xl font-bold mb-4 text-green-400">
-                            Trading System
-                        </h3>
+                        <div className="flex w-full text-xl font-bold uppercase">
+                            <p className="text-primary">money</p>
+                            <p className="text-accent">glitch</p>
+                        </div>
                         <p className="text-white/70 text-sm">
                             Empowering traders with advanced analytics and insights.
                         </p>
@@ -31,18 +32,18 @@ export default function Footer() {
                             </li>
                             <li>
                                 <Link
-                                    href="/markets"
+                                    href="/advisor"
                                     className="text-white/70 hover:text-green-400 transition"
                                 >
-                                    Markets
+                                    Expert Advisor
                                 </Link>
                             </li>
                             <li>
                                 <Link
-                                    href="/pricing"
+                                    href="/Billing"
                                     className="text-white/70 hover:text-green-400 transition"
                                 >
-                                    Pricing
+                                    Billing
                                 </Link>
                             </li>
                         </ul>
@@ -92,7 +93,7 @@ export default function Footer() {
                 {/* Copyright Section */}
                 <div className="mt-8 pt-6 border-t border-white/10 text-center">
                     <p className="text-white/50 text-sm">
-                        © {new Date().getFullYear()} Trading System. All Rights Reserved.
+                        © {new Date().getFullYear()} Money Glitch Trading System. All Rights Reserved.
                     </p>
                 </div>
             </div>

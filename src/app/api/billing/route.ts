@@ -9,35 +9,63 @@ export async function POST(request: NextRequest) {
         if (!id) {
             return NextResponse.json({ error: 'Please fill out all required fields' })
         }
-        const data = await prisma.billing.findMany({
-            include: {
-                bill_usage: {
-                    include: {
-                        usage_account: {
-                            include: {
-                                acc_user : true
+
+        const bills = await prisma.billing.findMany({
+            select: {
+                bill_id: true,
+                bill_create_date: true,
+                bill_expire_date: true,
+                bill_cost: true,
+                bill_status: true,
+                bill_log: {
+                    select: {
+                        log_profit: true,
+                        log_balance: true,
+                        log_start_date: true,
+                        log_trades: true,
+                        log_usage: {
+                            select: {
+                                usage_currency: true,
+                                usage_timeframe: true,
+                                usage_account: {
+                                    select: {
+                                        acc_client: true,
+                                        acc_name: true,
+                                    }
+                                }
                             }
                         }
                     }
                 }
-            }, where: {
-                bill_usage: {
-                    usage_account: {
-                        acc_user: {
-                            user_id: id
+            },
+            where: {
+                bill_log: {
+                    log_usage: {
+                        usage_account: {
+                            acc_user: {
+                                user_id: id
+                            }
                         }
                     }
                 }
+            },
+            orderBy: {
+                bill_status: "desc"
             }
-            // , orderBy: {
-            //     bill_status: "asc"
-            // }
+        });
+
+        const fee = await prisma.admin_Data.findFirst({
+            select: {
+                ad_fee: true
+            }
         })
 
-        if (data) {
-            return NextResponse.json(data);
+        if (bills && fee) {
+            return NextResponse.json({ message: "Bills fetched", billData: bills, fee: fee.ad_fee }, { status: 200 });
+        } else {
+            throw new Error("undefined data in bill searching")
         }
-    } catch (error:any) {
+    } catch (error: any) {
         return NextResponse.json({
             message: 'error in billing',
             error: error.message,

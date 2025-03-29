@@ -21,7 +21,7 @@ export default function LoginForm({ onClose }: { onClose: () => void }) {
         {
             email: {
                 regex: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-                errorMsg: "กรุณากรอก email ให้ถูกต้อง",
+                errorMsg: "Incorrect Email",
                 isError: false
             },
             password: {

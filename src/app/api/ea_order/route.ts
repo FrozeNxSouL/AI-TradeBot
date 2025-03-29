@@ -14,8 +14,6 @@ export async function POST(request: NextRequest) {
             closeTime: new Date(item.closeTime * 1000).toISOString() // Convert to Date and format as ISO
         }));
         
-
-        console.log(typeof formattedData)
         const exist = await prisma.usage.findFirst({
             include: {
                 usage_account: true,

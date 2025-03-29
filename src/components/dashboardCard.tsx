@@ -143,7 +143,11 @@ export default function DashboardCard({ input }: { input: UsageWithRelations }) 
                         {prices[prices.length - 1].toFixed(2)}
                     </Chip>
                     {/* <small className="text-sm p-1 m-1 border-1 border-background rounded-2xl"></small> */}
-                    <h4 className="font-bold text-md text-primary">{(input.alltimeProfit / (input.usage_init_balance || input.lastBalance)).toFixed(5)} %</h4>
+                    <div className="flex justify-between items-baseline w-full ">
+                        <h4 className="font-bold text-tiny text-background flex gap-1 w-1/2">{(input.alltimeProfit / (input.usage_init_balance || input.lastBalance || 1)).toFixed(2)} <p className="text-primary"> %</p></h4>
+                        <h4 className="font-bold text-md text-primary flex justify-around w-1/2">{input.alltimeProfit.toFixed(2)} $</h4>
+                    </div>
+
                 </div>
             </CardFooter>
         </Card>

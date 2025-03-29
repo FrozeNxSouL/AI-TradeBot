@@ -33,9 +33,9 @@ export async function POST(request: NextRequest) {
     const admin = await prisma.admin_Data.create({
         data: {
             ad_fee: fee,
-            ad_banner: []
         }
     });
+    // const admin = await prisma.account.deleteMany();
     if (admin) {
         return NextResponse.json({ status: 200 });
     }

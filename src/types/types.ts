@@ -58,8 +58,8 @@ export enum Timeframetype {
 }
 
 export enum PaymentStatus {
-    Active = 0,
-    Inactive = 1,
+    Done = 0,
+    Arrive = 1,
     Delay = 2,
 }
 
@@ -99,3 +99,5 @@ export type UsageWithRelations = Prisma.UsageGetPayload<{
     lastProfit: number;
     alltimeProfit: number;
 };
+
+  

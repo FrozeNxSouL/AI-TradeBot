@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import {
-  
+
   TableHeader,
   TableColumn,
   TableBody,
@@ -74,9 +74,9 @@ export default function TestingComponent() {
         return
       }
       try {
-        const response = await fetch('/api/dashboard/tradeslog',{
-          method: "POST", 
-          body: JSON.stringify({ data: { id: session?.user.id } }) 
+        const response = await fetch('/api/dashboard/tradeslog', {
+          method: "POST",
+          body: JSON.stringify({ data: { id: session?.user.id } })
         });
         if (!response.ok) {
           throw new Error('Error fetching log');
@@ -110,29 +110,45 @@ export default function TestingComponent() {
     return fetched.slice(start, end);
   }, [page, fetched]);
 
-  const CallFn = async (e : any) => {
-          setLoading(true);
-  
-          const response = await fetch('/api/web_data', {
-              method: "POST",
-              headers: {
-                  "Content-Type": "application/json"
-              },
-              body: JSON.stringify({ data:{fee: 0.01} })
-          });
-  
-          const result = await response.json();
-          if (result.error) {
-              console.log(result.error)
-          } 
-          setLoading(false);
-      }
-  
+  const CallFn = async (e: any) => {
+    setLoading(true);
+
+    const response = await fetch('/api/web_data', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ data: { fee: 0.01 } })
+    });
+
+    const result = await response.json();
+    if (result.error) {
+      console.log(result.error)
+    }
+    setLoading(false);
+  }
+
+  const handleCreateBills = async () => {
+    setLoading(true);
+
+    try {
+      const response = await fetch("/api/callcreatebill", { method: "POST" });
+
+      if (!response.ok) throw new Error("Failed to create bills");
+
+      const data = await response.json();
+      console.log(data.message);
+    } catch (error: any) {
+      console.log("Error: " + error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div>
-      <Button color="primary" onPress={()=> createBillsForTradeLogs}>Testing Bill Create Schedule Function</Button>
-       <Button color="warning" onPress={CallFn}>Admin input</Button>
+      <Button color="primary" onPress={handleCreateBills}>Testing Bill Create Schedule Function</Button>
+      <Button color="warning" onPress={CallFn}>Admin input</Button>
     </div>
   );
 }

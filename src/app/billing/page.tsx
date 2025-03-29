@@ -1,5 +1,4 @@
 "use client"
-import BillCard from "@/components/billing/billCard";
 import { Link } from "@heroui/link";
 import { Button } from "@heroui/button"
 import { Divider } from "@heroui/divider";

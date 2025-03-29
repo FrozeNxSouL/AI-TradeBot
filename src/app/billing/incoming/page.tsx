@@ -1,10 +1,50 @@
 "use client"
-import BillCard from "@/components/billing/billCard";
 import { Link } from "@heroui/link";
 import { Button } from "@heroui/button"
 import { Divider } from "@heroui/divider";
+import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
+import BillCard from "@/components/billing/billCard";
 
 export default function IncomingBills() {
+    const { data: session, status } = useSession()
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+    const [bills, setBills] = useState([]);
+    const [fee, setFee] = useState(0);
+
+    useEffect(() => {
+        async function fetchData() {
+            if (status != "authenticated") {
+                return
+            }
+            try {
+                // Reset states
+                setLoading(true);
+                setError(null);
+
+                const response = await fetch('/api/billing', {
+                    method: "POST",
+                    body: JSON.stringify({ data: { id: session?.user.id } })
+                });
+                if (!response.ok) {
+                    throw new Error('Failed to fetch data from Tiingo');
+                }
+                // Transform data to match the expected format
+                const output = await response.json();
+
+                setBills(output.billData);
+                setFee(output.fee)
+                setLoading(false);
+            } catch (err) {
+                setError(err instanceof Error ? err.message : 'An unknown error occurred');
+                setLoading(false);
+            }
+        }
+
+        fetchData();
+    }, [status]);
+
     return (
         <>
             <div className="px-10 py-7 w-full">
@@ -14,10 +54,15 @@ export default function IncomingBills() {
                     <p className="text-medium text-foreground-500 capitalize">arriving to make a payment.</p>
                 </div>
                 <div className="flex flex-col items-center w-full px-5 py-10 gap-5">
-                    <BillCard />
-                    <BillCard />
-                    <BillCard />
-                    <BillCard />
+                    {bills && status == "authenticated" && bills.map((bill: any) => (
+                        <BillCard
+                            key={bill.bill_id}
+                            input={bill}
+                            fee={fee}
+                            userID={session.user.id}
+                        />
+                    ))}
+
                 </div>
             </div>
         </>

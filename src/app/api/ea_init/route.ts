@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
                 // }
             }
         });
-        console.log(exist, "exist")
+
         if (exist) {
             const log_find = await prisma.tradeLog.findFirst({
                 // include: {

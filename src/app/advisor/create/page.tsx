@@ -218,11 +218,11 @@ export default function CreateAdvisor() {
                                     {(account: Account) => (
                                         <SelectItem key={account.acc_id} textValue={account.acc_id.toString()}>
                                             <div className="flex gap-2 items-center w-full">
-                                                <div className="flex flex-col w-full gap-2 py-2 px-4">
+                                                <div className="flex w-full items-center gap-2 py-2 px-4">
                                                     <Chip color="primary" className="text-small text-background bg-foreground border-background" variant="dot">
                                                         {account.acc_client}
                                                     </Chip>
-                                                    <span className="text-tiny text-default-600 pl-5">{account.acc_name}</span>
+                                                    <p className="text-tiny text-default-600 pl-5">{account.acc_name}</p>
                                                 </div>
                                             </div>
                                         </SelectItem>

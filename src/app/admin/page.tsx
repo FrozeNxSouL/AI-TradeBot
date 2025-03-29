@@ -40,7 +40,7 @@ export default async function Admin() {
             <TableComponent data={tradelogdata} columns={["log_id", "log_start_date", "log_balance", "log_profit", "log_status"]} />
 
             <h2 className="text-xl font-bold mt-5">Admin Table</h2>
-            <TableComponent data={admindata} columns={["ad_id", "ad_fee", "ad_banner"]} />
+            <TableComponent data={admindata} columns={["ad_id", "ad_fee"]} />
 
             <h1>Upload</h1>
             <div className="w-full">

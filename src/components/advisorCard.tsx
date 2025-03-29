@@ -6,7 +6,7 @@ import { useState } from "react";
 
 export default function AdvisorCard({ usage } : any) {
     const [isSelected, setIsSelected] = useState(usage.usage_status ==  UsageStatus.Active); 
-
+    console.log(usage, "usage")
     const toggleStatus = async () => {
 
         const newStatus = isSelected ? UsageStatus.Inactive : UsageStatus.Active; 

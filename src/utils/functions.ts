@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma_client";
-import { LogStatus } from "@/types/types";
+import { LogStatus, PaymentStatus } from "@/types/types";
 
 export default async function createBillsForTradeLogs() {
     try {
@@ -14,9 +14,9 @@ export default async function createBillsForTradeLogs() {
                 log_start_date: { lte: today }, // log_start_date should be in the past or today
                 log_status: LogStatus.Gethering, // Gathering status
             },
-            include: {
-                log_usage: true, // Include related Usage data
-            },
+            // include: {
+            //     log_usage: true, // Include related Usage data
+            // },
         });
 
 
@@ -39,8 +39,9 @@ export default async function createBillsForTradeLogs() {
                 await prisma.billing.create({
                     data: {
                         bill_expire_date: expireDate,
-                        bill_cost: log.log_profit, // Use the profit from TradeLog
-                        bill_usage_id: log.log_usage_id, // Associate bill with Usage
+                        bill_cost: Math.abs(log.log_profit), // Use the profit from TradeLog
+                        bill_log_id: log.log_id, // Associate bill with Usage
+                        bill_status : PaymentStatus.Arrive
                     },
                 });
 

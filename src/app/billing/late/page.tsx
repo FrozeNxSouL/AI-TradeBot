@@ -14,10 +14,10 @@ export default function LateBills() {
                     <p className="text-medium text-foreground-500 capitalize">Payment overdue.</p>
                 </div>
                 <div className="flex flex-col items-center w-full px-5 py-10 gap-5">
+                    {/* <BillCard />
                     <BillCard />
                     <BillCard />
-                    <BillCard />
-                    <BillCard />
+                    <BillCard /> */}
                 </div>
             </div>
         </>

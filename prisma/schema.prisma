@@ -49,8 +49,8 @@ model Billing {
   bill_expire_date DateTime
   bill_cost        Float
   bill_status      Int      @default(0)
-  bill_usage       Usage    @relation(fields: [bill_usage_id], references: [usage_id], onDelete: Cascade)
-  bill_usage_id    Int
+  bill_log         TradeLog @relation(fields: [bill_log_id], references: [log_id], onDelete: Cascade)
+  bill_log_id      Int      @unique
 }
 
 model Usage {
@@ -62,7 +62,6 @@ model Usage {
   usage_init_balance    Float      @default(0)
   usage_status          Int        @default(0)
   usage_log             TradeLog[]
-  usage_bill            Billing[]
   usage_account         Account    @relation(fields: [usage_account_id], references: [acc_id], onDelete: Cascade)
   usage_account_id      Int
   usage_model           Model      @relation(fields: [usage_model_id], references: [model_id], onDelete: Cascade)
@@ -78,10 +77,10 @@ model TradeLog {
   log_status     Int      @default(0) //0 = gethering, 1 = finalized
   log_usage      Usage    @relation(fields: [log_usage_id], references: [usage_id], onDelete: Cascade)
   log_usage_id   Int
+  log_bill       Billing?
 }
 
 model Admin_Data {
   ad_id     Int      @id @default(autoincrement())
   ad_fee    Float
-  ad_banner String[]
 }
