@@ -35,23 +35,6 @@ export default function CheckoutPage({ amount, billID , userID}: { amount: numbe
         fetchData();
     }, [amount]);
 
-    const handlePayBills = async () => {
-        setLoading(true);
-
-        try {
-            const response = await fetch("/api/callcreatebill", { method: "POST" });
-
-            if (!response.ok) throw new Error("Failed to create bills");
-
-            const data = await response.json();
-            console.log(data.message);
-        } catch (error: any) {
-            console.log("Error: " + error.message);
-        } finally {
-            setLoading(false);
-        }
-    };
-
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault()
         setLoading(true)
@@ -106,10 +89,9 @@ export default function CheckoutPage({ amount, billID , userID}: { amount: numbe
 
                 ) : (
                     <div className="w-full flex justify-between">
-                        <p className="text-foreground font-medium text-lg">Processing...</p>
+                        <p className="text-foreground font-medium text-md">Processing...</p>
                     </div>
                 )}
-                {/* <p className="text-foreground font-medium text-lg">{!loading ? `Total ${amount / 100} $` : "Processing..."}</p> */}
                 <Button type="submit" disabled={!stripe || loading} color="secondary" className="text-foreground font-semibold">Pay</Button>
             </div>
         </form>

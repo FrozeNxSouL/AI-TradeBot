@@ -37,7 +37,7 @@ export enum UserStatus {
     Active = 0,
     Suspend = 1,
     Inactive = 2,
-    Unverify = 3,
+    // Unverify = 3,
 }
 
 export enum TradeProvider {

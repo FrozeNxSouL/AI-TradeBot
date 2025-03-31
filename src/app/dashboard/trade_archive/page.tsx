@@ -3,7 +3,7 @@ import BillCard from "@/components/billing/billCard";
 import { Link } from "@heroui/link";
 import { Button } from "@heroui/button"
 import { Divider } from "@heroui/divider";
-import HistoryTrades from "@/components/historyTable";
+import HistoryTrades from "@/components/dashboard/historyTable";
 
 export default function TradeArchive() {
     return (

@@ -2,7 +2,7 @@
 import { Link } from "@heroui/link";
 import { Button } from "@heroui/button"
 import { Divider } from "@heroui/divider";
-import DashboardCard from "@/components/dashboardCard";
+import DashboardCard from "@/components/dashboard/dashboardCard";
 import { serverSession } from "@/lib/serverSession";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";

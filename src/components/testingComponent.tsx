@@ -110,24 +110,6 @@ export default function TestingComponent() {
     return fetched.slice(start, end);
   }, [page, fetched]);
 
-  const CallFn = async (e: any) => {
-    setLoading(true);
-
-    const response = await fetch('/api/web_data', {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ data: { fee: 0.01 } })
-    });
-
-    const result = await response.json();
-    if (result.error) {
-      console.log(result.error)
-    }
-    setLoading(false);
-  }
-
   const handleCreateBills = async () => {
     setLoading(true);
 
@@ -148,7 +130,6 @@ export default function TestingComponent() {
   return (
     <div>
       <Button color="primary" onPress={handleCreateBills}>Testing Bill Create Schedule Function</Button>
-      <Button color="warning" onPress={CallFn}>Admin input</Button>
     </div>
   );
 }

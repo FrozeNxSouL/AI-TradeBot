@@ -9,7 +9,7 @@ export default async function AccountProfile() {
     const session = await serverSession();
     
     if (!session) {
-        return <></>
+        redirect("/")
     }
     let userData = await prisma.user.findFirst({
         where: {
@@ -17,7 +17,7 @@ export default async function AccountProfile() {
         }
     })
     if (!userData) {
-        redirect("/signin");
+        redirect("/");
     }
     userData.user_password = null;
     return (

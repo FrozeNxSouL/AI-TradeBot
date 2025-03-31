@@ -10,7 +10,7 @@ import {
     useDisclosure,
 } from "@heroui/modal";
 import { Input } from "@heroui/input"
-import { LockIcon, MailIcon } from "../utils/icon";
+import { AccountCircle, Book2Line, Exit, LockIcon, MailIcon, MoneySVG, WatchLater } from "../utils/icon";
 import { Link } from "@heroui/link";
 import { Button } from "@heroui/button"
 
@@ -19,13 +19,55 @@ import LoginForm from "./loginForm";
 import SignUpForm from "./signUpForm";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { PaymentStatus, RoleAvailable } from "@/types/types";
+import { Chip } from "@heroui/chip";
 
 export default function MainNavbar() {
     const router = useRouter()
     const { data: session, status } = useSession();
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+    const [arrivelength, setArrivelength] = useState<number>(0);
+    const [latelength, setLatelength] = useState<number>(0);
+
+    useEffect(() => {
+        async function fetchData() {
+            if (status != "authenticated") {
+                return
+            }
+            try {
+                // Reset states
+                setLoading(true);
+                setError(null);
+
+                const response = await fetch('/api/billing', {
+                    method: "POST",
+                    body: JSON.stringify({ data: { id: session?.user.id } })
+                });
+                if (!response.ok) {
+                    throw new Error('Failed to fetch data from Tiingo');
+                }
+                // Transform data to match the expected format
+                const output = await response.json();
+                const arrivebilllength = output.billData.filter((bill: any) => bill.bill_status == PaymentStatus.Arrive).length
+                const latebilllength = (output.billData.filter((bill: any) => bill.bill_status == PaymentStatus.Delay)).length
+                setArrivelength(arrivebilllength);
+                setLatelength(latebilllength)
+                setLoading(false);
+            } catch (err) {
+                setError(err instanceof Error ? err.message : 'An unknown error occurred');
+                setLoading(false);
+            }
+        }
+
+        fetchData();
+    }, [status]);
+
     return (
-        <Navbar className="flex bg-foreground opacity-95 border-b-primary border-b-2" maxWidth="full">
+        <Navbar className="flex bg-foreground opacity-95 border-b-primary backdrop-blur-sm border-b-2" maxWidth="full">
             <NavbarBrand>
                 <Link href="/">
                     <p className="font-bold text-xl uppercase text-primary">money</p>
@@ -34,21 +76,25 @@ export default function MainNavbar() {
 
             </NavbarBrand>
             <NavbarContent className="hidden sm:flex gap-7" justify="center">
-                <NavbarItem className="hover:text-primary">
-                    <Link className="text-background hover:text-primary" href="/dashboard">
-                        Dashboard
-                    </Link>
-                </NavbarItem>
-                <NavbarItem className="hover:text-primary">
-                    <Link className="text-background hover:text-primary" href="/advisor">
-                        Advisor
-                    </Link>
-                </NavbarItem>
-                <NavbarItem className="hover:text-primary">
-                    <Link className="text-background hover:text-primary" href="/billing">
-                        Billing
-                    </Link>
-                </NavbarItem>
+                {session?.user.role == RoleAvailable.User && status == "authenticated" && (
+                    <>
+                        <NavbarItem className="hover:text-primary">
+                            <Link className="text-background hover:text-primary" href="/dashboard">
+                                Dashboard
+                            </Link>
+                        </NavbarItem>
+                        <NavbarItem className="hover:text-primary">
+                            <Link className="text-background hover:text-primary" href="/advisor">
+                                Advisor
+                            </Link>
+                        </NavbarItem>
+                        <NavbarItem className="hover:text-primary">
+                            <Link className="text-background hover:text-primary" href="/billing">
+                                Billing
+                            </Link>
+                        </NavbarItem>
+                    </>
+                )}
             </NavbarContent>
             <NavbarContent justify="end">
                 {session ? (
@@ -58,18 +104,46 @@ export default function MainNavbar() {
                                 <Button className="text-background" variant="bordered">{session.user.email}</Button>
                             </DropdownTrigger>
                             {/* <DropdownMenu aria-label="Dropdown menu with description" variant="shadow" onAction={(key) => router.push(`/${key}`)}> */}
-                            <DropdownMenu aria-label="Dropdown menu with description" variant="shadow">
+                            <DropdownMenu aria-label="Dropdown menu with description" variant="shadow" className="w-full">
                                 <DropdownItem
                                     key="account"
                                     showDivider
                                     description="Profile and Description"
                                     className="text-foreground"
+                                    startContent={<AccountCircle className="w-5 h-5" />}
                                     onPress={() => router.push(`/account`)}
                                 >
                                     {/* <Link color="foreground" href="/account"> */}
                                     Account
                                     {/* </Link> */}
                                 </DropdownItem>
+
+                                {arrivelength > 0 || latelength > 0 ? (
+                                    <DropdownItem
+                                        key="bill_box"
+                                    >
+                                        <div className="flex justify-around w-44 h-fit">
+
+                                            {arrivelength > 0 ? (
+                                                <div className="flex flex-col w-2/3 items-center gap-0.5">
+                                                    <MoneySVG className="w-5 h-5 text-secondary" />
+                                                    <p className="text-foreground font-semibold text-tiny">Arrived</p>
+                                                    <Chip size="sm" color="warning" >{arrivelength ?? 0}</Chip>
+                                                </div>
+                                            ) : null}
+
+                                            {latelength > 0 ? (
+                                                <div className="flex flex-col w-2/3 items-center gap-0.5">
+                                                    <WatchLater className="w-5 h-5 text-danger" />
+                                                    <p className="text-foreground font-semibold text-tiny">Late</p>
+                                                    <Chip size="sm" color="danger" >{latelength ?? 0}</Chip>
+                                                </div>
+                                            ) : null}
+
+                                        </div>
+                                    </DropdownItem>
+                                ) : null}
+
                                 <DropdownItem
                                     key="admin"
                                     description="Admin"
@@ -77,23 +151,14 @@ export default function MainNavbar() {
                                     onPress={() => router.push(`/admin`)}
                                 >
                                     {/* <Link color="foreground" href="/documentation"> */}
-                                    Admin
-                                    {/* </Link> */}
-                                </DropdownItem>
-                                <DropdownItem
-                                    key="data_check"
-                                    description="Historical Trade Orders"
-                                    className="text-foreground"
-                                    onPress={() => router.push(`/data_check`)}
-                                >
-                                    {/* <Link color="foreground" href="/account"> */}
-                                    Trade History
+                                    Admin Configuration
                                     {/* </Link> */}
                                 </DropdownItem>
                                 <DropdownItem
                                     key="documentation"
+                                    startContent={<Book2Line className="w-5 h-5" />}
                                     showDivider
-                                    description="Documentation for Trading System"
+                                    description="Document of the System"
                                     className="text-foreground"
                                     onPress={() => router.push(`/documentation`)}
                                 >
@@ -104,6 +169,7 @@ export default function MainNavbar() {
                                 <DropdownItem
                                     key="logout"
                                     className="text-danger"
+                                    startContent={<Exit className="w-5 h-5" />}
                                     color="danger"
                                     description="Logout from current user"
                                     onPress={() => signOut()}
@@ -124,14 +190,12 @@ export default function MainNavbar() {
                             <ModalContent>
                                 {(onClose) => (
                                     <>
-                                        {/* <ModalHeader className="flex flex-col gap-1"> */}
                                         <Tabs
                                             aria-label="Dynamic tabs"
                                             fullWidth
                                             size="lg"
                                             variant="light"
                                         >
-                                            {/* {(item) => ( */}
                                             <Tab key={0} title={"Login"} className="text-lg font-bold">
                                                 <LoginForm onClose={onClose} />
                                             </Tab>
@@ -139,12 +203,7 @@ export default function MainNavbar() {
                                             <Tab key={1} title={"Register"} className="text-lg font-bold">
                                                 <SignUpForm onClose={onClose} />
                                             </Tab>
-                                            {/* )} */}
                                         </Tabs>
-                                        {/* Log in
-
-                                </ModalHeader> */}
-
                                     </>
                                 )}
                             </ModalContent>

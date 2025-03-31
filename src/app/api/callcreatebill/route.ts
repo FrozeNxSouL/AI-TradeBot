@@ -33,16 +33,6 @@ export async function POST(req: NextRequest) {
             const expireDate = new Date();
             expireDate.setDate(today.getDate() + 5);
 
-            // Create a new Billing record
-            await prisma.billing.create({
-                data: {
-                    bill_expire_date: expireDate,
-                    bill_cost: Math.abs(log.log_profit), // Use the profit from TradeLog
-                    bill_log_id: log.log_id, // Associate bill with Usage
-                    bill_status: PaymentStatus.Arrive
-                },
-            });
-
             // Update log_status to 1 (finalized)
             await prisma.tradeLog.update({
                 where: { log_id: log.log_id },
@@ -56,6 +46,19 @@ export async function POST(req: NextRequest) {
                     log_start_date: new Date()
                 }
             });
+
+            const fee = await prisma.admin_Data.findFirst()
+
+            if (fee && (log.log_profit * fee.ad_fee > 10)) {
+                await prisma.billing.create({
+                    data: {
+                        bill_expire_date: expireDate,
+                        bill_cost: Math.abs(log.log_profit), // Use the profit from TradeLog
+                        bill_log_id: log.log_id, // Associate bill with Usage
+                        bill_status: PaymentStatus.Arrive
+                    },
+                });
+            }
             // }
         }
 

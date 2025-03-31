@@ -1,7 +1,9 @@
 import { prisma } from "@/lib/prisma_client";
-import { LogStatus, PaymentStatus } from "@/types/types";
+import { serverSession } from "@/lib/serverSession";
+import { LogStatus, PaymentStatus, RoleAvailable } from "@/types/types";
+import { redirect } from "next/navigation";
 
-export default async function createBillsForTradeLogs() {
+export async function createBillsForTradeLogs() {
     try {
         // Get today's date
         const today = new Date();
@@ -63,3 +65,13 @@ export default async function createBillsForTradeLogs() {
 // createBillsForTradeLogs();
 
 // Export for scheduled execution (cron jobs, background tasks)
+
+export async function routeProtection(pageRole:string, currentRole:string) {
+    if (currentRole == RoleAvailable.Admin && pageRole != currentRole) {
+        redirect("/admin")
+    } else if (currentRole == RoleAvailable.User && pageRole != currentRole) {
+        redirect("/")
+    } else if (currentRole == "") {
+        redirect("/") 
+    }
+}

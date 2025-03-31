@@ -1,5 +1,5 @@
 "use client"
-import AdvisorCard from "@/components/advisorCard";
+import AdvisorCard from "@/components/advisor/advisorCard";
 import { Button } from "@heroui/button";
 import { Divider } from "@heroui/divider";
 import { Input } from "@heroui/input";

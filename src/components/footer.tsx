@@ -81,7 +81,7 @@ export default function Footer() {
                         </h4>
                         <ul className="space-y-2">
                             <li className="text-white/70">
-                                Email: support@tradingsystem.com
+                                Email: s6504062630375@email.kmutnb.ac.th
                             </li>
                             <li className="text-white/70">
                                 Phone: +1 (555) 123-4567

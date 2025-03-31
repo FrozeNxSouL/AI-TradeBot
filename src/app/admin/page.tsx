@@ -1,15 +1,17 @@
 
 
-import AccountProfileCard from "@/components/account/accountdata";
-import UploadPage from "@/components/admin/model_input";
+import AdminSettings from "@/components/admin/adminData";
 import TableComponent from "@/components/admin/tableComponent";
+import UserList from "@/components/admin/userTable";
 import TestingComponent from "@/components/testingComponent";
 import { prisma } from "@/lib/prisma_client";
 import { serverSession } from "@/lib/serverSession";
-import { User } from "@prisma/client";
-import { redirect } from "next/navigation";
+import { RoleAvailable } from "@/types/types";
+import { routeProtection } from "@/utils/functions";
 
 export default async function Admin() {
+    const session = await serverSession()
+    // await routeProtection(RoleAvailable.Admin, session?.user.role || "")
 
     let userData = await prisma.user.findMany()
     let modaldata = await prisma.model.findMany()
@@ -42,10 +44,9 @@ export default async function Admin() {
             <h2 className="text-xl font-bold mt-5">Admin Table</h2>
             <TableComponent data={admindata} columns={["ad_id", "ad_fee"]} />
 
-            <h1>Upload</h1>
-            <div className="w-full">
-                <UploadPage />
-            </div>
+            <AdminSettings />
+
+            <UserList adminid={session?.user.id || ""} />
 
             <TestingComponent />
         </div>

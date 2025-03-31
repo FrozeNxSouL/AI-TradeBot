@@ -11,7 +11,6 @@ import {
     ModalContent,
     ModalHeader,
     ModalBody,
-    ModalFooter,
     useDisclosure,
 } from "@heroui/modal";
 import { Elements } from "@stripe/react-stripe-js"
@@ -53,7 +52,7 @@ export default function BillCard({ input, fee, userID }: { input: any, fee: numb
 
     const statusDetails = getStatusDetails();
 
-    const positive = Math.round(Math.abs(input.bill_log.log_profit * (1 + fee) * 100))
+    const positive = Math.round(Math.abs(input.bill_log.log_profit * (fee) * 100))
 
     return (
         <>
@@ -136,10 +135,10 @@ export default function BillCard({ input, fee, userID }: { input: any, fee: numb
                     </div>
 
                     {/* Actions Column */}
-                    <div className="flex flex-col justify-between w-3/12 bg-foreground text-background rounded-r-lg p-4">
+                    <div className="flex flex-col justify-around w-3/12 bg-foreground text-background rounded-r-lg p-4">
                         <div className="flex justify-between items-center mb-2">
                             <p className="text-sm">Total Commission:</p>
-                            <p className="font-bold">{(input.bill_log.log_profit * (1 + fee)).toFixed(2)} $</p>
+                            <p className="font-semibold text-xl">{(input.bill_log.log_profit * fee).toFixed(2)} $</p>
                         </div>
 
                         <div className="flex justify-between items-center mb-2">
@@ -147,22 +146,23 @@ export default function BillCard({ input, fee, userID }: { input: any, fee: numb
                             <p className="font-bold">{fee}%</p>
                         </div>
 
-                        <div className="flex justify-between items-center">
-                            <p className="text-sm">Expiry Date:</p>
-                            <p className="font-bold">
-                                {new Date(input.bill_expire_date).toLocaleDateString()}
-                            </p>
-                        </div>
-
                         {input.bill_status !== PaymentStatus.Done && (
-                            <Button
-                                onPress={onOpen}
-                                color="secondary"
-                                variant="shadow"
-                                className="mt-4 w-full"
-                                startContent={<PaymentIcon className="w-5 h-5" />}
-                            >Pay Bill
-                            </Button>
+                            <>
+                                <div className="flex justify-between items-center">
+                                    <p className="text-sm">Expiry Date:</p>
+                                    <p className="font-bold">
+                                        {new Date(input.bill_expire_date).toLocaleDateString()}
+                                    </p>
+                                </div>
+                                <Button
+                                    onPress={onOpen}
+                                    color="secondary"
+                                    variant="shadow"
+                                    className="mt-4 w-full"
+                                    startContent={<PaymentIcon className="w-5 h-5" />}
+                                >Pay Bill
+                                </Button>
+                            </>
                         )}
                     </div>
                 </CardBody>
@@ -206,17 +206,9 @@ export default function BillCard({ input, fee, userID }: { input: any, fee: numb
                                         currency: "usd"
                                     }}
                                 >
-                                    <CheckoutPage amount={Math.abs(positive)} billID={input.bill_id} userID={userID}/>
+                                    <CheckoutPage amount={Math.abs(positive)} billID={input.bill_id} userID={userID} />
                                 </Elements>
                             </ModalBody>
-                            {/* <ModalFooter>
-                                <Button color="danger" variant="light" onPress={onClose}>
-                                    Close
-                                </Button>
-                                <Button color="primary" onPress={onClose}>
-                                    Action
-                                </Button>
-                            </ModalFooter> */}
                         </>
                     )}
                 </ModalContent>

@@ -25,7 +25,7 @@ export default function DashboardCard({ input }: { input: UsageWithRelations }) 
                     body: JSON.stringify({ data: { timeframe: input.usage_timeframe, currency: input.usage_currency } })
                 });
                 if (!response.ok) {
-                    throw new Error('Failed to fetch data from Tiingo');
+                    throw new Error('Failed to fetch data from API');
                 }
                 // Transform data to match the expected format
                 const transformedData = await response.json();
@@ -46,12 +46,12 @@ export default function DashboardCard({ input }: { input: UsageWithRelations }) 
 
     // If loading, show a loading state
     if (loading) {
-        return <Card><div className="flex justify-center items-center w-[475px] h-96 bg-gray-300 text-foreground pb-20">Loading...</div></Card>;
+        return <Card><div className="flex justify-center items-center w-[475px] h-96 bg-foreground-300 text-2xl text-background font-normal capitalize">Loading...</div></Card>;
     }
 
     // If error, show error message
     if (error) {
-        return <Card><div className="flex justify-center items-center w-[475px] h-96 bg-gray-300 text-foreground pb-20">Error: {error}</div></Card>;
+        return <Card><div className="flex justify-center items-center w-[475px] h-96 bg-foreground-300 text-2xl text-background font-normal capitalize">Error: {error}</div></Card>;
     }
 
     // Extract times and prices for chart

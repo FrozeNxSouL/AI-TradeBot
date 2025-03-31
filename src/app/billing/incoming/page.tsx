@@ -5,6 +5,7 @@ import { Divider } from "@heroui/divider";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import BillCard from "@/components/billing/billCard";
+import { PaymentStatus } from "@/types/types";
 
 export default function IncomingBills() {
     const { data: session, status } = useSession()
@@ -32,8 +33,8 @@ export default function IncomingBills() {
                 }
                 // Transform data to match the expected format
                 const output = await response.json();
-
-                setBills(output.billData);
+                const filtered = output.billData.filter((bill: any) => bill.bill_status === PaymentStatus.Arrive)
+                setBills(filtered);
                 setFee(output.fee)
                 setLoading(false);
             } catch (err) {
@@ -54,15 +55,21 @@ export default function IncomingBills() {
                     <p className="text-medium text-foreground-500 capitalize">arriving to make a payment.</p>
                 </div>
                 <div className="flex flex-col items-center w-full px-5 py-10 gap-5">
-                    {bills && status == "authenticated" && bills.map((bill: any) => (
-                        <BillCard
-                            key={bill.bill_id}
-                            input={bill}
-                            fee={fee}
-                            userID={session.user.id}
-                        />
-                    ))}
+                    {bills && status === "authenticated" && bills.length > 0 && bills
+                        .map((bill: any) => (
+                            <BillCard
+                                key={bill.bill_id}
+                                input={bill}
+                                fee={fee}
+                                userID={session.user.id}
+                            />
+                        ))}
 
+                    {bills && bills.length <= 0 && (
+                        <div className="bg-foreground opacity-10 w-full h-48 flex justify-center items-center rounded-lg">
+                            <p className="text-2xl text-foreground-300 font-normal">Nothing to Display</p>
+                        </div>
+                    )}
                 </div>
             </div>
         </>

@@ -2,25 +2,17 @@
 import { prisma } from "@/lib/prisma_client";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(request: NextRequest) {
+export async function GET() {
     try {
-        // const body = await request.json();
-        // const { id } = body.data;
-        // if (!id) {
-        //     return NextResponse.json({ error: 'Please fill out all required fields' })
-        // }
-        const data = await prisma.admin_Data.findFirst()
-
-        if (data) {
-            return NextResponse.json(data);
-        }
-    } catch (error: any) {
-        return NextResponse.json({
-            message: 'error in admin data',
-            error: error.message,
-        }, { status: 500 });
+        const adminData = await prisma.admin_Data.findFirst();
+        return NextResponse.json(adminData || { ad_fee: 0 });
+    } catch (error) {
+        console.error('Error fetching admin data:', error);
+        return NextResponse.json(
+            { error: 'Failed to fetch admin data' },
+            { status: 500 }
+        );
     }
-
 }
 
 

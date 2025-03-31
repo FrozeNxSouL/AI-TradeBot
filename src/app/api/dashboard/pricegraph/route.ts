@@ -18,16 +18,16 @@ export async function POST(request: NextRequest) {
             const start = new Date(endDate);
             switch (timeframe) {
                 case 'D1':
-                    start.setDate(endDate.getDate() - (1000));
+                    start.setDate(endDate.getDate() - (2000));
                     break;
                 case 'H1':
-                    start.setHours(endDate.getHours() - (1000));
+                    start.setHours(endDate.getHours() - (3000));
                     break;
                 case 'M1':
-                    start.setMinutes(endDate.getMinutes() - (1000));
+                    start.setMinutes(endDate.getMinutes() - (4000));
                     break;
                 default:
-                    start.setDate(endDate.getDate() - (1000));
+                    start.setDate(endDate.getDate() - (2000));
             }
             return start;
         })();
@@ -45,8 +45,7 @@ export async function POST(request: NextRequest) {
             format: 'json',
             resampleFreq: inputtf
         });
-        console.log(`https://api.tiingo.com/tiingo/fx/${currency}/prices?${params}`)
-        // console.log(process.env.)
+        // console.log(`https://api.tiingo.com/tiingo/fx/${currency}/prices?${params}`)
 
         // Fetch data from Tiingo API
         const response = await fetch(`https://api.tiingo.com/tiingo/fx/${currency}/prices?${params}`, {

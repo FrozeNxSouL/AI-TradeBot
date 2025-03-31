@@ -105,7 +105,7 @@ export default function Insight() {
             name,
             value: ((value / totalProfit) * 100).toFixed(2),
             tooltip: {
-                valueFormatter: (value:number) => `${value} %`
+                valueFormatter: (value: number) => `${value} %`
             }
         }));
         return {
@@ -114,7 +114,7 @@ export default function Insight() {
             averageProfit: fetched.reduce((sum, item) => sum + (item.alltimeProfit || 0), 0) / fetched.length,
             currencies: Array.from(new Set(fetched.map(item => item.usage_currency))),
             timeframes: Array.from(new Set(fetched.map(item => item.usage_timeframe))),
-            donutData : chartData,
+            donutData: chartData,
             profitGrowthData: fetched.map(account => {
                 const profits = account.usage_log.map(log => log.log_profit);
 
@@ -201,14 +201,14 @@ export default function Insight() {
                 formatter: '{b}: {c}%'
             },
             color: [
-                '#26DE29',   
-                '#F2CC24',  
-                '#0E28AD',   
-                '#C7061C',   
-                '#45E6FF',   
-                '#E869FF',   
-                '#FC5D00'    
-              ],
+                '#26DE29',
+                '#F2CC24',
+                '#0E28AD',
+                '#C7061C',
+                '#45E6FF',
+                '#E869FF',
+                '#FC5D00'
+            ],
             series: [{
                 type: 'pie',
                 radius: ['40%', '70%'],
@@ -244,7 +244,9 @@ export default function Insight() {
                     <Divider className="my-4 bg-foreground h-0.5" />
                     <p className="text-medium text-foreground-500 capitalize">presenting key data insights concisely.</p>
                 </div>
-                <div className="text-center text-foreground p-4 my-28">No trading data available</div>
+                <div className="bg-foreground opacity-10 w-full h-48 flex justify-center items-center rounded-lg">
+                    <p className="text-2xl text-foreground-300 font-normal capitalize my-28 p-4">No trading data available</p>
+                </div>
             </div>
         );
     }
@@ -264,7 +266,7 @@ export default function Insight() {
                         option={currencyDistributionOption}
                         notMerge={true}
                         lazyUpdate={true}
-                        style={{ height: '400px', width: "100%"}}
+                        style={{ height: '400px', width: "100%" }}
                     />
                     {/* Profit Line Chart */}
                     <ReactEChartsCore
@@ -280,23 +282,23 @@ export default function Insight() {
                         <Divider className="my-4 bg-foreground h-0.5" />
                         <div className="grid grid-cols-3 gap-20 py-3 px-10">
                             <div>
-                                
+
                                 <p className="text-md font-medium text-foreground">Total Accounts</p>
-                                <Divider className="my-1 bg-foreground"/>
+                                <Divider className="my-1 bg-foreground" />
                                 <p className="text-2xl font-bold text-primary">{insights.totalAccounts}</p>
                             </div>
                             <div>
-                                
+
                                 <p className="text-md font-medium text-foreground">Total Profit</p>
-                                <Divider className="my-1 bg-foreground"/>
+                                <Divider className="my-1 bg-foreground" />
                                 <p className={`text-2xl font-semibold ${insights.totalProfit >= 0 ? 'text-primary' : 'text-danger'}`}>
                                     {insights.totalProfit.toFixed(2)} $
                                 </p>
                             </div>
                             <div>
-                                
+
                                 <p className="text-md font-medium text-foreground">Avg. Profit</p>
-                                <Divider className="my-1 bg-foreground"/>
+                                <Divider className="my-1 bg-foreground" />
                                 <p className={`text-2xl font-semibold ${insights.averageProfit >= 0 ? 'text-primary' : 'text-danger'}`}>
                                     {insights.averageProfit.toFixed(2)} $
                                 </p>

@@ -159,7 +159,7 @@ export function Book2Line(props: React.SVGProps<SVGSVGElement>) {
   )
 }
 
-export function SharpAccountCircle(props: React.SVGProps<SVGSVGElement>) {
+export function AccountCircle(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

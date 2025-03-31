@@ -70,9 +70,9 @@ export default function HistoryTrades() {
         return
       }
       try {
-        const response = await fetch('/api/dashboard/tradeslog',{
-          method: "POST", 
-          body: JSON.stringify({ data: { id: session?.user.id } }) 
+        const response = await fetch('/api/dashboard/tradeslog', {
+          method: "POST",
+          body: JSON.stringify({ data: { id: session?.user.id } })
         });
         if (!response.ok) {
           throw new Error('Error fetching log');
@@ -134,8 +134,10 @@ export default function HistoryTrades() {
         <TableColumn key="price">Price</TableColumn>
         <TableColumn key="profit">Profit</TableColumn>
       </TableHeader>
-      <TableBody items={items}>
-        {(item:TradeHistoryData) => (
+      <TableBody
+        emptyContent={"No Trades Found"}
+        items={items}>
+        {(item: TradeHistoryData) => (
           <TableRow className="text-foreground" key={Math.random()}>
             <TableCell>{item.closeTime}</TableCell>
             <TableCell>{item.ticket}</TableCell>

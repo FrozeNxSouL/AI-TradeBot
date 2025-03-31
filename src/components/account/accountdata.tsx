@@ -1,7 +1,7 @@
 "use client"
 
 import { parseDate } from "@internationalized/date"
-import { Button } from "@heroui/button"
+import { Button, PressEvent } from "@heroui/button"
 import { Card, CardBody, CardHeader } from "@heroui/card"
 import { Input } from "@heroui/input"
 import { User } from "@prisma/client"
@@ -23,7 +23,7 @@ export default function AccountProfileCard({ userData }: { userData: User }) {
                 isError: false
             },
             credit: {
-                regex: /^[0-9]{13}$/,
+                regex: /^[0-9]{16}$/,
                 errorMsg: "Enter your Credit Card Number Correctly",
                 isError: false
             },
@@ -51,132 +51,31 @@ export default function AccountProfileCard({ userData }: { userData: User }) {
         setSuccess(false);
     }, [data])
 
-    // const openPasswordBox = () => {
-    //     const { current, new1, new2 } = password;
-    //     const newErrors = { current: false, new1: false, new2: false };
-
-    //     if (!current) {
-    //         newErrors.current = true;
-    //         setError("กรุณากรอกรหัสผ่านปัจจุบัน");
-    //     }
-
-    //     if (new1 !== new2) {
-    //         newErrors.new1 = true;
-    //         newErrors.new2 = true;
-    //         setError("รหัสผ่านไม่ตรง");
-    //     }
-
-    //     if (!new1 || !new2) {
-    //         newErrors.new1 = true;
-    //         newErrors.new2 = true;
-    //         setError("กรุณากรอก ช่องรหัสผ่านที่จะเปลี่ยน");
-    //     }
-
-    //     setPasswordErrors(newErrors);
-    //     return !newErrors.current && !newErrors.new1 && !newErrors.new2;
-    // }
-
-
     const changePasswordValidation = () => {
         const { current, new1, new2 } = password;
         const newErrors = { current: false, new1: false, new2: false };
 
         if (!current) {
             newErrors.current = true;
-            setError("กรุณากรอกรหัสผ่านปัจจุบัน");
+            setError("Input your current password");
         }
 
         if (new1 !== new2) {
             newErrors.new1 = true;
             newErrors.new2 = true;
-            setError("รหัสผ่านไม่ตรง");
+            setError("New password is incorrect");
         }
 
         if (!new1 || !new2) {
             newErrors.new1 = true;
             newErrors.new2 = true;
-            setError("กรุณากรอก ช่องรหัสผ่านที่จะเปลี่ยน");
+            setError("Input your new password");
         }
 
         setPasswordErrors(newErrors);
         return !newErrors.current && !newErrors.new1 && !newErrors.new2;
     }
 
-    const handleEditProfile = async () => {
-        setLoading(true);
-        let group_password = null;
-        if (userData.provider == "credentials") {
-            if (!changePasswordValidation()) {
-                setLoading(false);
-                return;
-            } else if (isSelected) {
-                group_password = password
-            }
-        }
-
-        // Check for empty required fields (both null and empty string)
-        if (!data.user_email || !data.user_card) {
-            setValidation((prevValidation) => ({
-                ...prevValidation,
-                result: {
-                    isError: true,
-                    errorMsg: "กรุณากรอกข้อมูลให้ครบถ้วน",
-                },
-            }));
-            setLoading(false);
-            return;
-        }
-
-        // Additional validation checks if any
-        if (validation.email.isError || validation.credit.isError) {
-            setValidation((prevValidation) => ({
-                ...prevValidation,
-                result: {
-                    isError: true,
-                    errorMsg: "กรุณากรอกข้อมูลให้ถูกต้อง",
-                },
-            }));
-            setLoading(false);
-            return;
-        }
-
-        // Send data to the server
-        const response = await fetch('/api/modify_account', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                id: data.user_id,
-                email: data.user_email,
-                card: data.user_card,
-                group_password
-            }),
-        });
-
-        const result = await response.json();
-        if (result.error) {
-            setValidation((prevValidation) => ({
-                ...prevValidation,
-                result: {
-                    isError: true,
-                    errorMsg: result.error,
-                },
-            }));
-        } else {
-            setValidation((prevValidation) => ({
-                ...prevValidation,
-                result: {
-                    isError: false,
-                    errorMsg: "",
-                },
-            }));
-            setSuccess(true);
-        }
-        setLoading(false);
-        update();
-        router.refresh();
-    };
 
     const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setData({ ...data, user_email: e.target.value })
@@ -199,6 +98,97 @@ export default function AccountProfileCard({ userData }: { userData: User }) {
         }
         setValidation(newValidation)
     }
+
+    async function handleEditProfile(e: PressEvent) {  // ✅ Make handleEditProfile async
+        setLoading(true);
+        let group_password = null;
+        if (userData.provider == "credentials") {
+            if (isSelected && !changePasswordValidation()) {
+                setLoading(false);
+                return;
+            } else if (isSelected) {
+                group_password = password;
+            }
+        }
+
+        // Check for empty required fields (both null and empty string)
+        if (!data.user_email || !data.user_card) {
+            setValidation((prevValidation) => ({
+                ...prevValidation,
+                result: {
+                    isError: true,
+                    errorMsg: "Input all data",
+                },
+            }));
+            setLoading(false);
+            return;
+        }
+
+        // Additional validation checks if any
+        if (validation.email.isError || validation.credit.isError) {
+            setValidation((prevValidation) => ({
+                ...prevValidation,
+                result: {
+                    isError: true,
+                    errorMsg: "Incorrect input",
+                },
+            }));
+            setLoading(false);
+            return;
+        }
+
+        // Send data to the server
+        try {
+            const response = await fetch('/api/modify_account', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id: data.user_id,
+                    email: data.user_email,
+                    card: data.user_card,
+                    group_password
+                }),
+            });
+
+            const result = await response.json();
+            if (result.error) {
+                setValidation((prevValidation) => ({
+                    ...prevValidation,
+                    result: {
+                        isError: true,
+                        errorMsg: result.error,
+                    },
+                }));
+            } else {
+                setValidation((prevValidation) => ({
+                    ...prevValidation,
+                    result: {
+                        isError: false,
+                        errorMsg: "",
+                    },
+                }));
+                setSuccess(true);
+            }
+        } catch (error) {
+            console.error("Error updating profile:", error);
+            setValidation((prevValidation) => ({
+                ...prevValidation,
+                result: {
+                    isError: true,
+                    errorMsg: "Something went wrong. Please try again.",
+                },
+            }));
+        } finally {
+            setLoading(false);
+            update();
+            router.refresh();
+        }
+    }
+
+
+
 
     return (
         <Card className="w-2/5 p-5">
@@ -256,7 +246,7 @@ export default function AccountProfileCard({ userData }: { userData: User }) {
                     </>
                 )}
                 {validation.result.isError && <span className="auth-error">{validation.result.errorMsg}</span>}
-                {success && <span className="text-success-500">แก้ไขข้อมูลสำเร็จ</span>}
+                {success && <span className="text-success-500">Profile has been changed</span>}
                 {/* <Button isLoading={loading} spinner={<Spinner color="white" size="sm" />} onClick={handleEditProfile} radius="full" color="primary">Save</Button> */}
                 <Button isLoading={loading} onPress={handleEditProfile} color='primary' variant='shadow' className="w-full font-semibold">Save</Button>
             </CardBody>
