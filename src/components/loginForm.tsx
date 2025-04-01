@@ -49,7 +49,7 @@ export default function LoginForm({ onClose }: { onClose: () => void }) {
                 ...prevValidation,
                 result: {
                     isError: true,
-                    errorMsg: "กรุณากรอกข้อมูลให้ครบถ้วน"
+                    errorMsg: "Please input all data"
                 },
             }));
             setLoading(false);

@@ -7,12 +7,16 @@ import TestingComponent from "@/components/testingComponent";
 import { prisma } from "@/lib/prisma_client";
 import { serverSession } from "@/lib/serverSession";
 import { RoleAvailable } from "@/types/types";
-import { routeProtection } from "@/utils/functions";
+import { redirect } from "next/navigation";
 
 export default async function Admin() {
     const session = await serverSession()
-    // await routeProtection(RoleAvailable.Admin, session?.user.role || "")
 
+    let currentRole = session?.user.role
+
+    if (currentRole === RoleAvailable.User || !currentRole) {
+        redirect("/");
+    }
     let userData = await prisma.user.findMany()
     let modaldata = await prisma.model.findMany()
     let usagedata = await prisma.usage.findMany()

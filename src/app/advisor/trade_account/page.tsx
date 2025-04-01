@@ -1,12 +1,11 @@
 "use client"
+import { TradeProvider } from "@/types/types";
 import { Button } from "@heroui/button";
 import { Divider } from "@heroui/divider";
-import { Link } from "@heroui/link";
-import { useState } from "react";
-import { Select, SelectItem } from "@heroui/select";
 import { Input } from "@heroui/input";
-import { TradeProvider } from "@/types/types";
+import { Select, SelectItem } from "@heroui/select";
 import { useSession } from "next-auth/react";
+import { useState } from "react";
 
 export default function AccountForm() {
     const session = useSession()
@@ -38,7 +37,6 @@ export default function AccountForm() {
             setError("");
         }
         setLoading(false);
-        // onClose();
     }
 
 
@@ -75,14 +73,13 @@ export default function AccountForm() {
                         placeholder="Enter your Account"
                         className="pl-16 w-5/12 text-foreground"
                         isRequired
-                        // isInvalid={validation.password.isError}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setData(e.target.value)}
                         value={data}
                         type="text"
                         variant="bordered"
                     />
-                    <Button isLoading={loading} type="submit" color='primary' size="lg" variant='ghost' className="w-full font-semibold text-foreground text-md mt-10">Create</Button>
-                    <p className="text-foreground">{error}</p>
+                    <p className="items-center text-danger h-5 font-medium">{error}</p>
+                    <Button isLoading={loading} type="submit" color='primary' size="lg" variant='ghost' className="w-full font-semibold text-foreground text-md">Create</Button>
                 </form>
             </div>
         </div>

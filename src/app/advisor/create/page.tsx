@@ -1,15 +1,12 @@
 "use client"
-import AdvisorCard from "@/components/advisor/advisorCard";
+import { Modeltype, Timeframetype } from "@/types/types";
 import { Button } from "@heroui/button";
-import { Divider } from "@heroui/divider";
-import { Input } from "@heroui/input";
-import { Link } from "@heroui/link";
-import { useEffect, useState } from "react";
-import { Select, SelectedItems, SelectItem } from "@heroui/select";
-import { Modeltype, Timeframetype, TradeProvider } from "@/types/types";
 import { Chip } from "@heroui/chip";
-import { useSession } from "next-auth/react";
+import { Divider } from "@heroui/divider";
+import { Select, SelectedItems, SelectItem } from "@heroui/select";
 import { Account, Model } from "@prisma/client";
+import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 
 export default function CreateAdvisor() {
     const session = useSession()
@@ -86,7 +83,7 @@ export default function CreateAdvisor() {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ data : { uid:session.data?.user.id, mid:Number(inputModel), aid:Number(inputAccount)} })
+            body: JSON.stringify({ data: { uid: session.data?.user.id, mid: Number(inputModel), aid: Number(inputAccount) } })
         });
 
         const result = await response.json();
@@ -98,35 +95,6 @@ export default function CreateAdvisor() {
         setLoading(false);
     }
 
-    // const broker = [
-    //     {
-    //         id: 1,
-    //         name: "85245896",
-    //         provider: "MetaTrader"
-    //     },
-    //     {
-    //         id: 2,
-    //         name: "25458964",
-    //         provider: "MetaTrader"
-    //     },
-    // ];
-
-    // const models = [
-    //     {
-    //         id: 1,
-    //         model_type: "USDCAD - M1",
-    //         model_id: "X85436",
-    //         model_date: "02/02/22",
-    //         version: "10"
-    //     },
-    //     {
-    //         id: 2,
-    //         model_type: "USDJPY - M1",
-    //         model_id: "X85432",
-    //         model_date: "02/03/22",
-    //         version: "12"
-    //     },
-    // ];
     return (
         <div className="flex flex-col px-10 py-7 w-full">
             <div className="flex flex-col w-fit">
@@ -198,7 +166,7 @@ export default function CreateAdvisor() {
                                     variant="underlined"
                                     placeholder="Select Trading Account for Advisor"
                                     value={inputAccount}
-                                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) => 
+                                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
                                         setInputAccount(e.target.value)
                                     }
                                     items={accData}
@@ -240,7 +208,7 @@ export default function CreateAdvisor() {
                                     variant="underlined"
                                     placeholder="Select an Available Model"
                                     value={inputModel}
-                                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) => 
+                                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
                                         setInputModel(e.target.value)
                                     }
                                     items={modelData}
@@ -291,8 +259,8 @@ export default function CreateAdvisor() {
                             </div>
                         </>
                     )}
+                    <p className="items-center text-danger h-5 font-medium">{errorMsg}</p>
                     <Button isLoading={loading} type="submit" color='primary' size="lg" variant='ghost' className="w-full font-semibold text-foreground text-md">Create</Button>
-                    <p className="text-black">{errorMsg}</p>
                 </form>
             </div>
 

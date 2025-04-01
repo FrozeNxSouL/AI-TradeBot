@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(request: NextRequest) {
     const body = await request.json();
 
-    const { path, currency, timeframe } = body.data;
+    const { path, currency, timeframe, id } = body.data;
 
     try {
         const findlast = await prisma.model.findFirst({
@@ -22,6 +22,7 @@ export async function POST(request: NextRequest) {
 
             const insert = await prisma.model.create({
                 data: {
+                    model_id:id,
                     model_timeframe: timeframe,
                     model_currency: currency,
                     model_version: 1,
@@ -42,6 +43,7 @@ export async function POST(request: NextRequest) {
 
             const insert = await prisma.model.create({
                 data: {
+                    model_id:id,
                     model_timeframe: timeframe,
                     model_currency: currency,
                     model_version: findlast.model_version + 1,
@@ -59,6 +61,7 @@ export async function POST(request: NextRequest) {
             }
         }
     } catch (error) {
+        console.log(error)
         return NextResponse.json({ status: 500 });
     }
 }

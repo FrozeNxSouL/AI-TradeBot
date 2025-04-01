@@ -3,21 +3,27 @@
 import AdvisorCard from "@/components/advisor/advisorCard";
 import FileDownloader from "@/components/advisor/downloader";
 import { RoleAvailable } from "@/types/types";
-import { routeProtection } from "@/utils/functions";
 import { Divider } from "@heroui/divider";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Advisor() {
     const [usageData, setUsageData] = useState([]);
     const session = useSession()
+    const router = useRouter();
     useEffect(() => {
         const fetchUsageData = async () => {
             if (session.status == "loading") {
                 return
             }
             try {
-                await routeProtection(RoleAvailable.User, (session?.data?.user.role || ""))
+                let currentRole = session.data?.user.role
+                if (currentRole === RoleAvailable.Admin) {
+                    router.push("/admin");
+                } else if (!currentRole) {
+                    router.push("/");
+                }
             } catch (error) {
                 console.error("Redirect error:", error);
             }
@@ -55,15 +61,10 @@ export default function Advisor() {
                 <Divider className="my-4 bg-foreground h-0.5" />
             </div>
             <div className="flex justify-end w-full">
-                <FileDownloader
-                    filePath={"/files"}
-                    fileName={"moneyglitch.zip"}
-                    buttonText="Download"
-                    className="text-xs px-2 py-1"
-                />
-                {/* <p>kuy</p> */}
+
+                <FileDownloader />
             </div>
-            <div className="flex w-full px-5 py-10 gap-5">
+            <div className="grid grid-cols-3 w-full px-5 py-10 gap-5">
                 {usageData.map((usage: any) => (
                     <AdvisorCard
                         key={usage.usage_id}

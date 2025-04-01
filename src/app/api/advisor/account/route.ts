@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
         })
 
         if (searching) {
-            return NextResponse.json({ error: "Already Created" }, { status: 400 });
+            return NextResponse.json({ error: "Account is already created" }, { status: 400 });
         } else {
             const newAccount = await prisma.account.create({
                 data: {

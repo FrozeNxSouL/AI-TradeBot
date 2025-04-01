@@ -1,6 +1,6 @@
 
 import Google from "next-auth/providers/google";
-import { compare } from "bcrypt";
+import { compare } from "bcryptjs";
 
 import { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
@@ -53,7 +53,6 @@ export const authOptions: NextAuthOptions = {
             if (account?.provider == "google") {
                 token.id = profile?.sub!,
                 token.email = profile?.email!,
-                // token.name = profile?.name!,
                 token.provider = "google"
 
                 let existedUser = await prisma.user.findFirst({
@@ -69,26 +68,19 @@ export const authOptions: NextAuthOptions = {
                         }
                     });
                 }
-                // console.log("token :",token)
-                // console.log("user :",user)
-                // console.log("account :",account)
-                // console.log("profile :",profile)
 
             }
             if (user) {
-                // If a new user signs in, assign token from user object
                 token.id = user.id;
-                // token.name = user.name;
                 token.role = user.role;
             }
-            // Fetch fresh user data from the database every time the token is requested
+
             const dbUser = await prisma.user.findFirst({
                 where: { user_id: token.id as string }
             });
 
     
             if (dbUser) {
-                // token.name = dbUser.user_name;
                 token.role = dbUser.user_role;
                 token.email = dbUser.user_email;
             }
@@ -107,8 +99,9 @@ export const authOptions: NextAuthOptions = {
             return session;
         }
     },
-    // pages: {
-    //     signIn: "/signin"
-    // },
+    pages: {
+        signIn: "/",
+        error: "/"
+    },
     secret: process.env.AUTH_SECRET
 }

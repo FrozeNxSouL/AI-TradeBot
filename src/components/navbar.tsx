@@ -18,7 +18,7 @@ import { Tabs, Tab } from "@heroui/tabs";
 import LoginForm from "./loginForm";
 import SignUpForm from "./signUpForm";
 import { signOut, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { PaymentStatus, RoleAvailable } from "@/types/types";
 import { Chip } from "@heroui/chip";

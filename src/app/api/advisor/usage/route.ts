@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma_client";
-import { LogStatus, UsageStatus } from "@/types/types";
+import { LogStatus, UsageStatus, UserStatus } from "@/types/types";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
@@ -61,13 +61,31 @@ export async function PUT(request: NextRequest) {
         if (usage_id == null || newStatus == null) {
             return NextResponse.json({ error: 'Missing usage_id' }, { status: 400 });
         }
-
-        const updatedUsage = await prisma.usage.update({
-            where: { usage_id },
-            data: { usage_status: newStatus }
+        const finduser = await prisma.usage.findFirst({
+            select: {
+                usage_id: true,
+                usage_status: true,
+                usage_account: {
+                    select: {
+                        acc_user: true
+                    }
+                }
+            },
+            where: {
+                usage_id,
+            },
         });
-
-        return NextResponse.json({ message: "Status updated", data: updatedUsage }, { status: 200 });
+        if (finduser) {
+            if (finduser.usage_account.acc_user.user_status != UserStatus.Suspend) {
+                const updatedUsage = await prisma.usage.update({
+                    where: { usage_id },
+                    data: { usage_status: newStatus }
+                });
+                return NextResponse.json({ message: "Status updated", data: updatedUsage }, { status: 200 });
+            } else {
+                return NextResponse.json({ message: "Need to pay for bill before change expert advisor status", data: finduser.usage_status }, { status: 201 });
+            }
+        }
     } catch (error: any) {
         console.error(error);
         return NextResponse.json({ error: "Failed to update status" }, { status: 500 });

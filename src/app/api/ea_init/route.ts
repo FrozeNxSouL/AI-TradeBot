@@ -11,33 +11,20 @@ export async function POST(request: NextRequest) {
         const exist = await prisma.usage.findFirst({
             include: {
                 usage_account: true,
-                // usage_log: true
+                usage_model: true
             },
             where: {
                 usage_account: {
-                    // AND: [
-                    //     { acc_name: account },
-                    //     { acc_client: provider }
-                    // ]
                     acc_name: account ,
                     acc_client: provider
                 },
                 usage_currency: currency,
                 usage_timeframe: timeframe,
-                // usage_log: {
-                //     some: {
-                //         log_status: LogStatus.Gethering
-                //     }
-                // }
             }
         });
 
         if (exist) {
             const log_find = await prisma.tradeLog.findFirst({
-                // include: {
-                //     log_usage: true,
-                //     // usage_log: true
-                // },
                 where: {
                     log_usage_id: exist.usage_id,
                     log_balance : 0,
@@ -76,8 +63,7 @@ export async function POST(request: NextRequest) {
                     }
                 });
             }
-
-            return NextResponse.json({ status: 200 });
+            return NextResponse.json({ modelID: exist.usage_model.model_id, status: 200 });
         } else {
             return NextResponse.json({ status: 400 });
         }

@@ -73,9 +73,6 @@ export default function ChartDashboard() {
                     {fetched && fetched.map((item, index:number) => (
                         <DashboardCard key={index} input={item}/>
                     ))}
-                    
-                    {/* <DashboardCard /> */}
-                    {/* <DashboardCard /> */}
                 </div>
             </div>
         </>

@@ -21,14 +21,9 @@ import { signUpType } from "@/types/types";
 export default function SignUpForm({ onClose }: { onClose: () => void }) {
     const [validation, setValidation] = useState(
         {
-            name: {
-                regex: /^[\wก-๙a-zA-Z]{4,30}$/,
-                errorMsg: "ต้องการอักขระ ภาษาไทย, อังกฤษจำนวน 4-30 ตัว",
-                isError: false,
-            },
             email: {
                 regex: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-                errorMsg: "กรุณากรอก email ให้ถูกต้อง",
+                errorMsg: "Incorrect Email",
                 isError: false
             },
             password: {
@@ -57,7 +52,7 @@ export default function SignUpForm({ onClose }: { onClose: () => void }) {
                 ...prevValidation,
                 result: {
                     isError: true,
-                    errorMsg: "กรุณากรอกข้อมูลให้ครบถ้วน"
+                    errorMsg: "Please input all data"
                 },
             }));
             setLoading(false);
@@ -69,7 +64,7 @@ export default function SignUpForm({ onClose }: { onClose: () => void }) {
                 ...prevValidation,
                 password: {
                     isError: true,
-                    errorMsg: "รหัสผ่านทั้ง 2 ช่องไม่ตรงกัน"
+                    errorMsg: "Password not matched"
                 },
             }));
             return;
@@ -176,7 +171,7 @@ export default function SignUpForm({ onClose }: { onClose: () => void }) {
                     />
                     {validation.result.isError && <span className="auth-error">{validation.result.errorMsg}</span>}
 
-                    <Button onPress={() => signIn("google", { callbackUrl: "/" })} className="bg-white text-black w-full border-background border-2"><IconGoogle />Sign in with Google</Button>
+                    {/* <Button onPress={() => signIn("google", { callbackUrl: "/" })} className="bg-white text-black w-full border-background border-2"><IconGoogle />Sign in with Google</Button> */}
                     {/* <div className="flex py-2 px-1 justify-between">
                         <Link color="secondary" href="#" size="sm">
                             Forgot password?

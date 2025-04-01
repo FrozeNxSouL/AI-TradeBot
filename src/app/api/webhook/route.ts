@@ -58,14 +58,7 @@ export async function POST(request: NextRequest) {
                 },
             });
 
-            if (delaybills.length > 0) {
-                const update_user = await prisma.user.findFirst({
-                    where: {
-                        user_id: userID,
-                        user_status: UserStatus.Suspend
-                    }
-                });
-            } else {
+            if (delaybills.length <= 0) {
                 const update_user = await prisma.user.findFirst({
                     where: {
                         user_id: userID,

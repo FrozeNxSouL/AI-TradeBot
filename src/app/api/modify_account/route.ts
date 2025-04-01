@@ -1,6 +1,6 @@
 
 import { prisma } from "@/lib/prisma_client";
-import { compare, hashSync } from "bcrypt";
+import { compare, hashSync } from "bcryptjs";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
 
     if (group_password) {
         if (group_password.new1 != group_password.new2) {
-            return NextResponse.json({ error: 'New password are not same' });
+            return NextResponse.json({ error: 'New passwords not matched' });
         }
         const userData = await prisma.user.findFirst({
             where: {

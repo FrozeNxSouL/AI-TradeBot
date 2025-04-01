@@ -1,6 +1,6 @@
 
 import { prisma } from "@/lib/prisma_client";
-import { hashSync } from "bcrypt";
+import { hashSync } from "bcryptjs";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {

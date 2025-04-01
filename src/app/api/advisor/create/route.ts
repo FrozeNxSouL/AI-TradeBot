@@ -8,7 +8,7 @@ export async function POST(request: NextRequest) {
         if (!uid || !mid || !aid) {
             return NextResponse.json({ error: 'Please fill out all required fields' }, { status: 400 })
         }
-
+        
         const model = await prisma.model.findFirst({
             where: {
                 model_id: Number(mid)
@@ -24,6 +24,18 @@ export async function POST(request: NextRequest) {
         if (!model || !acc) {
             return NextResponse.json({ error: 'Database fail to search' }, { status: 500 })
         } else {
+            const findduplicate = await prisma.usage.findFirst({
+                where: {
+                    usage_currency: model.model_currency,
+                    usage_timeframe : model.model_timeframe,
+                    usage_account_id : acc.acc_id,
+                    usage_model_id : Number(mid),
+                } 
+            });
+
+            if (findduplicate) {
+                return NextResponse.json({ error: 'Duplicate expert advisor' }, { status: 400 })
+            }
             const usage = await prisma.usage.create({
                 data: {
                     usage_currency: model.model_currency,
