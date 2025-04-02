@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 
 export default function HistoryBills() {
     const { data: session, status } = useSession()
-    const [loading, setLoading] = useState(true);
+    // const [loading, setLoading] = useState(true);
     const [bills, setBills] = useState([]);
     const [fee, setFee] = useState(0);
 
@@ -18,7 +18,7 @@ export default function HistoryBills() {
             }
             try {
                 // Reset states
-                setLoading(true);
+                // setLoading(true);
 
                 const response = await fetch('/api/billing', {
                     method: "POST",
@@ -32,9 +32,9 @@ export default function HistoryBills() {
                 const filtered = output.billData.filter((bill: BillsPayload) => bill.bill_status === PaymentStatus.Done)
                 setBills(filtered);
                 setFee(output.fee)
-                setLoading(false);
+                // setLoading(false);
             } catch {
-                setLoading(false);
+                // setLoading(false);
             }
         }
 

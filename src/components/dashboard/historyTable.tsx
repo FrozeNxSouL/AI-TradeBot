@@ -22,26 +22,22 @@ export default function HistoryTrades() {
 
   useEffect(() => {
     const fecthData = async () => {
-      if (status != "authenticated") {
-        return
-      }
       try {
-        const response = await fetch('/api/dashboard/tradeslog', {
-          method: "POST",
-          body: JSON.stringify({ data: { id: session?.user.id } })
-        });
-        if (!response.ok) {
-          throw new Error('Error fetching log');
+        if (status == "authenticated") {
+          const response = await fetch('/api/dashboard/tradeslog', {
+            method: "POST",
+            body: JSON.stringify({ data: { id: session.user.id } })
+          });
+          if (!response.ok) {
+            throw new Error('Error fetching log');
+          }
+          const data = await response.json();
+          // console.log(data)
+          const converted = Array.isArray(data.trades) ? data.trades : []
+          setFetched(converted);
+          setPages(Math.ceil(converted.length / rowsPerPage))
+          setLoading(false)
         }
-        const data = await response.json();
-        // console.log(data)
-        const converted = Array.isArray(data.trades) ? data.trades : []
-        setFetched(converted);
-        setPages(Math.ceil(converted.length / rowsPerPage))
-        // console.log(converted)
-        // console.log(converted.length())
-        // console.log(typeof (converted))
-        setLoading(false)
       }
       catch (error) {
         console.error('Error fetching log:', error);
@@ -50,10 +46,6 @@ export default function HistoryTrades() {
     fecthData();
   }, [status]);
 
-  // setPages(Math.ceil(fetched.length() | 1 / rowsPerPage))
-  // console.log(typeof fetched)
-  // console.log(Array.isArray(fetched), fetched.length);
-  // console.log(fetched)
 
   const items = React.useMemo(() => {
     const start = (page - 1) * rowsPerPage;

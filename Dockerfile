@@ -1,6 +1,3 @@
-# # syntax=docker/dockerfile:1
-
-
 
 FROM node:18-alpine AS dependencies
 
@@ -22,32 +19,61 @@ COPY . .
 RUN npx prisma generate
 
 EXPOSE 3000
-CMD ["npm", "run", "dev"]
+# CMD ["npm", "run", "dev"]
+CMD ["sh", "-c", "node server.js & npm run dev"]
 
 
 # Use Node.js base image
-FROM node:18
+# FROM node:18
 
-# Set working directory
-WORKDIR /app
+# # Set working directory
+# WORKDIR /app
 
-# Copy package.json and install dependencies
-COPY package.json package-lock.json ./
-RUN npm install
+# # Copy package.json and install dependencies
+# COPY package.json package-lock.json ./
+# RUN npm install
 
-# Copy the rest of the app files
-COPY . .
-
-# Start the app
-CMD ["node", "server.js"]
-
-# RUN npm run build
-# CMD ["npm", "run", "dev"]
-# # Copy rest of the application files
+# # Copy the rest of the app files
 # COPY . .
 
-# # Build the app (if needed)
+# # Start the app
+# CMD ["node", "server.js"]
 
+# Install dependencies
+# FROM node:18-alpine AS dependencies
+# WORKDIR /app
+# COPY package.json package-lock.json ./
+# RUN npm install
 
-# # Start the application
-# CMD ["npm", "run", "dev"]
+# # Build the application
+# FROM node:18-alpine AS builder
+# WORKDIR /app
+# COPY --from=dependencies /app/node_modules ./node_modules
+# COPY . .
+
+# # Generate Prisma client
+# RUN npx prisma generate
+
+# # Build the Next.js app
+# RUN npm run build
+
+# # Create a lightweight production image
+# FROM node:18-alpine AS runner
+# WORKDIR /app
+
+# # Copy built files and node_modules
+# COPY --from=builder /app/node_modules ./node_modules
+# COPY --from=builder /app/.next ./.next
+# COPY --from=builder /app/public ./public
+# COPY --from=builder /app/package.json ./
+# COPY --from=builder /app/src/utils/server.js ./server.js 
+
+# # Set environment variables
+# ENV NODE_ENV=production
+
+# # Expose port
+# EXPOSE 3000
+
+# # Run both Next.js and server.js
+# CMD ["sh", "-c", "node server.js & npm run start"]
+

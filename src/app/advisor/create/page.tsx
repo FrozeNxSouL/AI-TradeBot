@@ -22,24 +22,23 @@ export default function CreateAdvisor() {
     useEffect(() => {
         const fecthData = async () => {
             try {
-                if (session.status != "authenticated") {
-                    return
-                }
-                const response = await fetch('/api/advisor/find_acc', {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({ data: { id: session.data?.user.id } })
-                });
-                if (!response.ok) {
-                    throw new Error('Failed to Account');
-                }
-                const data = await response.json();
-                console.log(data.accounts)
-                setAccData(data.accounts);
+                if (session.status == "authenticated") {
+                    const response = await fetch('/api/advisor/find_acc', {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({ data: { id: session.data.user.id } })
+                    });
+                    if (!response.ok) {
+                        throw new Error('Failed to Account');
+                    }
+                    const data = await response.json();
+                    console.log(data.accounts)
+                    setAccData(data.accounts);
 
-                // setLoading(false)
+                    // setLoading(false)
+                }
             }
             catch (error) {
                 console.error('Error fetching Account:', error);

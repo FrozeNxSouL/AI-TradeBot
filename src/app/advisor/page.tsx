@@ -4,7 +4,6 @@ import AdvisorCard from "@/components/advisor/advisorCard";
 import FileDownloader from "@/components/advisor/downloader";
 import { RoleAvailable, UsageForAdvisor } from "@/types/types";
 import { Divider } from "@heroui/divider";
-import { Usage } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -35,16 +34,16 @@ export default function Advisor() {
 
     useEffect(() => {
         const fetchUsageData = async () => {
-            if (session.status != "authenticated") {
-                return
-            }
             try {
-                const res = await fetch("/api/advisor/usage", { method: "POST", body: JSON.stringify({ data: { uid: session.data?.user.id } }) });
-                const json = await res.json();
-                if (res.ok) {
-                    setUsageData(json.data);
-                } else {
-                    console.log("Error fetching usage:", json.error);
+                if (session.status == "authenticated") {
+
+                    const res = await fetch("/api/advisor/usage", { method: "POST", body: JSON.stringify({ data: { uid: session.data.user.id } }) });
+                    const json = await res.json();
+                    if (res.ok) {
+                        setUsageData(json.data);
+                    } else {
+                        console.log("Error fetching usage:", json.error);
+                    }
                 }
             } catch (error) {
                 console.log("API error:", error);
@@ -55,7 +54,7 @@ export default function Advisor() {
     }, [session.status]);
 
     return (
-        <div className="flex flex-col px-10 py-7 w-full">
+        <div className="flex flex-col px-10 py-7 w-full min-h-[calc(100vh-4rem)]">
             <div className="flex flex-col w-fit">
                 <p className="font-bold text-3xl text-foreground uppercase pr-20">Expert Advisors</p>
                 <Divider className="my-4 bg-foreground h-0.5" />

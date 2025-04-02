@@ -25,7 +25,7 @@ export default async function Admin() {
     const admindata = await prisma.admin_Data.findMany()
 
     return (
-        <div className="flex flex-col text-black px-10 py-12 items-center w-full space-y-5 gap-3">
+        <div className="flex flex-col text-black px-10 py-12 items-center w-full space-y-5 gap-3 min-h-[calc(100vh-4rem)]">
             <h2 className="text-xl font-bold">Users Table</h2>
             <TableComponent data={userData} columns={["user_id", "user_email", "user_role", "provider"]} />
 

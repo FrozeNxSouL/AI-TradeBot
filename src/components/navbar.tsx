@@ -24,34 +24,30 @@ export default function MainNavbar() {
     const { data: session, status } = useSession();
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
-    const [loading, setLoading] = useState(true);
     const [arrivelength, setArrivelength] = useState<number>(0);
     const [latelength, setLatelength] = useState<number>(0);
 
     useEffect(() => {
         async function fetchData() {
-            if (status != "authenticated") {
-                return
-            }
+
             try {
                 // Reset states
-                setLoading(true);
-
-                const response = await fetch('/api/billing', {
-                    method: "POST",
-                    body: JSON.stringify({ data: { id: session?.user.id } })
-                });
-                if (response.ok) {
-                    // Transform data to match the expected format
-                    const output = await response.json();
-                    const arrivebilllength = output.billData.filter((bill: BillsPayload) => bill.bill_status == PaymentStatus.Arrive).length
-                    const latebilllength = (output.billData.filter((bill: BillsPayload) => bill.bill_status == PaymentStatus.Delay)).length
-                    setArrivelength(arrivebilllength);
-                    setLatelength(latebilllength)
-                    setLoading(false);
+                if (status == "authenticated") {
+                    const response = await fetch('/api/billing', {
+                        method: "POST",
+                        body: JSON.stringify({ data: { id: session.user.id } })
+                    });
+                    if (response.ok) {
+                        // Transform data to match the expected format
+                        const output = await response.json();
+                        const arrivebilllength = output.billData.filter((bill: BillsPayload) => bill.bill_status == PaymentStatus.Arrive).length
+                        const latebilllength = (output.billData.filter((bill: BillsPayload) => bill.bill_status == PaymentStatus.Delay)).length
+                        setArrivelength(arrivebilllength);
+                        setLatelength(latebilllength)
+                    }
                 }
             } catch {
-                setLoading(false);
+                console.log("Navbar Failed")
             }
         }
 

@@ -15,7 +15,6 @@ import { Tooltip } from "@heroui/tooltip";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import CheckoutPage from "./checkoutPage";
-import { ReactElement, JSXElementConstructor, ReactNode, ReactPortal } from "react";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY || "")
 
@@ -26,7 +25,7 @@ export default function BillCard({ input, fee, userID }: { input: BillsPayload, 
 
     // Determine status color and icon
     const getStatusDetails = () => {
-        let output: { color: "warning" | "danger" | "success" | "default" | "foreground" | "primary" | "secondary", icon: ReactElement }
+        let output: { color: "warning" | "danger" | "success" | "default" | "foreground" | "primary" | "secondary", icon: any }
         switch (input.bill_status) {
             case PaymentStatus.Arrive:
                 output = {

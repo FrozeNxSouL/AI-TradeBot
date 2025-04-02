@@ -2,6 +2,7 @@
 import { TiingoData, UsageWithRelations } from "@/types/types";
 import { Card, CardFooter } from "@heroui/card";
 import { Chip } from "@heroui/chip";
+import { Skeleton } from "@heroui/skeleton";
 
 import ReactECharts from 'echarts-for-react';
 import { useEffect, useState } from "react";
@@ -45,7 +46,25 @@ export default function DashboardCard({ input }: { input: UsageWithRelations }) 
 
     // If loading, show a loading state
     if (loading) {
-        return <Card><div className="flex justify-center items-center w-[475px] h-96 bg-foreground-300 text-2xl text-background font-normal capitalize">Loading...</div></Card>;
+        return (
+            <Card className="bg-foreground-300 w-[475px] h-96 space-y-5 p-4" radius="lg">
+                <Skeleton className="rounded-lg">
+                    <div className="h-96 rounded-lg bg-default-300" />
+                </Skeleton>
+                <div className="space-y-1.5">
+                    <Skeleton className="w-full rounded-lg">
+                        <div className="h-3 w-3/5 rounded-lg bg-default-200" />
+                    </Skeleton>
+                    <Skeleton className="w-full rounded-lg">
+                        <div className="h-3 w-4/5 rounded-lg bg-default-200" />
+                    </Skeleton>
+                    <Skeleton className="w-full rounded-lg">
+                        <div className="h-3 w-2/5 rounded-lg bg-default-300" />
+                    </Skeleton>
+                </div>
+            </Card>
+
+        );
     }
 
     // If error, show error message
