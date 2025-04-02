@@ -2,6 +2,15 @@
 import { TiingoData } from '@/types/types';
 import { NextRequest, NextResponse } from 'next/server';
 
+interface TiingoAPIData {
+    date: Date
+    ticker: string
+    open: number
+    high: number
+    low: number
+    close: number
+}
+
 export async function POST(request: NextRequest) {
     // Extract search params
     try {
@@ -66,7 +75,7 @@ export async function POST(request: NextRequest) {
         const sliced = data.slice(startIndex);
 
         // Transform data to match the expected format
-        const transformedData: TiingoData[] = sliced.map((item: any) => ({
+        const transformedData: TiingoData[] = sliced.map((item: TiingoAPIData) => ({
             time: new Date(item.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
             price: item.close,
             date: `${new Date(item.date).getFullYear()}-${String(new Date(item.date).getMonth() + 1).padStart(2, '0')

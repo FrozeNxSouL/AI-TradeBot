@@ -81,8 +81,8 @@ export default function Insight() {
                 setFetched(processedUsages);
                 setLoading(false)
             }
-            catch (error) {
-                console.error('Error fetching log:', error);
+            catch {
+                console.log('Error fetching log');
             }
         }
         fecthData();
@@ -259,53 +259,60 @@ export default function Insight() {
                     <Divider className="my-4 bg-foreground h-0.5" />
                     <p className="text-medium text-foreground-500 capitalize">presenting key data insights concisely.</p>
                 </div>
-                <div className="flex flex-col items-center w-full px-5 my-10 gap-16">
-                    {/* Currency Distribution Pie Chart */}
-                    <ReactEChartsCore
-                        echarts={echarts}
-                        option={currencyDistributionOption}
-                        notMerge={true}
-                        lazyUpdate={true}
-                        style={{ height: '400px', width: "100%" }}
-                    />
-                    {/* Profit Line Chart */}
-                    <ReactEChartsCore
-                        echarts={echarts}
-                        option={profitLineChartOption}
-                        notMerge={true}
-                        lazyUpdate={true}
-                        style={{ height: '400px', width: "100%" }}
-                    />
-                    {/* Performance Summary */}
-                    <div className="bg-white shadow rounded-lg p-4 w-full">
-                        <h2 className="text-xl text-primary font-bold p-4 rounded-lg bg-foreground opacity-90">Trading Performance Summary</h2>
-                        <Divider className="my-4 bg-foreground h-0.5" />
-                        <div className="grid grid-cols-3 gap-20 py-3 px-10">
-                            <div>
+                {loading ? (
+                    <div className="bg-foreground opacity-10 w-full h-48 flex justify-center items-center rounded-lg">
+                        <p className="text-2xl text-foreground-300 font-normal capitalize my-28 p-4">Loading...</p>
+                    </div>
+                ) : (
+                    <div className="flex flex-col items-center w-full px-5 my-10 gap-16">
+                        {/* Currency Distribution Pie Chart */}
+                        <ReactEChartsCore
+                            echarts={echarts}
+                            option={currencyDistributionOption}
+                            notMerge={true}
+                            lazyUpdate={true}
+                            style={{ height: '400px', width: "100%" }}
+                        />
+                        {/* Profit Line Chart */}
+                        <ReactEChartsCore
+                            echarts={echarts}
+                            option={profitLineChartOption}
+                            notMerge={true}
+                            lazyUpdate={true}
+                            style={{ height: '400px', width: "100%" }}
+                        />
+                        {/* Performance Summary */}
+                        <div className="bg-white shadow rounded-lg p-4 w-full">
+                            <h2 className="text-xl text-primary font-bold p-4 rounded-lg bg-foreground opacity-90">Trading Performance Summary</h2>
+                            <Divider className="my-4 bg-foreground h-0.5" />
+                            <div className="grid grid-cols-3 gap-20 py-3 px-10">
+                                <div>
 
-                                <p className="text-md font-medium text-foreground">Total Accounts</p>
-                                <Divider className="my-1 bg-foreground" />
-                                <p className="text-2xl font-bold text-primary">{insights.totalAccounts}</p>
-                            </div>
-                            <div>
+                                    <p className="text-md font-medium text-foreground">Total Accounts</p>
+                                    <Divider className="my-1 bg-foreground" />
+                                    <p className="text-2xl font-bold text-primary">{insights.totalAccounts}</p>
+                                </div>
+                                <div>
 
-                                <p className="text-md font-medium text-foreground">Total Profit</p>
-                                <Divider className="my-1 bg-foreground" />
-                                <p className={`text-2xl font-semibold ${insights.totalProfit >= 0 ? 'text-primary' : 'text-danger'}`}>
-                                    {insights.totalProfit.toFixed(2)} $
-                                </p>
-                            </div>
-                            <div>
+                                    <p className="text-md font-medium text-foreground">Total Profit</p>
+                                    <Divider className="my-1 bg-foreground" />
+                                    <p className={`text-2xl font-semibold ${insights.totalProfit >= 0 ? 'text-primary' : 'text-danger'}`}>
+                                        {insights.totalProfit.toFixed(2)} $
+                                    </p>
+                                </div>
+                                <div>
 
-                                <p className="text-md font-medium text-foreground">Avg. Profit</p>
-                                <Divider className="my-1 bg-foreground" />
-                                <p className={`text-2xl font-semibold ${insights.averageProfit >= 0 ? 'text-primary' : 'text-danger'}`}>
-                                    {insights.averageProfit.toFixed(2)} $
-                                </p>
+                                    <p className="text-md font-medium text-foreground">Avg. Profit</p>
+                                    <Divider className="my-1 bg-foreground" />
+                                    <p className={`text-2xl font-semibold ${insights.averageProfit >= 0 ? 'text-primary' : 'text-danger'}`}>
+                                        {insights.averageProfit.toFixed(2)} $
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                )}
+
             </div>
         </>
     );

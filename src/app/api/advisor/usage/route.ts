@@ -48,8 +48,7 @@ export async function POST(request: NextRequest) {
                 return NextResponse.json({ message: "Usage Found", data: usage }, { status: 200 });
             }
         }
-    } catch (error: any) {
-        console.log(error)
+    } catch {
         return NextResponse.json({ error: "Error fetching data" }, { status: 500 });
     }
 }
@@ -86,8 +85,7 @@ export async function PUT(request: NextRequest) {
                 return NextResponse.json({ message: "Pay the bill before change status", data: finduser.usage_status }, { status: 201 });
             }
         }
-    } catch (error: any) {
-        console.error(error);
+    } catch {
         return NextResponse.json({ error: "Failed to update status" }, { status: 500 });
     }
 }

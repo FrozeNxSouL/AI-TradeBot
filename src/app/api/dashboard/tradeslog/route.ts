@@ -46,12 +46,12 @@ export async function POST(request: NextRequest) {
 
         return NextResponse.json({ trades: combinedTrades });
 
-    } catch (error: any) {
+    } catch (error) {
         console.log(error)
         return NextResponse.json(
             {
                 message: "Error fetching trade logs",
-                error: error.message
+                error: error
             },
             { status: 500 }
         );

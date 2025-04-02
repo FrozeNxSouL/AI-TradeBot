@@ -1,6 +1,4 @@
-import { Button } from "@heroui/button";
 import { Divider } from "@heroui/divider";
-import Link from "next/link";
 
 
 export default function Documentation() {

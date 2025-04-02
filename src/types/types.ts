@@ -27,12 +27,6 @@ export enum RoleAvailable {
     Admin = 'admin',
 }
 
-// export enum TimeframeAvailable  {
-//     M1 = 0,
-//     H1 = 1,
-//     D1 = 2,
-// }
-
 export enum UserStatus {
     Active = 0,
     Suspend = 1,
@@ -76,11 +70,11 @@ export enum LogStatus {
 export interface TradeHistoryData {
     ticket: number;
     symbol: string;
-    type: "Buy" | "Sell";  // Enforce valid trade types
+    type: "Buy" | "Sell";
     lots: number;
     price: number;
     profit: number;
-    closeTime: String;  // Store as Unix timestamp initially
+    closeTime: string;
 }
 
 export interface TiingoData {
@@ -100,4 +94,46 @@ export type UsageWithRelations = Prisma.UsageGetPayload<{
     alltimeProfit: number;
 };
 
-  
+
+export type BillsPayload = Prisma.BillingGetPayload<{
+    select: {
+        bill_id: true,
+        bill_create_date: true,
+        bill_expire_date: true,
+        bill_cost: true,
+        bill_status: true,
+        bill_log: {
+            select: {
+                log_profit: true,
+                log_balance: true,
+                log_start_date: true,
+                log_trades: true,
+                log_usage: {
+                    select: {
+                        usage_currency: true,
+                        usage_timeframe: true,
+                        usage_account: {
+                            select: {
+                                acc_client: true,
+                                acc_name: true,
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}>
+
+
+export type UsageForAdvisor = Prisma.UsageGetPayload<{
+    include: {
+        usage_model: true,
+        usage_log: {
+            where: { log_status: LogStatus.Gethering },
+            select: {
+                log_start_date: true,
+            },
+        },
+    }
+}>

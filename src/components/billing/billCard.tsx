@@ -1,5 +1,5 @@
 "use client"
-import { PaymentStatus } from "@/types/types";
+import { BillsPayload, PaymentStatus } from "@/types/types";
 import { CalendarIcon, CheckCircle, CurrencyIcon, ListIcon, MoneySVG, PaymentIcon, TrendingUpIcon, WatchLater } from "@/utils/icon";
 import { Button } from "@heroui/button";
 import { Card, CardBody } from "@heroui/card";
@@ -14,20 +14,19 @@ import {
 import { Tooltip } from "@heroui/tooltip";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import { useState } from "react";
 import CheckoutPage from "./checkoutPage";
+import { ReactElement, JSXElementConstructor, ReactNode, ReactPortal } from "react";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY || "")
 
-export default function BillCard({ input, fee, userID }: { input: any, fee: number, userID: string }) {
-    const [loading, setLoading] = useState(false);
+export default function BillCard({ input, fee, userID }: { input: BillsPayload, fee: number, userID: string }) {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
     const profitPercentage = ((input.bill_log.log_profit * 100) / input.bill_log.log_balance).toFixed(2);
 
     // Determine status color and icon
     const getStatusDetails = () => {
-        let output: { color: "warning" | "danger" | "success" | "default" | "foreground" | "primary" | "secondary", icon: any }
+        let output: { color: "warning" | "danger" | "success" | "default" | "foreground" | "primary" | "secondary", icon: ReactElement }
         switch (input.bill_status) {
             case PaymentStatus.Arrive:
                 output = {
@@ -194,7 +193,7 @@ export default function BillCard({ input, fee, userID }: { input: any, fee: numb
                 onOpenChange={onOpenChange}
             >
                 <ModalContent>
-                    {(onClose) => (
+                    {() => (
                         <>
                             <ModalHeader className="flex flex-col gap-1 text-background p-5 bg-foreground text-2xl">Payment</ModalHeader>
                             <ModalBody>
@@ -203,7 +202,7 @@ export default function BillCard({ input, fee, userID }: { input: any, fee: numb
                                     options={{
                                         mode: "payment",
                                         amount: Math.abs(positive),
-                                        currency: "usd"
+                                        currency: "thb"
                                     }}
                                 >
                                     <CheckoutPage amount={Math.abs(positive)} billID={input.bill_id} userID={userID} />

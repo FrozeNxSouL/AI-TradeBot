@@ -1,6 +1,6 @@
 "use client"
 
-import { Button, PressEvent } from "@heroui/button"
+import { Button } from "@heroui/button"
 import { Card, CardBody, CardHeader } from "@heroui/card"
 import { Input } from "@heroui/input"
 import { Switch } from "@heroui/switch"
@@ -43,7 +43,7 @@ export default function AccountProfileCard({ userData }: { userData: User }) {
         new1: false,
         new2: false,
     });
-    const { data: session, update } = useSession();
+    const { update } = useSession();
     const [data, setData] = useState<User>(userData);
 
     useEffect(() => {
@@ -78,7 +78,7 @@ export default function AccountProfileCard({ userData }: { userData: User }) {
 
     const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setData({ ...data, user_email: e.target.value })
-        let newValidation = validation
+        const newValidation = validation
         if (!validation.email.regex.test(e.target.value)) {
             newValidation.email.isError = true
         } else {
@@ -89,7 +89,7 @@ export default function AccountProfileCard({ userData }: { userData: User }) {
 
     const handleIdCardChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setData({ ...data, user_card: e.target.value })
-        let newValidation = validation
+        const newValidation = validation
         if (!validation.credit.regex.test(e.target.value)) {
             newValidation.credit.isError = true
         } else {
@@ -98,7 +98,7 @@ export default function AccountProfileCard({ userData }: { userData: User }) {
         setValidation(newValidation)
     }
 
-    async function handleEditProfile(e: PressEvent) {  // ✅ Make handleEditProfile async
+    async function handleEditProfile() {  // ✅ Make handleEditProfile async
         setLoading(true);
         let group_password = null;
         if (userData.provider == "credentials") {
@@ -170,8 +170,7 @@ export default function AccountProfileCard({ userData }: { userData: User }) {
                 }));
                 setSuccess(true);
             }
-        } catch (error) {
-            console.error("Error updating profile:", error);
+        } catch {
             setValidation((prevValidation) => ({
                 ...prevValidation,
                 result: {
@@ -180,6 +179,7 @@ export default function AccountProfileCard({ userData }: { userData: User }) {
                 },
             }));
         } finally {
+            setError(null)
             setLoading(false);
             update();
             router.refresh();
@@ -205,6 +205,7 @@ export default function AccountProfileCard({ userData }: { userData: User }) {
                         </div>
                         {isSelected && (
                             <>
+                                {error && <span className="auth-error">{error}</span>}
                                 <Input
                                     isRequired
                                     variant="underlined"

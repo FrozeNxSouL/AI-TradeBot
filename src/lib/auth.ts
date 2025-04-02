@@ -1,8 +1,9 @@
 
-import Google from "next-auth/providers/google";
 import { compare } from "bcryptjs";
+import Google from "next-auth/providers/google";
 
 import { NextAuthOptions } from "next-auth";
+import { JWT } from "next-auth/jwt";
 import Credentials from "next-auth/providers/credentials";
 import { prisma } from "./prisma_client";
 
@@ -87,7 +88,7 @@ export const authOptions: NextAuthOptions = {
     
             return token;
         },
-        async session({ session, token }: { session: any; token: any }) {
+        async session({ session, token }: { session: any; token: JWT }) {
             // Sync session with updated token data
             if (token) {
                 session.user.id = token.id;

@@ -33,6 +33,7 @@ export default function ChartDashboard() {
 
     useEffect(() => {
         const fecthData = async () => {
+            setLoading(true)
             if (status != "authenticated") {
                 return
             }
@@ -65,12 +66,16 @@ export default function ChartDashboard() {
                     <Divider className="my-4 bg-foreground h-0.5" />
                     <p className="text-medium text-foreground-500 capitalize">A visual representation of expert advisor performance.</p>
                 </div>
-
-                <div className="flex flex-wrap w-full px-5 py-10 gap-10">
-                    {fetched && fetched.map((item, index:number) => (
-                        <DashboardCard key={index} input={item}/>
-                    ))}
-                </div>
+                {loading ? (
+                    <>
+                    </>
+                ) : (
+                    <div className="flex flex-wrap w-full px-5 py-10 gap-10">
+                        {fetched && fetched.map((item, index: number) => (
+                            <DashboardCard key={index} input={item} />
+                        ))}
+                    </div>
+                )}
             </div>
         </>
     );

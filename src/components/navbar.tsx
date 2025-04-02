@@ -10,7 +10,7 @@ import {
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@heroui/navbar";
 import { AccountCircle, Book2Line, Exit, MoneySVG, WatchLater } from "../utils/icon";
 
-import { PaymentStatus, RoleAvailable } from "@/types/types";
+import { BillsPayload, PaymentStatus, RoleAvailable } from "@/types/types";
 import { Chip } from "@heroui/chip";
 import { Tab, Tabs } from "@heroui/tabs";
 import { signOut, useSession } from "next-auth/react";
@@ -25,7 +25,6 @@ export default function MainNavbar() {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
     const [arrivelength, setArrivelength] = useState<number>(0);
     const [latelength, setLatelength] = useState<number>(0);
 
@@ -37,24 +36,21 @@ export default function MainNavbar() {
             try {
                 // Reset states
                 setLoading(true);
-                setError(null);
 
                 const response = await fetch('/api/billing', {
                     method: "POST",
                     body: JSON.stringify({ data: { id: session?.user.id } })
                 });
-                if (!response.ok) {
-                    throw new Error('Failed to fetch data from Tiingo');
+                if (response.ok) {
+                    // Transform data to match the expected format
+                    const output = await response.json();
+                    const arrivebilllength = output.billData.filter((bill: BillsPayload) => bill.bill_status == PaymentStatus.Arrive).length
+                    const latebilllength = (output.billData.filter((bill: BillsPayload) => bill.bill_status == PaymentStatus.Delay)).length
+                    setArrivelength(arrivebilllength);
+                    setLatelength(latebilllength)
+                    setLoading(false);
                 }
-                // Transform data to match the expected format
-                const output = await response.json();
-                const arrivebilllength = output.billData.filter((bill: any) => bill.bill_status == PaymentStatus.Arrive).length
-                const latebilllength = (output.billData.filter((bill: any) => bill.bill_status == PaymentStatus.Delay)).length
-                setArrivelength(arrivebilllength);
-                setLatelength(latebilllength)
-                setLoading(false);
-            } catch (err) {
-                setError(err instanceof Error ? err.message : 'An unknown error occurred');
+            } catch {
                 setLoading(false);
             }
         }

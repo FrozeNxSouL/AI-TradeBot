@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
 
         const paymentIntent = await stripe.paymentIntents.create({
             amount,
-            currency: "usd",
+            currency: "thb",
             automatic_payment_methods: { enabled:true},
             metadata: {
                 billid: billID,

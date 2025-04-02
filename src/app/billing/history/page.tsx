@@ -1,6 +1,6 @@
 "use client"
 import BillCard from "@/components/billing/billCard";
-import { PaymentStatus } from "@/types/types";
+import { BillsPayload, PaymentStatus } from "@/types/types";
 import { Divider } from "@heroui/divider";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 export default function HistoryBills() {
     const { data: session, status } = useSession()
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
     const [bills, setBills] = useState([]);
     const [fee, setFee] = useState(0);
 
@@ -20,7 +19,6 @@ export default function HistoryBills() {
             try {
                 // Reset states
                 setLoading(true);
-                setError(null);
 
                 const response = await fetch('/api/billing', {
                     method: "POST",
@@ -31,12 +29,11 @@ export default function HistoryBills() {
                 }
                 // Transform data to match the expected format
                 const output = await response.json();
-                const filtered = output.billData.filter((bill: any) => bill.bill_status === PaymentStatus.Done)
+                const filtered = output.billData.filter((bill: BillsPayload) => bill.bill_status === PaymentStatus.Done)
                 setBills(filtered);
                 setFee(output.fee)
                 setLoading(false);
-            } catch (err) {
-                setError(err instanceof Error ? err.message : 'An unknown error occurred');
+            } catch {
                 setLoading(false);
             }
         }
@@ -54,7 +51,7 @@ export default function HistoryBills() {
                 </div>
                 <div className="flex flex-col items-center w-full px-5 py-10 gap-5">
                     {bills && status === "authenticated" && bills.length > 0 && bills
-                        .map((bill: any) => (
+                        .map((bill: BillsPayload) => (
                             <BillCard
                                 key={bill.bill_id}
                                 input={bill}

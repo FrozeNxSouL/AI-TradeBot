@@ -3,7 +3,6 @@
 import AdminSettings from "@/components/admin/adminData";
 import TableComponent from "@/components/admin/tableComponent";
 import UserList from "@/components/admin/userTable";
-import TestingComponent from "@/components/testingComponent";
 import { prisma } from "@/lib/prisma_client";
 import { serverSession } from "@/lib/serverSession";
 import { RoleAvailable } from "@/types/types";
@@ -51,8 +50,6 @@ export default async function Admin() {
             <AdminSettings />
 
             <UserList adminid={session?.user.id || ""} />
-
-            <TestingComponent />
         </div>
     )
 }

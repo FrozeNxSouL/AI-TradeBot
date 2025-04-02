@@ -41,14 +41,12 @@ export async function POST(request: NextRequest) {
                     usage_currency: model.model_currency,
                     usage_timeframe : model.model_timeframe,
                     usage_token : "",
-                    // usage_account_id : acc.acc_id,
                     usage_account : {
                         connect: {acc_id : acc.acc_id}
                     },
                     usage_model : {
                         connect : {model_id: model.model_id}
                     },
-                    // usage_model_id : Number(mid),
                     usage_collection_date : new Date()
                 } 
             });
@@ -72,8 +70,7 @@ export async function POST(request: NextRequest) {
             }
         }
         
-    } catch (error: any) {
-        console.log(error)
+    } catch {
         return NextResponse.json({ error: "Error fetching data" }, { status: 500 });
     }
 }

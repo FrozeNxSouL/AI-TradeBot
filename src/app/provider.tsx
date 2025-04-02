@@ -9,6 +9,7 @@ export function Providers({children}: { children: React.ReactNode }) {
   const router = useRouter();
   const { theme, setTheme } = useTheme()
   setTheme('light')
+  console.log(theme)
 
   return (
     <HeroUIProvider navigate={router.push}>

@@ -16,7 +16,7 @@ export default function CheckoutPage({ amount, billID , userID}: { amount: numbe
             setLoading(true);
 
             console.log("in check ", amount)
-            const response = await fetch('/api/create-payment-intent', {
+            await fetch('/api/create-payment-intent', {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

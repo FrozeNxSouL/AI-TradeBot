@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma_client";
-import { LogStatus, UsageStatus } from "@/types/types";
+import { UsageStatus } from "@/types/types";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
                 return NextResponse.json({ message: "Usage Found", data: usage }, { status: 200 });
             }
         }
-    } catch (error: any) {
+    } catch (error) {
         console.log(error)
         return NextResponse.json({ error: "Error fetching data" }, { status: 500 });
     }

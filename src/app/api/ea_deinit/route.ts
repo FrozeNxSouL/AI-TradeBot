@@ -1,6 +1,7 @@
 
 import { prisma } from "@/lib/prisma_client";
 import { LogStatus, TradeHistoryData, UsageStatus } from "@/types/types";
+import { InputJsonValue } from "@prisma/client/runtime/library";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
@@ -17,7 +18,6 @@ export async function POST(request: NextRequest) {
         const exist = await prisma.usage.findFirst({
             include: {
                 usage_account: true,
-                // usage_log: true
             },
             where: {
                 usage_account: {
@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
             }
         });
         if (exist) {
-            const updated = await prisma.usage.update({
+            await prisma.usage.update({
                 where: {
                     usage_id: exist.usage_id
                 },
@@ -49,28 +49,34 @@ export async function POST(request: NextRequest) {
             });
 
             if (log_find) {
-                let tradelist: any = log_find.log_trades || []
-                tradelist.push(...formattedData);
-                let sumOfProfit = formattedData.reduce((sum, { profit }) => sum + profit, 0);
+
+                const tradelist: TradeHistoryData[] = [...log_find.log_trades as unknown as TradeHistoryData[], ...formattedData];
+
+                const tradelistJson: InputJsonValue[] = tradelist.map((trade) => ({
+                    ...trade,
+                    closeTime: String(trade.closeTime) 
+                }));
+
+                const sumOfProfit = formattedData.reduce((sum, { profit }) => sum + profit, 0);
 
                 if (log_find.log_balance == 0) {
-                    const log_update = await prisma.tradeLog.update({
+                    await prisma.tradeLog.update({
                         where: {
                             log_id: log_find.log_id
                         },
                         data: {
-                            log_trades: tradelist,
+                            log_trades: tradelistJson,
                             log_balance: balance,
                             log_profit: log_find.log_profit + sumOfProfit
                         }
                     });
                 } else {
-                    const log_update = await prisma.tradeLog.update({
+                    await prisma.tradeLog.update({
                         where: {
                             log_id: log_find.log_id
                         },
                         data: {
-                            log_trades: tradelist,
+                            log_trades: tradelistJson,
                             log_profit: log_find.log_profit + sumOfProfit
                         }
                     });
@@ -78,7 +84,7 @@ export async function POST(request: NextRequest) {
             }
         }
         return NextResponse.json({ status: 200 });
-    } catch (error) {
+    } catch {
         return NextResponse.json({ status: 500 });
     }
 }

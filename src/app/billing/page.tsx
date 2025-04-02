@@ -8,7 +8,7 @@ import LateBills from "./late/page";
 
 export default async function Billing() {
     const session = await serverSession()
-    let currentRole = session?.user.role
+    const currentRole = session?.user.role
     if (currentRole === RoleAvailable.Admin) {
         redirect("/admin");
     } else if (!currentRole) {

@@ -12,49 +12,6 @@ import { TradeHistoryData } from "@/types/types";
 import { Pagination } from "@heroui/pagination";
 import { useSession } from "next-auth/react";
 
-// export const trades = [
-//   {
-//     date: "20/02/22",
-//     ticket: "82547546",
-//     symbol: "USDJPY",
-//     type: "BUY",
-//     price: "152.25",
-//     profit: "0.525"
-//   },
-//   {
-//     date: "20/02/22",
-//     ticket: "82547544",
-//     symbol: "USDJPY",
-//     type: "BUY",
-//     price: "152.25",
-//     profit: "0.525"
-//   },
-//   {
-//     date: "20/02/22",
-//     ticket: "82547549",
-//     symbol: "USDJPY",
-//     type: "BUY",
-//     price: "152.25",
-//     profit: "0.525"
-//   },
-//   {
-//     date: "20/02/22",
-//     ticket: "82547576",
-//     symbol: "USDJPY",
-//     type: "BUY",
-//     price: "152.25",
-//     profit: "0.525"
-//   },
-//   {
-//     date: "20/02/22",
-//     ticket: "62547546",
-//     symbol: "USDJPY",
-//     type: "BUY",
-//     price: "152.25",
-//     profit: "0.525"
-//   }
-// ];
-
 export default function HistoryTrades() {
   const [page, setPage] = useState(1);
   const { data: session, status } = useSession();
@@ -135,6 +92,7 @@ export default function HistoryTrades() {
       </TableHeader>
       <TableBody
         emptyContent={"No Trades Found"}
+        isLoading={loading}
         items={items}>
         {(item: TradeHistoryData) => (
           <TableRow className="text-foreground" key={Math.random()}>

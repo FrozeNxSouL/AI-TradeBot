@@ -9,7 +9,7 @@ import TradeArchive from "./trade_archive/page";
 
 export default async function Dashboard() {
     const session = await serverSession()
-    let currentRole = session?.user.role
+    const currentRole = session?.user.role
     if (currentRole === RoleAvailable.Admin) {
         redirect("/admin");
     } else if (!currentRole) {

@@ -16,13 +16,13 @@ export async function POST(request: NextRequest) {
                 acc_user_id: id
             },
             include: {
-                acc_usage: true 
+                acc_usage: true
             }
         })
 
         return NextResponse.json({ accounts }, { status: 200 });
 
-    } catch (error: any) {
-        return NextResponse.json({ message: "Error fetching data", error: error.message }, { status: 500 });
+    } catch {
+        return NextResponse.json({ message: "Error fetching data", error: "Error fetching data" }, { status: 500 });
     }
 }

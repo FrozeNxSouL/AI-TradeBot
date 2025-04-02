@@ -1,10 +1,10 @@
 "use client";
-import { UsageStatus } from "@/types/types";
+import { UsageForAdvisor, UsageStatus } from "@/types/types";
 import { Card, CardFooter, CardHeader } from "@heroui/card";
 import { Switch } from "@heroui/switch";
 import { useState } from "react";
 
-export default function AdvisorCard({ usage }: any) {
+export default function AdvisorCard({ usage }: { usage: UsageForAdvisor }) {
     const [isSelected, setIsSelected] = useState(usage.usage_status == UsageStatus.Active);
     const [errorMSG, setErrorMSG] = useState<string>("");
     const [lock, setLock] = useState<boolean>(false);

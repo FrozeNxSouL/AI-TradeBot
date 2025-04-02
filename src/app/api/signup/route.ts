@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(request: NextRequest) {
     const body = await request.json();
     const { email, password, repass } = body.data;
-    if (!email || !password || !repass ) {
+    if (!email || !password || !repass) {
         return NextResponse.json({ error: 'Please fill out all required fields' })
     }
 
@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
     }
 
     const hashedPassword = await hashSync(password, 10);
-    const user = await prisma.user.create({
+    await prisma.user.create({
         data: {
             user_email: email,
             user_password: hashedPassword

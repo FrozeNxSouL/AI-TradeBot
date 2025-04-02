@@ -23,6 +23,7 @@
     "@heroui/navbar": "^2.2.12",
     "@heroui/pagination": "^2.2.14",
     "@heroui/select": "^2.4.15",
+    "@heroui/skeleton": "^2.2.10",
     "@heroui/switch": "^2.2.12",
     "@heroui/system": "^2.4.12",
     "@heroui/table": "^2.2.12",

@@ -2,8 +2,9 @@
 
 import AdvisorCard from "@/components/advisor/advisorCard";
 import FileDownloader from "@/components/advisor/downloader";
-import { RoleAvailable } from "@/types/types";
+import { RoleAvailable, UsageForAdvisor } from "@/types/types";
 import { Divider } from "@heroui/divider";
+import { Usage } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -25,7 +26,7 @@ export default function Advisor() {
                     router.push("/");
                 }
             } catch (error) {
-                console.error("Redirect error:", error);
+                console.log("Redirect error:", error);
             }
         };
 
@@ -41,13 +42,12 @@ export default function Advisor() {
                 const res = await fetch("/api/advisor/usage", { method: "POST", body: JSON.stringify({ data: { uid: session.data?.user.id } }) });
                 const json = await res.json();
                 if (res.ok) {
-                    console.log(json.data)
                     setUsageData(json.data);
                 } else {
-                    console.error("Error fetching usage:", json.error);
+                    console.log("Error fetching usage:", json.error);
                 }
             } catch (error) {
-                console.error("API error:", error);
+                console.log("API error:", error);
             }
         };
 
@@ -65,7 +65,7 @@ export default function Advisor() {
                 <FileDownloader />
             </div>
             <div className="grid grid-cols-3 w-full px-5 py-10 gap-5">
-                {usageData.map((usage: any) => (
+                {usageData.map((usage: UsageForAdvisor) => (
                     <AdvisorCard
                         key={usage.usage_id}
                         usage={usage}

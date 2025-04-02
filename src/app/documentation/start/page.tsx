@@ -1,10 +1,5 @@
 "use client"
-import { Button } from "@heroui/button";
 import { Divider } from "@heroui/divider";
-import { Link } from "@heroui/link";
-import { useState } from "react";
-import { Select, SelectItem } from "@heroui/select";
-import { Input } from "@heroui/input";
 
 export default function Starting(){
     return (

@@ -13,7 +13,7 @@ import { useRef } from 'react';
 
 export default function Home() {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const router = useRouter()
   const { scrollYProgress } = useScroll();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();

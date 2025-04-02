@@ -100,7 +100,7 @@ export default function SignUpForm({ onClose }: { onClose: () => void }) {
 
     const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setData({ ...data, email: e.target.value })
-        let newValidation = validation
+        const newValidation = validation
         if (!validation.email.regex.test(e.target.value)) {
             newValidation.email.isError = true
         } else {

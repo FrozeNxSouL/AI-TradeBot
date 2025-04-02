@@ -65,10 +65,10 @@ export async function POST(request: NextRequest) {
         } else {
             throw new Error("undefined data in bill searching")
         }
-    } catch (error: any) {
+    } catch (error) {
         return NextResponse.json({
             message: 'error in billing',
-            error: error.message,
+            error: error,
         }, { status: 500 });
     }
 
