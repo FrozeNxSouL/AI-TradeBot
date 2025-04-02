@@ -1,15 +1,16 @@
 "use client";
 import { UsageStatus } from "@/types/types";
-import { Card, CardHeader, CardFooter } from "@heroui/card";
+import { Card, CardFooter, CardHeader } from "@heroui/card";
 import { Switch } from "@heroui/switch";
 import { useState } from "react";
 
-export default function AdvisorCard({ usage } : any) {
-    const [isSelected, setIsSelected] = useState(usage.usage_status ==  UsageStatus.Active); 
-    console.log(usage, "usage")
+export default function AdvisorCard({ usage }: any) {
+    const [isSelected, setIsSelected] = useState(usage.usage_status == UsageStatus.Active);
+    const [errorMSG, setErrorMSG] = useState<string>("");
+    const [lock, setLock] = useState<boolean>(false);
     const toggleStatus = async () => {
 
-        const newStatus = isSelected ? UsageStatus.Inactive : UsageStatus.Active; 
+        const newStatus = isSelected ? UsageStatus.Inactive : UsageStatus.Active;
         console.log(isSelected, newStatus, usage.usage_id)
         try {
             const res = await fetch("/api/advisor/usage", {
@@ -19,10 +20,15 @@ export default function AdvisorCard({ usage } : any) {
             });
 
             const json = await res.json();
-            if (res.ok) {
-                setIsSelected(!isSelected); // Update UI state
+            if (res.status == 200) {
+                setErrorMSG("")
+                setIsSelected(!isSelected);
+                setLock(false)
+            } else if (res.status == 201) {
+                setErrorMSG(json.message)
+                setLock(true)
             } else {
-                console.error("Error updating status:", json.error);
+                setErrorMSG(json.error)
             }
         } catch (error) {
             console.error("API error:", error);
@@ -36,8 +42,6 @@ export default function AdvisorCard({ usage } : any) {
     if (nextMonth.getDate() < new Date().getDate()) {
         nextMonth.setDate(0); // Moves to last day of the previous month
     }
-
-
 
     return (
         <Card className="py-4 w-fit h-fit p-0" radius="sm">
@@ -57,7 +61,11 @@ export default function AdvisorCard({ usage } : any) {
             <CardFooter>
                 <div className="flex items-center gap-2">
                     <Switch isSelected={isSelected} onValueChange={toggleStatus} />
-                    <p className="text-small text-default-500">Status: {isSelected ? "On" : "Off"}</p>
+                    {lock ? (
+                        <p className="text-small text-danger">{errorMSG}</p>
+                    ) : (
+                        <p className="text-small text-default-500">Status : {isSelected ? "On" : "Off"}</p>
+                    )}
                 </div>
             </CardFooter>
         </Card>

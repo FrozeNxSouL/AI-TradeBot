@@ -1,11 +1,9 @@
 "use client"
-import { Link } from "@heroui/link";
-import { Button } from "@heroui/button"
+import BillCard from "@/components/billing/billCard";
+import { PaymentStatus } from "@/types/types";
 import { Divider } from "@heroui/divider";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
-import BillCard from "@/components/billing/billCard";
-import { PaymentStatus } from "@/types/types";
 
 export default function IncomingBills() {
     const { data: session, status } = useSession()

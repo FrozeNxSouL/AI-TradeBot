@@ -18,7 +18,7 @@ export default function Advisor() {
                 return
             }
             try {
-                let currentRole = session.data?.user.role
+                const currentRole = session.data?.user.role
                 if (currentRole === RoleAvailable.Admin) {
                     router.push("/admin");
                 } else if (!currentRole) {

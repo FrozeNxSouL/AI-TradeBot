@@ -1,17 +1,15 @@
 "use client";
 
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { Link } from "@heroui/link";
-import { Card, CardBody } from '@heroui/card';
-import { ChartAreaspline, ChartTimelineVariant, Robot2Fill } from '@/utils/icon';
-import { Button } from '@heroui/button';
-import { Modal, ModalContent, useDisclosure } from '@heroui/modal';
-import { Tab, Tabs } from '@heroui/tabs';
 import LoginForm from '@/components/loginForm';
 import SignUpForm from '@/components/signUpForm';
+import { ChartAreaspline, ChartTimelineVariant, Robot2Fill } from '@/utils/icon';
+import { Card, CardBody } from '@heroui/card';
+import { Modal, ModalContent, useDisclosure } from '@heroui/modal';
+import { Tab, Tabs } from '@heroui/tabs';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { useRef } from 'react';
 
 export default function Home() {
   const videoRef = useRef<HTMLVideoElement>(null);

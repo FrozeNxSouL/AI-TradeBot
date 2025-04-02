@@ -1,12 +1,7 @@
 "use client"
-import { PaymentStatus } from "@/types/types";
-import { CalendarIcon, CheckCircle, CurrencyIcon, ListIcon, MoneySVG, PaymentIcon, TrendingUpIcon, WatchLater } from "@/utils/icon";
 import { Button } from "@heroui/button";
-import { Card, CardBody } from "@heroui/card";
-import { Tooltip } from "@heroui/tooltip";
-import { Chip } from "@heroui/chip";
+import { PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useEffect, useState } from "react";
-import { PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js"
 
 export default function CheckoutPage({ amount, billID , userID}: { amount: number, billID: number, userID:string }) {
     const [loading, setLoading] = useState(false);

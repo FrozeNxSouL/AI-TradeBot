@@ -1,7 +1,6 @@
 "use client"
 import { TiingoData, UsageWithRelations } from "@/types/types";
-import { Button } from "@heroui/button";
-import { Card, CardHeader, CardBody, CardFooter } from "@heroui/card";
+import { Card, CardFooter } from "@heroui/card";
 import { Chip } from "@heroui/chip";
 
 import ReactECharts from 'echarts-for-react';

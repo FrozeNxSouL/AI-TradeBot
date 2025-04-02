@@ -11,7 +11,7 @@ export default async function AccountProfile() {
     if (!session) {
         redirect("/")
     }
-    let userData = await prisma.user.findFirst({
+    const userData = await prisma.user.findFirst({
         where: {
             user_email: session?.user?.email
         }

@@ -1,9 +1,9 @@
+import Footer from "@/components/footer";
+import MainNavbar from "@/components/navbar";
+import SessionProvider from "@/components/sessionProvider";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import MainNavbar from "@/components/navbar";
-import Footer from "@/components/footer";
-import SessionProvider from "@/components/sessionProvider";
 import { Providers } from "./provider";
 
 

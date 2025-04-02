@@ -1,14 +1,14 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { Button } from "@heroui/button";
 import {
     Card,
-    CardHeader,
     CardBody,
-    CardFooter
-} from "@heroui/card"
-import { Input } from "@heroui/input"
-import { Button } from "@heroui/button"
+    CardFooter,
+    CardHeader
+} from "@heroui/card";
+import { Input } from "@heroui/input";
+import { useEffect, useState } from 'react';
 
 export default function AdminSettings() {
     const [adminData, setAdminData] = useState({ ad_fee: 0 });

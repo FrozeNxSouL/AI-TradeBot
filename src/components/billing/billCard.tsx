@@ -3,18 +3,18 @@ import { PaymentStatus } from "@/types/types";
 import { CalendarIcon, CheckCircle, CurrencyIcon, ListIcon, MoneySVG, PaymentIcon, TrendingUpIcon, WatchLater } from "@/utils/icon";
 import { Button } from "@heroui/button";
 import { Card, CardBody } from "@heroui/card";
-import { Tooltip } from "@heroui/tooltip";
 import { Chip } from "@heroui/chip";
-import { useState } from "react";
 import {
     Modal,
+    ModalBody,
     ModalContent,
     ModalHeader,
-    ModalBody,
     useDisclosure,
 } from "@heroui/modal";
-import { Elements } from "@stripe/react-stripe-js"
-import { loadStripe } from "@stripe/stripe-js"
+import { Tooltip } from "@heroui/tooltip";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import { useState } from "react";
 import CheckoutPage from "./checkoutPage";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY || "")

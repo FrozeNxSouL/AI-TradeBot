@@ -1,11 +1,11 @@
 "use server"
+import { serverSession } from "@/lib/serverSession";
 import { RoleAvailable } from "@/types/types";
 import { Divider } from "@heroui/divider";
+import { redirect } from "next/navigation";
 import ChartDashboard from "./chart/page";
 import Insight from "./insight/page";
 import TradeArchive from "./trade_archive/page";
-import { serverSession } from "@/lib/serverSession";
-import { redirect } from "next/navigation";
 
 export default async function Dashboard() {
     const session = await serverSession()

@@ -1,27 +1,23 @@
 "use client"
-import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@heroui/navbar";
-import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@heroui/dropdown";
+import { Button } from "@heroui/button";
+import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@heroui/dropdown";
+import { Link } from "@heroui/link";
 import {
     Modal,
     ModalContent,
-    ModalHeader,
-    ModalBody,
-    ModalFooter,
-    useDisclosure,
+    useDisclosure
 } from "@heroui/modal";
-import { Input } from "@heroui/input"
-import { AccountCircle, Book2Line, Exit, LockIcon, MailIcon, MoneySVG, WatchLater } from "../utils/icon";
-import { Link } from "@heroui/link";
-import { Button } from "@heroui/button"
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@heroui/navbar";
+import { AccountCircle, Book2Line, Exit, MoneySVG, WatchLater } from "../utils/icon";
 
-import { Tabs, Tab } from "@heroui/tabs";
-import LoginForm from "./loginForm";
-import SignUpForm from "./signUpForm";
-import { signOut, useSession } from "next-auth/react";
-import { redirect, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import { PaymentStatus, RoleAvailable } from "@/types/types";
 import { Chip } from "@heroui/chip";
+import { Tab, Tabs } from "@heroui/tabs";
+import { signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import LoginForm from "./loginForm";
+import SignUpForm from "./signUpForm";
 
 export default function MainNavbar() {
     const router = useRouter()

@@ -1,21 +1,15 @@
 "use client"
-import { motion } from "framer-motion";
+import {
+    ModalBody,
+    ModalFooter
+} from "@heroui/modal";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
-import {
-    Modal,
-    ModalContent,
-    ModalHeader,
-    ModalBody,
-    ModalFooter,
-    useDisclosure,
-} from "@heroui/modal";
 
-import { Link } from "@heroui/link";
-import { Button } from "@heroui/button"
-import { Input } from "@heroui/input"
-import { IconGoogle, LockIcon, MailIcon } from "../utils/icon";
 import { signUpType } from "@/types/types";
+import { Button } from "@heroui/button";
+import { Input } from "@heroui/input";
+import { LockIcon, MailIcon } from "../utils/icon";
 
 
 export default function SignUpForm({ onClose }: { onClose: () => void }) {

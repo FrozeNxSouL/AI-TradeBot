@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
             }
         }
 
-    } catch (error:any) {
+    } catch (error) {
         return NextResponse.json({
             error: "Error prisma",
         }, {

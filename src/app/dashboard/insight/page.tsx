@@ -1,19 +1,19 @@
 "use client"
-import React, { useMemo } from 'react';
-import * as echarts from 'echarts/core';
+import ReactEChartsCore from 'echarts-for-react/lib/core';
 import {
-    GridComponent,
-    TooltipComponent,
-    LegendComponent,
-    TitleComponent
-} from 'echarts/components';
-import {
-    LineChart,
     BarChart,
+    LineChart,
     PieChart
 } from 'echarts/charts';
+import {
+    GridComponent,
+    LegendComponent,
+    TitleComponent,
+    TooltipComponent
+} from 'echarts/components';
+import * as echarts from 'echarts/core';
 import { CanvasRenderer } from 'echarts/renderers';
-import ReactEChartsCore from 'echarts-for-react/lib/core';
+import { useMemo } from 'react';
 
 // Register ECharts components
 echarts.use([
@@ -27,12 +27,12 @@ echarts.use([
     CanvasRenderer
 ]);
 
-import { Divider } from "@heroui/divider";
-import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
 import { UsageWithRelations } from "@/types/types";
+import { Divider } from "@heroui/divider";
 import { Prisma } from "@prisma/client";
 import { EChartsOption } from 'echarts';
+import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 
 export default function Insight() {
     const { data: session, status } = useSession();

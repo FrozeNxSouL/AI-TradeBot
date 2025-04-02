@@ -1,25 +1,25 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
-import {
-    Table,
-    TableHeader,
-    TableColumn,
-    TableBody,
-    TableRow,
-    TableCell,
-} from "@heroui/table";
+import { RoleAvailable, UserStatus } from '@/types/types';
+import { Button } from "@heroui/button";
+import { Chip } from "@heroui/chip";
 import {
     Dropdown,
-    DropdownTrigger,
-    DropdownMenu,
     DropdownItem,
-} from "@heroui/dropdown"
-import { Button } from "@heroui/button"
-import { Pagination } from "@heroui/pagination"
-import { Chip } from "@heroui/chip"
+    DropdownMenu,
+    DropdownTrigger,
+} from "@heroui/dropdown";
+import { Pagination } from "@heroui/pagination";
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableColumn,
+    TableHeader,
+    TableRow,
+} from "@heroui/table";
 import { User } from '@prisma/client';
-import { RoleAvailable, UserStatus } from '@/types/types';
+import { useEffect, useMemo, useState } from 'react';
 
 export default function UserList({ adminid }: { adminid: string }) {
     const [users, setUsers] = useState<User[]>([]);

@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
     }
 
     try {
-        const updatedUser = await prisma.user.update({
+        await prisma.user.update({
             where: {
                 user_id: id,
             },
@@ -52,7 +52,7 @@ export async function DELETE(request: NextRequest) {
     }
 
     try {
-        const deleteUser = await prisma.user.delete({
+        await prisma.user.delete({
             where: {
                 user_id: id,
             },

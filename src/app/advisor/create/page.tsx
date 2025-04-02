@@ -25,7 +25,6 @@ export default function CreateAdvisor() {
                 if (session.status != "authenticated") {
                     return
                 }
-                console.log(session.data?.user.id)
                 const response = await fetch('/api/advisor/find_acc', {
                     method: "POST",
                     headers: {
@@ -103,10 +102,6 @@ export default function CreateAdvisor() {
             </div>
             <div className="flex w-full justify-end items-center gap-5">
                 <form onSubmit={advisorCreate} className="flex flex-col w-full gap-5 p-5">
-                    {/* <Button isLoading={loading} spinner={
-                    <Spinner color="white" size="sm" />
-                    } type="submit" color='primary' variant='shadow' className="uppercase w-full" radius="full" >sign in</Button>
-                    <Divider className="my-3" /> */}
                     <div className="flex justify-start gap-10">
                         <div className="flex w-full flex-wrap md:flex-nowrap md:mb-0 gap-4">
                             <Select

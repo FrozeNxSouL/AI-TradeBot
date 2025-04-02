@@ -1,14 +1,13 @@
 "use client"
 
-import { parseDate } from "@internationalized/date"
 import { Button, PressEvent } from "@heroui/button"
 import { Card, CardBody, CardHeader } from "@heroui/card"
 import { Input } from "@heroui/input"
+import { Switch } from "@heroui/switch"
 import { User } from "@prisma/client"
-import { signOut, useSession } from "next-auth/react"
+import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
-import { Switch } from "@heroui/switch"
 
 export default function AccountProfileCard({ userData }: { userData: User }) {
     const router = useRouter();

@@ -1,5 +1,5 @@
-import { Link } from "@heroui/link";
 import { Divider } from "@heroui/divider";
+import { Link } from "@heroui/link";
 
 export default function AdvisorLayout({ children }: { children: React.ReactNode }) {
   return (

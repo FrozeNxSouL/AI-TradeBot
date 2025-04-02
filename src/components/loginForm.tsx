@@ -1,19 +1,14 @@
 import {
-    Modal,
-    ModalContent,
-    ModalHeader,
     ModalBody,
-    ModalFooter,
-    useDisclosure,
+    ModalFooter
 } from "@heroui/modal";
 
-import { Link } from "@heroui/link";
-import { Button } from "@heroui/button"
-import { Input } from "@heroui/input"
-import { LockIcon, MailIcon } from "../utils/icon";
-import { useState } from "react";
 import { signInType } from "@/types/types";
+import { Button } from "@heroui/button";
+import { Input } from "@heroui/input";
 import { signIn } from "next-auth/react";
+import { useState } from "react";
+import { LockIcon, MailIcon } from "../utils/icon";
 
 
 export default function LoginForm({ onClose }: { onClose: () => void }) {

@@ -12,18 +12,18 @@ import { redirect } from "next/navigation";
 export default async function Admin() {
     const session = await serverSession()
 
-    let currentRole = session?.user.role
+    const currentRole = session?.user.role
 
     if (currentRole === RoleAvailable.User || !currentRole) {
         redirect("/");
     }
-    let userData = await prisma.user.findMany()
-    let modaldata = await prisma.model.findMany()
-    let usagedata = await prisma.usage.findMany()
-    let accountdata = await prisma.account.findMany()
-    let billingdata = await prisma.billing.findMany()
-    let tradelogdata = await prisma.tradeLog.findMany()
-    let admindata = await prisma.admin_Data.findMany()
+    const userData = await prisma.user.findMany()
+    const modaldata = await prisma.model.findMany()
+    const usagedata = await prisma.usage.findMany()
+    const accountdata = await prisma.account.findMany()
+    const billingdata = await prisma.billing.findMany()
+    const tradelogdata = await prisma.tradeLog.findMany()
+    const admindata = await prisma.admin_Data.findMany()
 
     return (
         <div className="flex flex-col text-black px-10 py-12 items-center w-full space-y-5 gap-3">

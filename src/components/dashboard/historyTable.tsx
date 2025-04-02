@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from "react";
 import {
   Table,
-  TableHeader,
-  TableColumn,
   TableBody,
-  TableRow,
   TableCell,
-  getKeyValue,
+  TableColumn,
+  TableHeader,
+  TableRow
 } from "@heroui/table";
+import React, { useEffect, useState } from "react";
 
+import { TradeHistoryData } from "@/types/types";
 import { Pagination } from "@heroui/pagination";
 import { useSession } from "next-auth/react";
-import { TradeHistoryData } from "@/types/types";
 
 // export const trades = [
 //   {

@@ -83,7 +83,7 @@ export async function PUT(request: NextRequest) {
                 });
                 return NextResponse.json({ message: "Status updated", data: updatedUsage }, { status: 200 });
             } else {
-                return NextResponse.json({ message: "Need to pay for bill before change expert advisor status", data: finduser.usage_status }, { status: 201 });
+                return NextResponse.json({ message: "Pay the bill before change status", data: finduser.usage_status }, { status: 201 });
             }
         }
     } catch (error: any) {

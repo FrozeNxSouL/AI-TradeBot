@@ -1,21 +1,10 @@
 "use client"
 
 import React, { useEffect, useState } from "react";
-import {
 
-  TableHeader,
-  TableColumn,
-  TableBody,
-  TableRow,
-  TableCell,
-  getKeyValue,
-} from "@heroui/table";
-
-import { Pagination } from "@heroui/pagination";
-import { useSession } from "next-auth/react";
 import { TradeHistoryData } from "@/types/types";
 import { Button } from "@heroui/button";
-import createBillsForTradeLogs from "@/utils/functions";
+import { useSession } from "next-auth/react";
 
 // export const trades = [
 //   {
