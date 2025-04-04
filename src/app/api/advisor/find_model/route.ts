@@ -2,8 +2,8 @@ import { prisma } from "@/lib/prisma_client";
 import { NextRequest, NextResponse } from "next/server";
 
 interface Condition {
-    model_currency: string
-    model_timeframe: string
+    model_currency?: string
+    model_timeframe?: string
 }
 
 export async function POST(request: NextRequest) {
@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
         // console.log(body.data);
 
         // Dynamically construct the `where` condition
-        const whereCondition: Condition = { model_currency: "", model_timeframe: "" };
+        const whereCondition: Condition = {};
         if (currency) whereCondition.model_currency = currency;
         if (timeframe) whereCondition.model_timeframe = timeframe;
 

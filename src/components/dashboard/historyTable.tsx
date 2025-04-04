@@ -34,7 +34,7 @@ export default function HistoryTrades() {
           const data = await response.json();
           // console.log(data)
           const converted = Array.isArray(data.trades) ? data.trades : []
-          setFetched(converted);
+          setFetched(converted.reverse());
           setPages(Math.ceil(converted.length / rowsPerPage))
           setLoading(false)
         }
@@ -80,14 +80,14 @@ export default function HistoryTrades() {
         <TableColumn key="symbol">Symbol</TableColumn>
         <TableColumn key="type">Type</TableColumn>
         <TableColumn key="price">Price</TableColumn>
-        <TableColumn key="profit">Profit</TableColumn>
+        <TableColumn key="profit">Profit (฿)</TableColumn>
       </TableHeader>
       <TableBody
         emptyContent={"No Trades Found"}
         isLoading={loading}
         items={items}>
         {(item: TradeHistoryData) => (
-          <TableRow className="text-foreground" key={Math.random()}>
+          <TableRow className="text-foreground" key={item.ticket}>
             <TableCell>{item.closeTime}</TableCell>
             <TableCell>{item.ticket}</TableCell>
             <TableCell>{item.symbol}</TableCell>

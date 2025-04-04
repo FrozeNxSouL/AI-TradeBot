@@ -39,9 +39,9 @@ export default function AdvisorCard({ usage }: { usage: UsageForAdvisor }) {
     nextMonth.setMonth(nextMonth.getMonth() + 1);
 
     // If the day changes, adjust to the last day of the new month
-    if (nextMonth.getDate() < new Date().getDate()) {
-        nextMonth.setDate(0); // Moves to last day of the previous month
-    }
+    // if (nextMonth.getDate() < new Date().getDate()) {
+    //     nextMonth.setDate(0); // Moves to last day of the previous month
+    // }
 
     return (
         <Card className="py-4 w-fit h-fit p-0" radius="sm">

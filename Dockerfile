@@ -7,7 +7,6 @@ COPY package.json package-lock.json ./
 
 RUN npm install
 
-
 FROM node:18-alpine AS app
 
 WORKDIR /app
@@ -18,9 +17,12 @@ COPY . .
 # RUN npx prisma db push
 RUN npx prisma generate
 
+# RUN npm run build
+
 EXPOSE 3000
 # CMD ["npm", "run", "dev"]
-CMD ["sh", "-c", "node server.js & npm run dev"]
+# CMD ["sh", "-c", "node src/utils/server.js & npm run start"]
+CMD ["sh", "-c", "node src/utils/server.js & npm run dev"]
 
 
 # Use Node.js base image

@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
         if (!amount || amount < 0 || !billID || !userID) {
             return NextResponse.json({ error: 'Please fill out all required fields' }, { status: 400 })
         }
-
+        
         const paymentIntent = await stripe.paymentIntents.create({
             amount,
             currency: "thb",

@@ -91,9 +91,9 @@ export default function Footer() {
                             <li className="text-white/70">
                                 Email: s6504062630375@email.kmutnb.ac.th
                             </li>
-                            <li className="text-white/70">
+                            {/* <li className="text-white/70">
                                 Phone: +1 (555) 123-4567
-                            </li>
+                            </li> */}
                         </ul>
                     </div>
                 </div>

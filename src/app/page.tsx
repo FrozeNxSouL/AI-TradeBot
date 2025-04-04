@@ -34,8 +34,8 @@ export default function Home() {
       icon: <ChartAreaspline className='text-background' />
     },
     {
-      title: "AI Powered",
-      description: "AI Intelligent risk assessment and portfolio optimization strategies.",
+      title: "AI-Powered",
+      description: "AI Intelligent for risk assessment and portfolio optimization strategies.",
       icon: <Robot2Fill className='text-background' />
     }
   ];

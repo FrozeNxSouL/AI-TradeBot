@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
 
                 const tradelistJson: InputJsonValue[] = tradelist.map((trade) => ({
                     ...trade,
-                    closeTime: String(trade.closeTime) 
+                    closeTime: String(trade.closeTime)
                 }));
 
                 const sumOfProfit = formattedData.reduce((sum, { profit }) => sum + profit, 0);
@@ -73,11 +73,11 @@ export async function POST(request: NextRequest) {
                     });
                 }
             }
-            return NextResponse.json({ status: 200 });
+            return NextResponse.json({ advisor_status: UsageStatus.Active, status: 200 });
         } else {
-            return NextResponse.json({ status: 400 });
+            return NextResponse.json({ advisor_status: UsageStatus.Inactive, status: 200 });
         }
     } catch {
-        return NextResponse.json({ status: 500 });
+        return NextResponse.json({ advisor_status: UsageStatus.Inactive, status: 500 });
     }
 }

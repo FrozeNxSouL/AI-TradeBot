@@ -132,16 +132,19 @@ export default function MainNavbar() {
                                     </DropdownItem>
                                 ) : null}
 
-                                <DropdownItem
-                                    key="admin"
-                                    description="Admin"
-                                    className="text-foreground"
-                                    onPress={() => router.push(`/admin`)}
-                                >
-                                    {/* <Link color="foreground" href="/documentation"> */}
-                                    Admin Configuration
-                                    {/* </Link> */}
-                                </DropdownItem>
+                                {session.user.role == RoleAvailable.Admin ? (
+                                    <DropdownItem
+                                        key="admin"
+                                        description="Admin"
+                                        className="text-foreground"
+                                        onPress={() => router.push(`/admin`)}
+                                    >
+                                        {/* <Link color="foreground" href="/documentation"> */}
+                                        Admin Configuration
+                                        {/* </Link> */}
+                                    </DropdownItem>
+                                ) : null}
+
                                 <DropdownItem
                                     key="documentation"
                                     startContent={<Book2Line className="w-5 h-5" />}

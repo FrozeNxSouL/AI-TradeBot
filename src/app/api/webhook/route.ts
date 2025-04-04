@@ -66,10 +66,12 @@ export async function POST(request: NextRequest) {
             });
         }
         return new NextResponse("ok", { status: 200 })
-    } else {
+    } else if (event.type === "payment_intent.payment_failed" || event.type === "payment_intent.canceled") {
         return NextResponse.json(
             { error: "Payment Intent Error" },
             { status: 400 }
         );
+    } else {
+        return new NextResponse("ok", { status: 201 })
     }
 }

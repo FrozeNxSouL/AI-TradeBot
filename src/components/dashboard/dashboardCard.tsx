@@ -163,7 +163,7 @@ export default function DashboardCard({ input }: { input: UsageWithRelations }) 
                     {/* <small className="text-sm p-1 m-1 border-1 border-background rounded-2xl"></small> */}
                     <div className="flex justify-between items-baseline w-full ">
                         <h4 className="font-bold text-tiny text-background flex gap-1 w-1/2">{(input.alltimeProfit / (input.usage_init_balance || input.lastBalance || 1)).toFixed(2)} <p className="text-primary"> %</p></h4>
-                        <h4 className="font-bold text-md text-primary flex justify-around w-1/2">{input.alltimeProfit.toFixed(2)} $</h4>
+                        <h4 className="font-medium text-md text-primary flex justify-around">{input.alltimeProfit.toFixed(2)} ฿</h4>
                     </div>
 
                 </div>

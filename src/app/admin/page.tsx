@@ -13,9 +13,9 @@ export default async function Admin() {
 
     const currentRole = session?.user.role
 
-    if (currentRole === RoleAvailable.User || !currentRole) {
-        redirect("/");
-    }
+    // if (currentRole === RoleAvailable.User || !currentRole) {
+    //     redirect("/");
+    // }
     const userData = await prisma.user.findMany()
     const modaldata = await prisma.model.findMany()
     const usagedata = await prisma.usage.findMany()
@@ -26,7 +26,7 @@ export default async function Admin() {
 
     return (
         <div className="flex flex-col text-black px-10 py-12 items-center w-full space-y-5 gap-3 min-h-[calc(100vh-4rem)]">
-            <h2 className="text-xl font-bold">Users Table</h2>
+            {/* <h2 className="text-xl font-bold">Users Table</h2>
             <TableComponent data={userData} columns={["user_id", "user_email", "user_role", "provider"]} />
 
             <h2 className="text-xl font-bold mt-5">Accounts Table</h2>
@@ -45,7 +45,7 @@ export default async function Admin() {
             <TableComponent data={tradelogdata} columns={["log_id", "log_start_date", "log_balance", "log_profit", "log_status"]} />
 
             <h2 className="text-xl font-bold mt-5">Admin Table</h2>
-            <TableComponent data={admindata} columns={["ad_id", "ad_fee"]} />
+            <TableComponent data={admindata} columns={["ad_id", "ad_fee"]} /> */}
 
             <AdminSettings />
 

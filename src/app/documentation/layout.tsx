@@ -22,7 +22,7 @@ export default function DocumentLayout({ children }: { children: React.ReactNode
             Trading Provider
           </Link>
           <Link className="text-background hover:text-primary" href="/documentation/website">
-            {"Website (Spectator)"}
+            {"Website"}
           </Link>
           <Link className="text-background hover:text-primary" href="/documentation/pricing">
             Pricing
