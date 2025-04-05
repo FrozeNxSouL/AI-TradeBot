@@ -2,6 +2,18 @@
 import { prisma } from "@/lib/prisma_client";
 import { NextRequest, NextResponse } from "next/server";
 
+/**
+ * @swagger
+ * /py_model:
+ *   post:
+ *     summary: Insert new model data into database from python server
+ *     responses:
+ *       200:
+ *         description: successful response
+ *       500:
+ *         description: Prisma fail in progress
+ */
+
 export async function POST(request: NextRequest) {
     const body = await request.json();
 

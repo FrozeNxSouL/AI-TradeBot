@@ -2,6 +2,20 @@
 import Stripe from 'stripe';
 import { NextRequest, NextResponse } from 'next/server';
 
+/**
+ * @swagger
+ * /create-payment-intent:
+ *   post:
+ *     summary: Returns created payment intent
+ *     responses:
+ *       200:
+ *         description: successful response
+ *       400:
+ *         description: False Input
+ *       500:
+ *         description: Prisma fail in progress
+ */
+
 export async function POST(request: NextRequest) {
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
     try {

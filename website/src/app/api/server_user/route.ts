@@ -3,6 +3,18 @@ import { PaymentStatus, UsageStatus, UserStatus } from "@/types/types";
 import { prisma } from "@/lib/prisma_client";
 
 
+/**
+ * @swagger
+ * /server_user:
+ *   get:
+ *     summary: Return number of late bill to change user status from server schedule
+ *     responses:
+ *       200:
+ *         description: successful response
+ *       500:
+ *         description: Prisma fail in progress
+ */
+
 export async function GET() {
     try {
         const today = new Date();

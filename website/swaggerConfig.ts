@@ -13,6 +13,9 @@ export const swaggerOptions = {
         },
       ],
     },
-    apis: ['./src/app/api/**/*.ts'], // Route handler files with comments
+    apis: [
+        './app/api/**/*.ts',
+        './app/api/**/**/*.ts'
+      ],
   };
   

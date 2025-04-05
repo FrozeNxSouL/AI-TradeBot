@@ -5,8 +5,6 @@ import { NextRequest } from 'next/server';
 
 const specs = swaggerJsdoc(swaggerOptions);
 
-// Since Next.js Route Handlers don't support Express middleware directly,
-// you need a workaround: a simple page that renders the Swagger UI.
 
 export async function GET(req: NextRequest) {
   return new Response(

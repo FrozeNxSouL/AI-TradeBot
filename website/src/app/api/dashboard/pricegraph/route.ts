@@ -11,6 +11,20 @@ interface TiingoAPIData {
     close: number
 }
 
+/**
+ * @swagger
+ * /dashboard/pricegraph:
+ *   post:
+ *     summary: Returns price data for dashboard
+ *     responses:
+ *       200:
+ *         description: successful response
+ *       400:
+ *         description: False Input
+ *       500:
+ *         description: Prisma fail in progress
+ */
+
 export async function POST(request: NextRequest) {
     // Extract search params
     try {

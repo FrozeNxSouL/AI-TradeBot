@@ -2,6 +2,20 @@ import { prisma } from "@/lib/prisma_client";
 import { LogStatus, UsageStatus, UserStatus } from "@/types/types";
 import { NextRequest, NextResponse } from "next/server";
 
+/**
+ * @swagger
+ * /advisor/usage:
+ *   post:
+ *     summary: Returns usages of matched account and model result
+ *     responses:
+ *       200:
+ *         description: successful response
+ *       400:
+ *         description: False Input
+ *       500:
+ *         description: Prisma fail in progress
+ */
+
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
@@ -28,7 +42,7 @@ export async function POST(request: NextRequest) {
                             log_start_date: true,
                         },
                     },
-                    usage_account : true
+                    usage_account: true
                 },
                 where: {
                     usage_account: {
@@ -53,6 +67,23 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ error: "Error fetching data" }, { status: 500 });
     }
 }
+
+/**
+ * @swagger
+ * /advisor/usage:
+ *   put:
+ *     summary: Returns changed status usages result
+ *     responses:
+ *       200:
+ *         description: successful response
+ *       201:
+ *         description: unable to change the status
+ *       400:
+ *         description: False Input
+ *       500:
+ *         description: Prisma fail in progress
+ */
+
 
 export async function PUT(request: NextRequest) {
     try {

@@ -6,6 +6,18 @@ interface Condition {
     model_timeframe?: string
 }
 
+/**
+ * @swagger
+ * /advisor/find_model:
+ *   post:
+ *     summary: Returns searched model result
+ *     responses:
+ *       200:
+ *         description: successful response
+ *       500:
+ *         description: Prisma fail in progress
+ */
+
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json();

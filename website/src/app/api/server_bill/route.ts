@@ -2,6 +2,18 @@ import { NextResponse } from "next/server";
 import { LogStatus, PaymentStatus } from "@/types/types";
 import { prisma } from "@/lib/prisma_client";
 
+/**
+ * @swagger
+ * /server_bill:
+ *   get:
+ *     summary: Return number of processed log to create bill from server schedule
+ *     responses:
+ *       200:
+ *         description: successful response
+ *       500:
+ *         description: Prisma fail in progress
+ */
+
 
 export async function GET() {
     try {

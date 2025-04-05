@@ -1,6 +1,18 @@
 import { prisma } from "@/lib/prisma_client";
 import { NextRequest, NextResponse } from "next/server";
 
+/**
+ * @swagger
+ * /admin/user:
+ *   get:
+ *     summary: Returns all users
+ *     responses:
+ *       200:
+ *         description: successful response
+ *       500:
+ *         description: Prisma fail to return
+ */
+
 export async function GET() {
     try {
         const users = await prisma.user.findMany();
@@ -13,6 +25,21 @@ export async function GET() {
         );
     }
 }
+
+/**
+ * @swagger
+ * /admin/user:
+ *   post:
+ *     summary: Returns update a user result
+ *     responses:
+ *       200:
+ *         description: successful response
+ *       400:
+ *         description: False Input
+ *       500:
+ *         description: Prisma fail to return
+ */
+
 
 export async function POST(request: NextRequest) {
     const body = await request.json();
@@ -43,6 +70,20 @@ export async function POST(request: NextRequest) {
         );
     }
 }
+
+/**
+ * @swagger
+ * /admin/user:
+ *   delete:
+ *     summary: Returns delete a user result
+ *     responses:
+ *       200:
+ *         description: successful response
+ *       400:
+ *         description: False Input
+ *       500:
+ *         description: Prisma fail to return
+ */
 
 export async function DELETE(request: NextRequest) {
     const body = await request.json();

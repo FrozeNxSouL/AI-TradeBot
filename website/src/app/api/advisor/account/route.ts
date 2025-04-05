@@ -2,6 +2,20 @@
 import { prisma } from "@/lib/prisma_client";
 import { NextRequest, NextResponse } from "next/server";
 
+/**
+ * @swagger
+ * /advisor/account:
+ *   post:
+ *     summary: Returns edited account result
+ *     responses:
+ *       200:
+ *         description: successful response
+ *       400:
+ *         description: False Input
+ *       500:
+ *         description: Prisma fail in progress
+ */
+
 export async function POST(request: NextRequest) {
     const body = await request.json();
     const { acc, id, client } = body;

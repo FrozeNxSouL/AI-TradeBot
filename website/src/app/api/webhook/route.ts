@@ -5,6 +5,22 @@ import { PaymentStatus, UserStatus } from '@/types/types';
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 
+/**
+ * @swagger
+ * /webhook:
+ *   post:
+ *     summary: Return payment intent status
+ *     responses:
+ *       200:
+ *         description: transaction success
+ *       201:
+ *         description: transaction status has been change
+ *       400:
+ *         description: failed transaction
+ *       500:
+ *         description: internal server error
+ */
+
 export async function POST(request: NextRequest) {
     const body = await request.text();
     const signature = request.headers.get("Stripe-Signature") as string;

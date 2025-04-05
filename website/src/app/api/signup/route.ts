@@ -3,6 +3,18 @@ import { prisma } from "@/lib/prisma_client";
 import { hashSync } from "bcryptjs";
 import { NextRequest, NextResponse } from "next/server";
 
+/**
+ * @swagger
+ * /signup:
+ *   post:
+ *     summary: Return signup result
+ *     responses:
+ *       200:
+ *         description: successful response
+ *       500:
+ *         description: internal server error
+ */
+
 export async function POST(request: NextRequest) {
     const body = await request.json();
     const { email, password, repass } = body.data;

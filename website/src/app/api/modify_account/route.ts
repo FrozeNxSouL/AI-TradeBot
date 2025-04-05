@@ -3,6 +3,16 @@ import { prisma } from "@/lib/prisma_client";
 import { compare, hashSync } from "bcryptjs";
 import { NextRequest, NextResponse } from "next/server";
 
+/**
+ * @swagger
+ * /modify_account:
+ *   post:
+ *     summary: Return account modification status
+ *     responses:
+ *       200:
+ *         description: Status of modification
+ */
+
 export async function POST(req: NextRequest) {
     const body = await req.json();
     const {

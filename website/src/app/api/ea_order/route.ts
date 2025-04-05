@@ -4,6 +4,18 @@ import { LogStatus, TradeHistoryData, UsageStatus } from "@/types/types";
 import { InputJsonValue } from "@prisma/client/runtime/library";
 import { NextRequest, NextResponse } from "next/server";
 
+/**
+ * @swagger
+ * /ea_order:
+ *   post:
+ *     summary: Synchronize the log data for trades log and billing process
+ *     responses:
+ *       200:
+ *         description: successful response and trading client status
+ *       500:
+ *         description: Prisma fail in progress
+ */
+
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
