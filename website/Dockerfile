@@ -5,7 +5,7 @@ WORKDIR /dependencies
 
 COPY package.json package-lock.json ./
 
-RUN npm install
+RUN npm install --legacy-peer-deps
 
 FROM node:18-alpine AS app
 
