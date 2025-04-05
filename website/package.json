@@ -47,13 +47,18 @@
     "next-themes": "^0.4.5",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "stripe": "^17.7.0"
+    "stripe": "^17.7.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
+    "swagger-ui-react": "^5.20.6"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@types/node": "^20.17.19",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.8",
     "eslint": "^9",
     "eslint-config-next": "15.1.7",
     "patch-package": "^8.0.0",

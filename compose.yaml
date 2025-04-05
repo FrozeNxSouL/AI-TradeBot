@@ -7,7 +7,7 @@ services:
     environment:
       NODE_ENV: development
       # NODE_ENV: production
-      DATABASE_URL: "postgresql://postgres:1234567890@db:5432/tradebotdb"
+      DATABASE_URL: ${COMPOSE_DATABASE_URL}
     develop:
       watch:
         - action: sync
