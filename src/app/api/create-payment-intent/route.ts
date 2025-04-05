@@ -10,18 +10,18 @@ export async function POST(request: NextRequest) {
         if (!amount || amount < 0 || !billID || !userID) {
             return NextResponse.json({ error: 'Please fill out all required fields' }, { status: 400 })
         }
-        
+
         const paymentIntent = await stripe.paymentIntents.create({
             amount,
             currency: "thb",
-            automatic_payment_methods: { enabled:true},
+            automatic_payment_methods: { enabled: true },
             metadata: {
                 billid: billID,
-                userid: userID 
-              }
+                userid: userID
+            }
         })
 
-        return NextResponse.json({ clientSecret: paymentIntent.client_secret})
+        return NextResponse.json({ clientSecret: paymentIntent.client_secret })
 
     } catch (error) {
         console.log(error)
