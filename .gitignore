@@ -1,5 +1,5 @@
-/compose.yaml
-
 /python/__pycache__
 
 /python/models/*
+
+/.env.local

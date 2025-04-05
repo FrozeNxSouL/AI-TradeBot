@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      STRIPE_RK: ${{ secrets.STRIPE_RK }}
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      NEXT_PUBLIC_TIINGO_API_KEY: ${{ secrets.NEXT_PUBLIC_TIINGO_API_KEY }}
+      TIINGO_API_KEY: ${{ secrets.TIINGO_API_KEY }}
+      NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }
+      NEXT_PUBLIC_STRIPE_SECRET_KEY: ${{ secrets.NEXT_PUBLIC_STRIPE_SECRET_KEY }}
+      STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+      STRIPE_WEBHOOK_SECRET: ${{ secrets.STRIPE_WEBHOOK_SECRET }}
+      AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
+      AUTH_GOOGLE_ID: ${{ secrets.AUTH_GOOGLE_ID }}
+      AUTH_GOOGLE_SECRET: ${{ secrets.AUTH_GOOGLE_SECRET }}
+
+    steps:
+      - uses: actions/checkout@v3  # Use a specific stable version, e.g., v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 22.14.0
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Set up Docker
+        run: |
+          sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          sudo chmod +x /usr/local/bin/docker-compose
+      # - name: Build and run containers with Docker Compose
+      #   run: |
+      #     cd Web_AI_Real/backend/djangoai_backend/
+      #     chmod +x entrypoint.sh
+      #     cd ..
+      #     docker-compose -f docker-compose.prod.yml up --build -d
+      # - name: Wait for containers to be ready
+      #   run: sleep 30
+      - name: Build Docker
+        run: |
+          docker-compose up --build
+      - name: Stop Docker containers
+        run: |
+          docker-compose -f docker-compose.prod.yml down
