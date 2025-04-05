@@ -11,18 +11,23 @@ FROM node:18-alpine AS app
 
 WORKDIR /app
 
-COPY --from=dependencies /dependencies/node_modules .
+COPY --from=dependencies /dependencies/node_modules ./node_modules
 COPY . .
+COPY prisma ./prisma
 
-# RUN npx prisma db push
+ENV NODE_ENV=production
+ENV NODE_OPTIONS=--max-old-space-size=2048
+ENV NEXT_IGNORE_TYPE_ERRORS=true
+ENV NEXT_DISABLE_ESLINT=true
+
 RUN npx prisma generate
 
-# RUN npm run build
+RUN npm run build
 
 EXPOSE 3000
 # CMD ["npm", "run", "dev"]
-# CMD ["sh", "-c", "node src/utils/server.js & npm run start"]
-CMD ["sh", "-c", "node src/utils/server.js & npm run dev"]
+CMD ["sh", "-c", "node src/utils/server.js & npm start"]
+# CMD ["sh", "-c", "node src/utils/server.js & npm run dev"]
 
 
 # Use Node.js base image

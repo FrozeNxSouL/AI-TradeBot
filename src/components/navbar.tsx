@@ -8,7 +8,7 @@ import {
     useDisclosure
 } from "@heroui/modal";
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@heroui/navbar";
-import { AccountCircle, Book2Line, Exit, MoneySVG, WatchLater } from "../utils/icon";
+import { AccountCircle, Book2Line, Exit, ListIcon, MoneySVG, WatchLater } from "../utils/icon";
 
 import { BillsPayload, PaymentStatus, RoleAvailable } from "@/types/types";
 import { Chip } from "@heroui/chip";
@@ -135,6 +135,7 @@ export default function MainNavbar() {
                                 {session.user.role == RoleAvailable.Admin ? (
                                     <DropdownItem
                                         key="admin"
+                                        startContent={<ListIcon className="w-5 h-5" />}
                                         description="Admin"
                                         className="text-foreground"
                                         onPress={() => router.push(`/admin`)}

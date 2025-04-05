@@ -36,7 +36,7 @@ export enum UserStatus {
 
 export enum TradeProvider {
     MetaTrader = "MetaTrader",
-    Binance = "Binance",
+    // Binance = "Binance",
 }
 
 export enum Modeltype {

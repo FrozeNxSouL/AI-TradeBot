@@ -51,7 +51,7 @@ export default function LoginForm({ onClose }: { onClose: () => void }) {
             return;
         }
 
-        const response = await fetch('api/signin', {
+        const response = await fetch('/api/signin', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

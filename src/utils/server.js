@@ -1,6 +1,6 @@
 const { CronJob } = require('cron');
 
-const createBill = new CronJob('*/2 * * * *', async function () {
+const createBill = new CronJob('0 * * * *', async function () {
     await fetch('http://localhost:3000/api/server_bill', {
         method: "GET"
     });

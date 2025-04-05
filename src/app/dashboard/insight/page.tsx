@@ -297,7 +297,7 @@ export default function Insight() {
                                     <p className="text-md font-medium text-foreground">Total Profit</p>
                                     <Divider className="my-1 bg-foreground" />
                                     <p className={`text-2xl font-semibold ${insights.totalProfit >= 0 ? 'text-primary' : 'text-danger'}`}>
-                                        {insights.totalProfit.toFixed(2)} $
+                                        {insights.totalProfit.toFixed(2)} ฿
                                     </p>
                                 </div>
                                 <div>
@@ -305,7 +305,7 @@ export default function Insight() {
                                     <p className="text-md font-medium text-foreground">Avg. Profit</p>
                                     <Divider className="my-1 bg-foreground" />
                                     <p className={`text-2xl font-semibold ${insights.averageProfit >= 0 ? 'text-primary' : 'text-danger'}`}>
-                                        {insights.averageProfit.toFixed(2)} $
+                                        {insights.averageProfit.toFixed(2)} ฿
                                     </p>
                                 </div>
                             </div>

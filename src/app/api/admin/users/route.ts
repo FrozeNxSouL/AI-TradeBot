@@ -46,6 +46,7 @@ export async function POST(request: NextRequest) {
 
 export async function DELETE(request: NextRequest) {
     const body = await request.json();
+
     const { id } = body.data;
     if (!id) {
         return NextResponse.json({ error: 'Please fill out all required fields' }, { status: 400 })

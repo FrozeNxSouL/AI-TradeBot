@@ -7,7 +7,7 @@ export default function Footer() {
                 <div className="grid md:grid-cols-4 gap-8">
                     {/* Company Info Column */}
                     <div>
-                        <div className="flex w-full text-xl font-bold uppercase">
+                        <div className="flex w-full text-xl font-bold uppercase mb-4">
                             <p className="text-primary">money</p>
                             <p className="text-accent">glitch</p>
                         </div>
@@ -22,14 +22,6 @@ export default function Footer() {
                             Quick Links
                         </h4>
                         <ul className="space-y-2">
-                            <li>
-                                <Link
-                                    href="/documentation"
-                                    className="text-white/70 hover:text-green-400 transition"
-                                >
-                                    Documentation
-                                </Link>
-                            </li>
                             <li>
                                 <Link
                                     href="/dashboard"
@@ -60,23 +52,47 @@ export default function Footer() {
                     {/* Legal Links Column */}
                     <div>
                         <h4 className="text-lg font-semibold mb-4 text-green-400">
-                            Legal
+                            Documentation
                         </h4>
                         <ul className="space-y-2">
                             <li>
                                 <Link
-                                    href="/privacy"
+                                    href="/documentation/start"
                                     className="text-white/70 hover:text-green-400 transition"
                                 >
-                                    Privacy Policy
+                                    Getting Start
                                 </Link>
                             </li>
                             <li>
                                 <Link
-                                    href="/terms"
+                                    href="/documentation/ea_system"
                                     className="text-white/70 hover:text-green-400 transition"
                                 >
-                                    Terms of Service
+                                    Expert Advisor
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    href="/documentation/provider"
+                                    className="text-white/70 hover:text-green-400 transition"
+                                >
+                                    Trading Provider
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    href="/documentation/website"
+                                    className="text-white/70 hover:text-green-400 transition"
+                                >
+                                    Website
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    href="/documentation/pricing"
+                                    className="text-white/70 hover:text-green-400 transition"
+                                >
+                                    Pricing
                                 </Link>
                             </li>
                         </ul>

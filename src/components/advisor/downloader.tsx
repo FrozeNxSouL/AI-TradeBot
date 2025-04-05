@@ -2,7 +2,7 @@
 
 import { Button } from "@heroui/button";
 
-const downloadLink = "https://drive.google.com/file/d/1QoPF6LjrDnpYPVdSZ4_msAkfgj1lur4E/view?usp=sharing";
+const downloadLink = "https://drive.google.com/uc?export=download&id=1XiyTFRsLpZePM8SNBDmzUfTGS8cP4b8h";
 
 export default function FileDownloader() {
   return (

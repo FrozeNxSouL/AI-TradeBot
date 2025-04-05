@@ -50,7 +50,7 @@ export async function GET() {
                     await prisma.billing.create({
                         data: {
                             bill_expire_date: expireDate,
-                            bill_cost: Math.abs(log.log_profit), 
+                            bill_cost: Math.abs(log.log_profit * fee.ad_fee), 
                             bill_log_id: log.log_id,
                             bill_status: PaymentStatus.Arrive
                         },

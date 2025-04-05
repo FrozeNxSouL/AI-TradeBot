@@ -1,0 +1,39 @@
+diff --git a/node_modules/@internationalized/date/src/DateFormatter.ts b/node_modules/@internationalized/date/src/DateFormatter.ts
+index 21ab69f..9f092b5 100644
+--- a/node_modules/@internationalized/date/src/DateFormatter.ts
++++ b/node_modules/@internationalized/date/src/DateFormatter.ts
+@@ -68,9 +68,9 @@ export class DateFormatter implements Intl.DateTimeFormat {
+     let startParts = this.formatter.formatToParts(start);
+     let endParts = this.formatter.formatToParts(end);
+     return [
+-      ...startParts.map(p => ({...p, source: 'startRange'} as DateRangeFormatPart)),
+-      {type: 'literal', value: ' – ', source: 'shared'},
+-      ...endParts.map(p => ({...p, source: 'endRange'} as DateRangeFormatPart))
++      ...startParts.map(p => ({ ...p, source: 'startRange' } as DateRangeFormatPart)),
++      { type: 'literal', value: ' – ', source: 'shared' },
++      ...endParts.map(p => ({ ...p, source: 'endRange' } as DateRangeFormatPart))
+     ];
+   }
+ 
+@@ -115,13 +115,19 @@ const hour12Preferences = {
+     // All locales use h23 for 24 hour time. None use h24.
+   }
+ };
++// const hour12Preferences: Record<string, Record<string, string>> = {
++//   true: { ja: 'h11' },
++//   false: {},
++// };
+ 
+ function getCachedDateFormatter(locale: string, options: Intl.DateTimeFormatOptions = {}): Intl.DateTimeFormat {
+   // Work around buggy hour12 behavior in Chrome / ECMA 402 spec by using hourCycle instead.
+   // Only apply the workaround if the issue is detected, because the hourCycle option is buggy in Safari.
+   if (typeof options.hour12 === 'boolean' && hasBuggyHour12Behavior()) {
+-    options = {...options};
+-    let pref = hour12Preferences[String(options.hour12)][locale.split('-')[0]];
++    options = { ...options };
++    // let pref = hour12Preferences[String(options.hour12)][locale.split('-')[0]];
++    let pref = hour12Preferences[String(options.hour12) as 'true' | 'false'][locale.split('-')[0]];
++
+     let defaultHourCycle = options.hour12 ? 'h12' : 'h23';
+     options.hourCycle = pref ?? defaultHourCycle;
+     delete options.hour12;

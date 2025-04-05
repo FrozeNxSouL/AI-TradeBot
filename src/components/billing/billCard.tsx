@@ -50,7 +50,7 @@ export default function BillCard({ input, fee, userID }: { input: BillsPayload, 
 
     const statusDetails = getStatusDetails();
 
-    const positive = Math.round(Math.abs(input.bill_log.log_profit * (fee) * 100))
+    const positive = Math.round(Math.abs(input.bill_cost * 100))
 
     return (
         <>
@@ -136,7 +136,7 @@ export default function BillCard({ input, fee, userID }: { input: BillsPayload, 
                     <div className="flex flex-col justify-around w-3/12 bg-foreground text-background rounded-r-lg p-4">
                         <div className="flex justify-between items-center mb-2">
                             <p className="text-sm">Total Commission:</p>
-                            <p className="font-semibold text-xl">{(input.bill_log.log_profit * fee).toFixed(2)} $</p>
+                            <p className="font-semibold text-xl">{(input.bill_cost).toFixed(2)} $</p>
                         </div>
 
                         <div className="flex justify-between items-center mb-2">

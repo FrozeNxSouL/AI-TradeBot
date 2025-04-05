@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@heroui/button": "^2.2.13",
@@ -31,6 +32,7 @@
     "@heroui/theme": "^2.4.12",
     "@heroui/tooltip": "^2.2.13",
     "@heroui/user": "^2.2.10",
+    "@internationalized/date": "^3.7.0",
     "@prisma/client": "^6.4.1",
     "@stripe/react-stripe-js": "^3.5.1",
     "@stripe/stripe-js": "^6.1.0",
@@ -54,7 +56,9 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.1.7",
+    "patch-package": "^8.0.0",
     "postcss": "^8",
+    "postinstall-postinstall": "^2.1.0",
     "prisma": "^6.4.1",
     "tailwindcss": "^3.4.1",
     "tsx": "^4.19.3",

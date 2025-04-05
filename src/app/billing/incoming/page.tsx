@@ -29,6 +29,7 @@ export default function IncomingBills() {
                 }
                 // Transform data to match the expected format
                 const output = await response.json();
+                console.log(output)
                 const filtered = output.billData.filter((bill: BillsPayload) => bill.bill_status === PaymentStatus.Arrive)
                 setBills(filtered);
                 setFee(output.fee)

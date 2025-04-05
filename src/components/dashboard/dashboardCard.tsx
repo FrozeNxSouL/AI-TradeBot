@@ -76,6 +76,16 @@ export default function DashboardCard({ input }: { input: UsageWithRelations }) 
     const times = chartData.map(item => item.time);
     const prices = chartData.map(item => item.price);
 
+    function formatNumber(value: number): string {
+        if (value >= 1_000_000) {
+            return (value / 1_000_000).toFixed(1).replace(/\.0$/, '') + " M"; // Millions
+        } else if (value >= 1_000) {
+            return (value / 1_000).toFixed(1).replace(/\.0$/, '') + " K"; // Thousands
+        } else {
+            return value.toFixed(2); // Keep original for smaller numbers
+        }
+    }
+
     return (
         <Card isFooterBlurred className="border-none" radius="lg">
             <div className="w-[475px] h-96 bg-foreground pb-14 p-2">
@@ -161,9 +171,9 @@ export default function DashboardCard({ input }: { input: UsageWithRelations }) 
                         {prices[prices.length - 1].toFixed(2)}
                     </Chip>
                     {/* <small className="text-sm p-1 m-1 border-1 border-background rounded-2xl"></small> */}
-                    <div className="flex justify-between items-baseline w-full ">
-                        <h4 className="font-bold text-tiny text-background flex gap-1 w-1/2">{(input.alltimeProfit / (input.usage_init_balance || input.lastBalance || 1)).toFixed(2)} <p className="text-primary"> %</p></h4>
-                        <h4 className="font-medium text-md text-primary flex justify-around">{input.alltimeProfit.toFixed(2)} ฿</h4>
+                    <div className="flex justify-between items-baseline w-full">
+                        <h4 className="font-bold text-tiny text-background flex gap-1 w-1/3">{(input.alltimeProfit / (input.usage_init_balance || input.lastBalance || 1)).toFixed(2)} <p className="text-primary"> %</p></h4>
+                        <h4 className="font-medium text-md text-primary text-end justify-around w-2/3">{formatNumber(input.alltimeProfit)}฿</h4>
                     </div>
 
                 </div>
