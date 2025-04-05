@@ -1,0 +1,8 @@
+stable-baselines3
+pyzmq
+pandas
+schedule
+requests
+gym
+numpy
+scikit-learn
