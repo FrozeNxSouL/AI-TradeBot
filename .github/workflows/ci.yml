@@ -93,7 +93,7 @@ jobs:
 
       - name: Build and run containers with Docker Compose
         run: |
-          docker-compose -f docker-compose.yml --env-file .env up --build -d
+          docker-compose -f compose.yaml --env-file .env up --build -d
 
       - name: Wait for containers to be ready
         run: sleep 10
