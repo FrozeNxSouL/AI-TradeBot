@@ -28,6 +28,7 @@ export async function POST(request: NextRequest) {
                             log_start_date: true,
                         },
                     },
+                    usage_account : true
                 },
                 where: {
                     usage_account: {

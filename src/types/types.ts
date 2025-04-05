@@ -135,5 +135,6 @@ export type UsageForAdvisor = Prisma.UsageGetPayload<{
                 log_start_date: true,
             },
         },
+        usage_account : true
     }
 }>

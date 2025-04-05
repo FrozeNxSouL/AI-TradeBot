@@ -55,7 +55,7 @@ export default function AdvisorCard({ usage }: { usage: UsageForAdvisor }) {
                     <p className="text-tiny uppercase font-semibold">ID : {usage.usage_id} </p>
                     <p className="text-tiny uppercase font-normal">Start Date : {new Date(usage.usage_collection_date).toLocaleDateString()} </p>
                     <p className="text-tiny uppercase font-normal">Billing Date : {nextMonth.toLocaleDateString()} </p>
-                    {/* <p className="text-tiny uppercase font-normal">Orders Sent : {usage.usage_orders || 0} </p> */}
+                    <p className="text-tiny uppercase font-normal">Account : {usage.usage_account.acc_name || 0} </p>
                 </div>
             </CardHeader>
             <CardFooter>
