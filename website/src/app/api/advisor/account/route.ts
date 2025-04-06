@@ -37,7 +37,6 @@ export async function POST(request: NextRequest) {
             where: {
                 acc_name: acc,
                 acc_client: String(client),
-                acc_user_id: id 
             }
         })
 

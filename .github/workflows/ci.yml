@@ -47,9 +47,11 @@ on:
   push:
     branches:
       - main
+      - alternative-payment
   pull_request:
     branches:
       - main
+      - alternative-payment
 
 jobs:
   build:
