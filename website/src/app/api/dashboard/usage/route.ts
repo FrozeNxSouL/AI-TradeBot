@@ -3,7 +3,7 @@ import { UsageStatus } from "@/types/types";
 import { NextRequest, NextResponse } from "next/server";
 
 /**
- * @swagger
+ * @openapi
  * /dashboard/usage:
  *   post:
  *     summary: Returns usages for visualize as insights 

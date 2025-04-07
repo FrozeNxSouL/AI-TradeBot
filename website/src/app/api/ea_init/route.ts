@@ -4,7 +4,7 @@ import { LogStatus, UsageStatus } from "@/types/types";
 import { NextRequest, NextResponse } from "next/server";
 
 /**
- * @swagger
+ * @openapi
  * /ea_init:
  *   post:
  *     summary: Initialize and return modelID for trading client

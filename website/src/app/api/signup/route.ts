@@ -4,7 +4,7 @@ import { hashSync } from "bcryptjs";
 import { NextRequest, NextResponse } from "next/server";
 
 /**
- * @swagger
+ * @openapi
  * /signup:
  *   post:
  *     summary: Return signup result

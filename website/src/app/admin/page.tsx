@@ -1,6 +1,7 @@
 
 
 import AdminSettings from "@/components/admin/adminData";
+import SwaggerPage from "@/components/admin/swaggerComponent";
 import TableComponent from "@/components/admin/tableComponent";
 import UserList from "@/components/admin/userTable";
 import { prisma } from "@/lib/prisma_client";
@@ -49,6 +50,8 @@ export default async function Admin() {
 
             <h2 className="text-xl font-bold mt-5">Admin Table</h2>
             <TableComponent data={admindata} columns={["ad_id", "ad_fee"]} />
+
+            <SwaggerPage />
 
             <AdminSettings />
 

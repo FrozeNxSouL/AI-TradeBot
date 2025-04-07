@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma_client";
 import { NextRequest, NextResponse } from "next/server";
 
 /**
- * @swagger
+ * @openapi
  * /advisor/account:
  *   post:
  *     summary: Returns edited account result
@@ -36,8 +36,7 @@ export async function POST(request: NextRequest) {
         const searching = await prisma.account.findFirst({
             where: {
                 acc_name: acc,
-                acc_client: String(client),
-                acc_user_id: id 
+                acc_client: String(client)
             }
         })
 

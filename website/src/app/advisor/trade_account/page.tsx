@@ -56,7 +56,7 @@ export default function AccountForm() {
                             className="max-w-md font-semibold mx-10 p-5"
                             label="TRADE BROKER"
                             variant="underlined"
-                            placeholder="Select Currency"
+                            placeholder="Select Trading Provider"
                             value={inputProvider}
                             onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setInputProvider(e.target.value)}
                         >

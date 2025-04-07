@@ -5,7 +5,7 @@ import { InputJsonValue } from "@prisma/client/runtime/library";
 import { NextRequest, NextResponse } from "next/server";
 
 /**
- * @swagger
+ * @openapi
  * /ea_order:
  *   post:
  *     summary: Synchronize the log data for trades log and billing process

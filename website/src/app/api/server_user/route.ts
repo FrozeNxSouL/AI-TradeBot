@@ -4,7 +4,7 @@ import { prisma } from "@/lib/prisma_client";
 
 
 /**
- * @swagger
+ * @openapi
  * /server_user:
  *   get:
  *     summary: Return number of late bill to change user status from server schedule

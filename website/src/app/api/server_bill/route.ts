@@ -3,7 +3,7 @@ import { LogStatus, PaymentStatus } from "@/types/types";
 import { prisma } from "@/lib/prisma_client";
 
 /**
- * @swagger
+ * @openapi
  * /server_bill:
  *   get:
  *     summary: Return number of processed log to create bill from server schedule

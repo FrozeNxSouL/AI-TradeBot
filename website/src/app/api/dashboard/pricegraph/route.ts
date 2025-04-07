@@ -12,7 +12,7 @@ interface TiingoAPIData {
 }
 
 /**
- * @swagger
+ * @openapi
  * /dashboard/pricegraph:
  *   post:
  *     summary: Returns price data for dashboard

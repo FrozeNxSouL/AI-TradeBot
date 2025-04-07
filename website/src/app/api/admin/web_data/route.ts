@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma_client";
 import { NextRequest, NextResponse } from "next/server";
 
 /**
- * @swagger
+ * @openapi
  * /admin/web_data:
  *   get:
  *     summary: Returns webste variable (fee)
@@ -29,7 +29,7 @@ export async function GET() {
 
 
 /**
- * @swagger
+ * @openapi
  * /admin/web_data:
  *   post:
  *     summary: Returns edited fee result

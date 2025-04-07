@@ -3,7 +3,7 @@ import { TradeHistoryData } from "@/types/types";
 import { NextRequest, NextResponse } from "next/server";
 
 /**
- * @swagger
+ * @openapi
  * /dashboard/tradeslog:
  *   post:
  *     summary: Returns trades history 

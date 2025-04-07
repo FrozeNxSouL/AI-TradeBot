@@ -15,3 +15,21 @@ export async function GET(req: NextRequest) {
     }
   );
 }
+
+// // src/app/api/docs/route.ts
+// import { NextRequest } from 'next/server';
+// import swaggerUi from 'swagger-ui-express';
+// import swaggerSpec from '/swaggerConfig';
+// import express from 'express';
+// import { createServer } from 'http';
+
+// const app = express();
+// app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+// // 👇 Wrap the express app in a Next.js handler
+// export const GET = async (req: NextRequest) => {
+//   return new Response(JSON.stringify(swaggerSpec), {
+//     status: 200,
+//     headers: { 'Content-Type': 'application/json' },
+//   });
+// };

@@ -3,7 +3,7 @@ import { LogStatus, UsageStatus, UserStatus } from "@/types/types";
 import { NextRequest, NextResponse } from "next/server";
 
 /**
- * @swagger
+ * @openapi
  * /advisor/usage:
  *   post:
  *     summary: Returns usages of matched account and model result
@@ -69,7 +69,7 @@ export async function POST(request: NextRequest) {
 }
 
 /**
- * @swagger
+ * @openapi
  * /advisor/usage:
  *   put:
  *     summary: Returns changed status usages result

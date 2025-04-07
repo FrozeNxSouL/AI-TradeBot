@@ -2,7 +2,7 @@ import { prisma } from "@/lib/prisma_client";
 import { NextRequest, NextResponse } from "next/server";
 
 /**
- * @swagger
+ * @openapi
  * /advisor/create:
  *   post:
  *     summary: Returns create advisor result

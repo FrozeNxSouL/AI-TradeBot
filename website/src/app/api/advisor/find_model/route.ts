@@ -7,7 +7,7 @@ interface Condition {
 }
 
 /**
- * @swagger
+ * @openapi
  * /advisor/find_model:
  *   post:
  *     summary: Returns searched model result

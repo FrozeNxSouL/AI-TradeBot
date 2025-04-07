@@ -2,7 +2,7 @@ import { prisma } from "@/lib/prisma_client";
 import { NextRequest, NextResponse } from "next/server";
 
 /**
- * @swagger
+ * @openapi
  * /admin/user:
  *   get:
  *     summary: Returns all users
@@ -27,7 +27,7 @@ export async function GET() {
 }
 
 /**
- * @swagger
+ * @openapi
  * /admin/user:
  *   post:
  *     summary: Returns update a user result
@@ -72,7 +72,7 @@ export async function POST(request: NextRequest) {
 }
 
 /**
- * @swagger
+ * @openapi
  * /admin/user:
  *   delete:
  *     summary: Returns delete a user result

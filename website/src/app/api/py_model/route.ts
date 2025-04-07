@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma_client";
 import { NextRequest, NextResponse } from "next/server";
 
 /**
- * @swagger
+ * @openapi
  * /py_model:
  *   post:
  *     summary: Insert new model data into database from python server

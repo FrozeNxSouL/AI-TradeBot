@@ -4,7 +4,7 @@ import { compare, hashSync } from "bcryptjs";
 import { NextRequest, NextResponse } from "next/server";
 
 /**
- * @swagger
+ * @openapi
  * /modify_account:
  *   post:
  *     summary: Return account modification status

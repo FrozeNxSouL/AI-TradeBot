@@ -3,7 +3,7 @@ import Stripe from 'stripe';
 import { NextRequest, NextResponse } from 'next/server';
 
 /**
- * @swagger
+ * @openapi
  * /create-payment-intent:
  *   post:
  *     summary: Returns created payment intent

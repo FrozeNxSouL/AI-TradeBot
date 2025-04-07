@@ -1,0 +1,192 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Modern API Documentation",
+        "description": "A modern REST API built with Next.js",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/signin": {
+            "post": {
+                "summary": "Return signin result",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SigninData"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful response"
+                    },
+                    "400": {
+                        "description": "Prisma fail in progress"
+                    }
+                }
+            }
+        },
+        "/api/admin/user": {
+            "get": {
+                "summary": "Returns all users",
+                "responses": {
+                    "200": {
+                        "description": "successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Prisma fail to return"
+                    }
+                }
+            },
+            "post": {
+                "summary": "Returns update a user result",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ChangeUser"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful response"
+                    },
+                    "400": {
+                        "description": "False Input"
+                    },
+                    "500": {
+                        "description": "Prisma fail to return"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Returns delete a user result",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DeleteUser"
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful response"
+                    },
+                    "400": {
+                        "description": "False Input"
+                    },
+                    "500": {
+                        "description": "Prisma fail to return"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "User": {
+                "type": "object",
+                "properties": {
+                    "user_id": {
+                        "type": "string"
+                    },
+                    "user_email": {
+                        "type": "string"
+                    },
+                    "user_password": {
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "user_role": {
+                        "type": "string",
+                        "enum": [
+                            "user",
+                            "admin"
+                        ]
+                    },
+                    "user_card": {
+                        "type": "string"
+                    },
+                    "user_status": {
+                        "type": "number"
+                    },
+                    "provider": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "user_id",
+                    "user_role",
+                    "provider"
+                ]
+            },
+            "ChangeUser": {
+                "type": "object",
+                "properties": {
+                    "role": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "id",
+                    "role"
+                ]
+            },
+            "DeleteUser": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "id"
+                ]
+            },
+            "SigninData" : {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "email",
+                    "password"
+                ]
+            }
+        }
+    }
+}

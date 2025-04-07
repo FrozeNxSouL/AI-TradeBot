@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma_client";
 import { NextRequest, NextResponse } from "next/server";
 
 /**
- * @swagger
+ * @openapi
  * /billing:
  *   post:
  *     summary: Returns all created bill in account result

@@ -107,6 +107,7 @@ export default function LoginForm({ onClose }: { onClose: () => void }) {
                         onChange={handleEmailChange}
                         isInvalid={validation.email.isError}
                         errorMessage={validation.email.errorMsg}
+                        className="text-foreground"
                         value={data.email}
                         type="email"
                         label="Email"

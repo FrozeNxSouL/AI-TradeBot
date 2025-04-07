@@ -5,7 +5,7 @@ import { InputJsonValue } from "@prisma/client/runtime/library";
 import { NextRequest, NextResponse } from "next/server";
 
 /**
- * @swagger
+ * @openapi
  * /ea_deinit:
  *   post:
  *     summary: Deinitialize for trading client and synchronize the log data

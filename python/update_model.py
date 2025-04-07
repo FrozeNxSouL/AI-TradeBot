@@ -171,7 +171,7 @@ def H1job():
 
         lr_base = 0.0005
         lr_end = 0.0000075
-        steps = 100000
+        steps = 10000
 
         adaptive_lr_callback = AdaptiveLearningRateCallback(lr_base, lr_end, steps)
 
@@ -223,7 +223,7 @@ def D1job():
 
         lr_base = 0.0005
         lr_end = 0.0000075
-        steps = 100000
+        steps = 1000
 
         adaptive_lr_callback = AdaptiveLearningRateCallback(lr_base, lr_end, steps)
 
